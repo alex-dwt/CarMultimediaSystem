@@ -54,6 +54,7 @@ export default class FilesScanner {
 			"$(find \"{}\" -type f -regex \".+\\.\\(" + type.ext.join('\\|') +
 			"\\)$\" | wc -l)' 2>/dev/null"
 		).toString();
+
 		if (dirs) {
 			dirs = dirs.split('\n');
 			dirs.pop();
@@ -65,11 +66,12 @@ export default class FilesScanner {
 			}
 		}
 
-		let files = execSync(
-			"ls -p '" + fullPath + "' | grep -v / | egrep -i '.+\\.(" + type.ext.join('|') + ")$' " +
-			"| xargs -I {} bash -c 'echo \"{}\"; " +
-			"echo $(mediainfo --Inform=\"General;##%Duration%##%Title%##\" " + fullPath + "\"{}\")' 2>/dev/null"
-		).toString();
+		let files = execSync(`
+			ls -p '${fullPath}' | grep -v / | egrep -i '.+\\.(${type.ext.join('|')})$' \
+			| xargs -I {} bash -c 'echo "{}"; \
+			echo $(mediainfo --Inform="General;##%Duration%##%Title%##" "${fullPath}"/"{}")' 2>/dev/null
+        `).toString();
+
 		if (files) {
 			files = files.split('\n');
 			files.pop();
