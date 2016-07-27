@@ -109,12 +109,12 @@ describe('Files API', () => {
                             touch '${fileType.dir}/dir 1/file.${ext}' && \
                             touch '${fileType.dir}/dir 1/dir11/file.${ext}' && \
                             touch '${fileType.dir}/dir 1/dir12/file.${ext}' && \
-                            touch '${fileType.dir}/dir3/file.${ext}'
+                            touch '${fileType.dir}/dir 1/dir12/dir121/file.${ext}'
                         `);
                     }
 
 					request(server)
-						.get('/files/' + fileType.name + '?path=/')
+						.get('/files/' + fileType.name + '?path=' + encodeURIComponent('/dir 1'))
 						.expect(200)
 						.end((err, res) => {
 							if (err) {
@@ -123,12 +123,25 @@ describe('Files API', () => {
 							assert.sameDeepMembers(
                                 res.body.dirs,
                                 [
-                                    {path: '/dir2', files_count: 0},
-                                    {path: '/dir3', files_count: fileType.ext.length},
-                                    {path: '/dir 1', files_count: fileType.ext.length * 3}
+                                    {path: '/dir 1/dir11', files_count: fileType.ext.length, dir_name: 'dir11', is_parent_dir: false},
+                                    {path: '/dir 1/dir12', files_count: fileType.ext.length * 2, dir_name: 'dir12', is_parent_dir: false},
+                                    {path: '/', files_count: 0, dir_name: '', is_parent_dir: true}
                                 ]
                             );
-							done();
+
+							request(server)
+								.get('/files/' + fileType.name + '?path=' + encodeURIComponent('/dir 1/dir12/dir121'))
+								.expect(200)
+								.end((err, res) => {
+									if (err) {
+										return done(err);
+									}
+									assert.sameDeepMembers(
+										res.body.dirs,
+										[{path: '/dir 1/dir12', files_count: 0, dir_name: '', is_parent_dir: true}]
+									);
+									done();
+								});
 						});
 				}
 			);
@@ -183,6 +196,7 @@ describe('Files API', () => {
  * ./dir 1
  * ./dir 1/dir11
  * ./dir 1/dir12
+ * ./dir 1/dir12/dir121
  * ./dir2
  * ./dir3
  * ./dir3/dir31
@@ -190,7 +204,7 @@ describe('Files API', () => {
  */
 function createFakeDirs(path) {
 	execSync(`
-	    /bin/bash -c 'mkdir -p ${path}/{dir1/{dir11,dir12},dir2,dir3/{dir31,dir32}}' && \
+	    /bin/bash -c 'mkdir -p ${path}/{dir1/{dir11,dir12/dir121},dir2,dir3/{dir31,dir32}}' && \
 	    mv ${path}/dir1 '${path}/dir 1'
 	`);
 }

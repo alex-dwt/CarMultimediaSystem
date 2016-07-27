@@ -5,8 +5,17 @@
  */
 
 export default class {
-	constructor(path, filesCount) {
+	constructor(path, filesCount, isParentDir = false) {
 		this.path = path;
 		this.filesCount = parseInt(filesCount);
+		this.isParentDir = isParentDir;
+		this.dirName = '';
+
+		if (!isParentDir) {
+			let pos = path.lastIndexOf('/');
+			if (pos !== -1) {
+				this.dirName = path.substr(++pos);
+			}
+		}
 	}
 }

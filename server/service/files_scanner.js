@@ -48,6 +48,16 @@ export default class FilesScanner {
 			files: []
 		};
 
+		// at first add parent directory if not root
+		if (path !== '/') {
+			let pos = path.lastIndexOf('/');
+			if (pos === 0) {
+				result.dirs.push(Snake(new Directory('/', 0, true)));
+			} else if (pos > 0) {
+				result.dirs.push(Snake(new Directory(path.substring(0, pos), 0, true)));
+			}
+		}
+
 		let dirs = execSync(
 			"find '" + fullPath + "' -maxdepth 1 -not -path '" + fullPath + "' " +
 			"-type d -print0 2>/dev/null | xargs -I {} -0 -n1 bash -c 'echo {}; echo " +
@@ -60,30 +70,29 @@ export default class FilesScanner {
 			dirs.pop();
 			for (let i = 0, j = dirs.length; i < j; i += 2) {
 				let [p, c] = dirs.slice(i, i + 2);
-				result.dirs.push(Snake(
-					new Directory(p.replace(type.dir, ''), c)
-				));
+				result.dirs.push(
+					Snake(new Directory(p.replace(type.dir, ''), c))
+				);
 			}
 		}
 
 		let files = execSync(`
 			ls -p '${fullPath}' | grep -v / | egrep -i '.+\\.(${type.ext.join('|')})$' \
-			| xargs -I {} bash -c 'echo "{}"; \
-			echo $(mediainfo --Inform="General;##%Duration%##%Title%##" "${fullPath}"/"{}")' 2>/dev/null
+			| xargs -n 1 -P 10 -I {} bash -c \
+			'mediainfo --Inform="General;##%Duration%##%Title%##%FileName%.%FileExtension%##" "${fullPath}"/"{}"' 2>/dev/null
         `).toString();
 
 		if (files) {
 			files = files.split('\n');
 			files.pop();
-			for (let i = 0, j = files.length; i < j; i += 2) {
-				let [fileName, info] = files.slice(i, i + 2);
-				let matches = info.match(/^##(.*?)##(.*?)##$/);
-				if (matches) {
-					result.files.push(Snake(
-						new File(fileName, matches[2], matches[1])
-					));
+			files.forEach(item => {
+				let matches = item.match(/^##(.*?)##(.*?)##(.*?)##$/);
+				if (matches && matches[3]) {
+					result.files.push(
+						Snake(new File(matches[3], matches[2], matches[1]))
+					);
 				}
-			}
+			});
 		}
 
 		return result;
