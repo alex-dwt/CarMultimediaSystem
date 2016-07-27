@@ -58,12 +58,12 @@ export default class FilesScanner {
 			}
 		}
 
-		let dirs = execSync(
-			"find '" + fullPath + "' -maxdepth 1 -not -path '" + fullPath + "' " +
-			"-type d -print0 2>/dev/null | xargs -I {} -0 -n1 bash -c 'echo {}; echo " +
-			"$(find \"{}\" -type f -regex \".+\\.\\(" + type.ext.join('\\|') +
-			"\\)$\" | wc -l)' 2>/dev/null"
-		).toString();
+        let dirs = execSync(`
+            fullPath="${fullPath}"; \
+			find "$fullPath" -maxdepth 1 -not -path "$fullPath" -type d -print0 2>/dev/null \
+            | xargs -I {} -0 -n1 bash -c 'temp=$(printf "%q" "{}"); echo "$temp"; echo \
+            $(find "{}" -type f -regex ".+\\.\\(${type.ext.join('\\|')}\\)$" | wc -l)' 2>/dev/null
+		`).toString();
 
 		if (dirs) {
 			dirs = dirs.split('\n');
@@ -77,9 +77,9 @@ export default class FilesScanner {
 		}
 
 		let files = execSync(`
-			ls -p '${fullPath}' | grep -v / | egrep -i '.+\\.(${type.ext.join('|')})$' \
+			ls -p "${fullPath}" | grep -v / | egrep -i '.+\\.(${type.ext.join('|')})$' \
 			| xargs -n 1 -P 10 -I {} bash -c \
-			'mediainfo --Inform="General;##%Duration%##%Title%##%FileName%.%FileExtension%##" "${fullPath}"/"{}"' 2>/dev/null
+			"mediainfo --Inform=\\"General;##%Duration%##%Title%##%FileName%.%FileExtension%##\\" \\"${fullPath}/{}\\"" 2>/dev/null
         `).toString();
 
 		if (files) {

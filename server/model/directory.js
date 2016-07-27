@@ -6,15 +6,15 @@
 
 export default class {
 	constructor(path, filesCount, isParentDir = false) {
-		this.path = path;
+		this.path = path.replace(/\\/g, '');
 		this.filesCount = parseInt(filesCount);
 		this.isParentDir = isParentDir;
 		this.dirName = '';
 
 		if (!isParentDir) {
-			let pos = path.lastIndexOf('/');
+			let pos = this.path.lastIndexOf('/');
 			if (pos !== -1) {
-				this.dirName = path.substr(++pos);
+				this.dirName = this.path.substr(++pos);
 			}
 		}
 	}
