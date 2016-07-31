@@ -14,6 +14,7 @@ import HttpException from './exception/http_exception'
 
 let app = express();
 app.use(bodyParser.json());
+app.use(express.static('/car-pi/client'));
 
 /**
  * Files Scanner
@@ -65,6 +66,6 @@ app.use((err, req, res, next) => {
 	}
 });
 
-let server = app.listen(8080);
+let server = app.listen(80);
 
 export { server };

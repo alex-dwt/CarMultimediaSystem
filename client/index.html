@@ -1,0 +1,33 @@
+<!--This file is part of the CarMultimediaSystem package.-->
+<!--(c) Alexander Lukashevich <aleksandr.dwt@gmail.com>-->
+<!--For the full copyright and license information, please view the LICENSE file that was distributed with this source code.-->
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Car Multimedia System</title>
+	<link href="assets/css/bootstrap.min.css" rel="stylesheet">
+	<link href="assets/css/reset.css" rel="stylesheet">
+	<link href="assets/css/styles.css" rel="stylesheet">
+	<script src="node_modules/zone.js/dist/zone.min.js"></script>
+	<script src="node_modules/reflect-metadata/Reflect.js"></script>
+	<script src="node_modules/es6-shim/es6-shim.js"></script>
+	<script src="node_modules/systemjs/dist/system.src.js"></script>
+</head>
+<body>
+	<script>
+		SystemJS.config({
+			map: {
+				'rxjs': 'node_modules/rxjs',
+				'angular2': 'node_modules/angular2'
+			},
+			packages: {	'.': {	defaultExtension: 'js'	}	}
+		});
+		System.import('_app/app.js');
+	</script>
+	<div my-app>
+		Loading...
+	</div>
+</body>
+</html>

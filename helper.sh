@@ -19,27 +19,28 @@ function main {
             ;;
         "start-dev")
             docker run  --rm -it \
+                -v /home/pi/CarMultimediaSystem/client:/car-pi/client \
                 -v /home/pi/Audio:/Audio -v /home/pi/Video:/Video \
                 -v /opt/vc:/opt/vc:ro --device /dev/vchiq:/dev/vchiq --device /dev/fb0:/dev/fb0 \
-                -p 8080:8080 \
+                -p 80:80 \
                 alex_dwt/car-pi
             ;;
         "run-tests")
             docker run  --rm -it \
                 -v /opt/vc:/opt/vc:ro --device /dev/vchiq:/dev/vchiq --device /dev/fb0:/dev/fb0 \
-                -p 8080:8080 \
+                -p 80:80 \
                 alex_dwt/car-pi npm test
             ;;
         "start-bash")
             docker run  --rm -it \
                 -v /opt/vc:/opt/vc:ro --device /dev/vchiq:/dev/vchiq --device /dev/fb0:/dev/fb0 \
-                -p 8080:8080 \
+                -p 80:80 \
                 alex_dwt/car-pi bash
             ;;
 #        "start-start")
 #            docker rm -f alex_dwt_car_pi > /dev/null 2>&1
 #            docker run  -it \
-#                -p 8080:8080 \
+#                -p 80:80 \
 #                --name alex_dwt_car_pi alex_dwt/car-pi npm run-script compile run-compiled
 #            ;;
         *)

@@ -84,7 +84,7 @@ export default class {
 				if (typeof body.alpha === 'undefined') {
 					throw new HttpException(400, 'Param "alpha" is missing');
 				}
-				let alpha = parseInt(body.alpha);
+				let alpha = parseInt(body.alpha) || 0;
 				if (alpha < 0 || alpha > 255) {
 					throw new HttpException(400, 'Param "alpha" is wrong');
 				}
@@ -93,7 +93,7 @@ export default class {
 			}
             case 'set_position':
 			{
-				let position = parseInt(body.position);
+				let position = parseInt(body.position) || 0;
 				if (!position) {
 					throw new HttpException(400, 'Param "position" is missing or wrong');
 				}

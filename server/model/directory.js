@@ -7,7 +7,7 @@
 export default class {
 	constructor(path, filesCount, isParentDir = false) {
 		this.path = path.replace(/\\/g, '');
-		this.filesCount = parseInt(filesCount);
+		this.filesCount = parseInt(filesCount) || 0;
 		this.isParentDir = isParentDir;
 		this.dirName = '';
 
