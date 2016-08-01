@@ -28,7 +28,7 @@ import {PagingComponent} from '_app/component/paging.component';
 					<p>{{ item.title | trackTitle }}</p>
 				</div>
 				<div class="actions-block">
-					<div><span class="glyphicon-play-circle play-file-icon" aria-hidden="true"></span></div>
+					<div><span class="glyphicon-play-circle play-file-icon" aria-hidden="true" (click)="playItem(item)"></span></div>
 					<div><span class="glyphicon-share-alt" aria-hidden="true"></span></div>
 					<div><span class="glyphicon-remove-circle" aria-hidden="true"></span></div>
 					<div class="delete-block">
@@ -71,7 +71,7 @@ import {PagingComponent} from '_app/component/paging.component';
 		</section>
 	`,
 	directives: [PagingComponent],
-	inputs: ['addFileEvent', 'addDirectoryEvent'],
+	inputs: ['addFileEvent', 'addDirectoryEvent', 'playFileEvent'],
 	pipes: [TrackDurationPipe, TrackTitlePipe]
 })
 export class PlaylistComponent {
@@ -99,5 +99,10 @@ export class PlaylistComponent {
 			item.isActive = false; // todo
 			return item;
 		});
+	}
+
+	playItem(item) {
+		this.playFileEvent.emit(item);
+		console.log('playlist play file');
 	}
 }

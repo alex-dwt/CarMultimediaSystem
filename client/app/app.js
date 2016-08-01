@@ -41,6 +41,7 @@ const TABS = [
 				(click)="isExplorerActive=true">
 			</section>
 			<section playlist id="playlist"
+				[playFileEvent]="playFileEvent"
 				[addFileEvent]="addFileEvent"
 				[addDirectoryEvent]="addDirectoryEvent"
 				(click)="isExplorerActive=false">
