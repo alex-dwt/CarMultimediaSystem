@@ -65,3 +65,19 @@ nav {
 		}
 	}
 }
+
+[paging] {
+	display: flex;
+	align-items: center;
+
+	span {
+		display: block;
+		font-size: 6vmin;
+		margin: 0 3vmin;
+	}
+
+	p {
+		font-size: 5vmin;
+		text-align: center;
+	}
+}

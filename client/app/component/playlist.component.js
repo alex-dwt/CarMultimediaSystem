@@ -8,7 +8,7 @@ import {Component, EventEmitter, OnInit} from 'angular2/core';
 import {TrackDurationPipe } from '_app/pipe/trackDuration.pipe';
 import {TrackTitlePipe } from '_app/pipe/trackTitle.pipe';
 
-const ITEMS_PER_PAGE = 4;
+import {PagingComponent} from '_app/component/paging.component';
 
 @Component({
 	selector: '[playlist]',
@@ -42,12 +42,11 @@ const ITEMS_PER_PAGE = 4;
 
 		<section class="panel-paging">
 
-
-			<span class="glyphicon-arrow-left" aria-hidden="true" [style.visibility]="currentItemsFrom <= 1 ? 'hidden' : 'visible'" (click)="prevPage()"></span>
-			<p>{{ currentItemsFrom }}-{{ currentItemsTill }} of {{ items.length }}</p>
-			<span class="glyphicon-arrow-right" aria-hidden="true" [style.visibility]="currentItemsTill >= items.length ? 'hidden' : 'visible'" (click)="nextPage()"></span>
-
-
+			<div paging
+				(change)="onCurrentItemsChange($event)"
+				[items]="items"
+				[itemsPerPage]="itemsPerPage">
+			</div>
 
 			<div class="select-playlist">
 				<span id="show-current-track" class="glyphicon-new-window" aria-hidden="true"></span>
@@ -71,81 +70,34 @@ const ITEMS_PER_PAGE = 4;
 			</section>
 		</section>
 	`,
+	directives: [PagingComponent],
 	inputs: ['addFileEvent', 'addDirectoryEvent'],
 	pipes: [TrackDurationPipe, TrackTitlePipe]
 })
 export class PlaylistComponent {
 	constructor() {
-		this.currentItems = [];
 		this.items = [];
-		this.currentItemsFrom = 0;
-		this.currentItemsTill = 0;
+		this.currentItems = [];
+		this.itemsPerPage = 4;
 	}
 
 	ngOnInit(){
 		this.addFileEvent.subscribe(item => {
 			this.items = this.items.filter((e) => e.path !== item.path);
-			//item.isWantToDelete = false;
-			item.isActive = false; // todo
 			this.items.push(item);
-
-			this.firstPage();
 		});
+
 		this.addDirectoryEvent.subscribe(item => {
 			console.log('addDirectoryEvent PLAYLIST')
 			console.log(item)
 		});
 	}
 
-
-
-
-
-
-
-
-
-	firstPage() {
-		if (!this.items.length) {
-			this.currentItemsFrom = 0;
-			this.currentItemsTill = 0;
-		} else {
-			this.currentItemsFrom = 1;
-			this.currentItemsTill = Math.min(ITEMS_PER_PAGE, this.items.length);
-		}
-		this.render();
+	onCurrentItemsChange(currentItems) {
+		this.currentItems = currentItems.map((item) => {
+			item.isWantToDelete = false;
+			item.isActive = false; // todo
+			return item;
+		});
 	}
-
-	nextPage() {
-		if (this.items.length <= this.currentItemsTill) {
-			return;
-		}
-		this.currentItemsFrom = this.currentItemsTill + 1;
-		this.currentItemsTill = Math.min(this.currentItemsFrom + ITEMS_PER_PAGE - 1, this.items.length);
-		this.render();
-	}
-
-	prevPage() {
-		if (this.currentItemsFrom <= 1) {
-			return;
-		}
-		this.currentItemsFrom = Math.max(1, this.currentItemsFrom - ITEMS_PER_PAGE);
-		this.currentItemsTill = Math.min(this.currentItemsFrom + ITEMS_PER_PAGE - 1, this.items.length);
-		this.render();
-	}
-
-	render() {
-		if (this.currentItemsFrom && this.currentItemsTill) {
-			this.currentItems = this.items.slice(
-				this.currentItemsFrom - 1,
-				this.currentItemsTill
-			).map((item) => {
-					item.isWantToDelete = false;
-					return item;
-				});
-		} else {
-			this.currentItems = [];
-		}
-	}
-
 }

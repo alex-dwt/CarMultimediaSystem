@@ -5,11 +5,12 @@
  */
 
 import {Component, EventEmitter} from 'angular2/core';
+
 import {ExplorerService} from '_app/service/explorer.service';
 import {TrackDurationPipe } from '_app/pipe/trackDuration.pipe';
 import {TrackTitlePipe } from '_app/pipe/trackTitle.pipe';
+import {PagingComponent} from '_app/component/paging.component';
 
-const ITEMS_PER_PAGE = 4;
 const DEFAULT_PATH ='/';
 
 @Component({
@@ -58,14 +59,15 @@ const DEFAULT_PATH ='/';
 				<span class="glyphicon-align-justify" aria-hidden="true"></span>
 			</div>
 
-
-			<span class="glyphicon-arrow-left" aria-hidden="true" [style.visibility]="currentItemsFrom <= 1 ? 'hidden' : 'visible'" (click)="prevPage()"></span>
-			<p>{{ currentItemsFrom }}-{{ currentItemsTill }} of {{ items.length }}</p>
-			<span class="glyphicon-arrow-right" aria-hidden="true" [style.visibility]="currentItemsTill >= items.length ? 'hidden' : 'visible'" (click)="nextPage()"></span>
-
+			<div paging
+				(change)="onCurrentItemsChange($event)"
+				[items]="items"
+				[itemsPerPage]="itemsPerPage">
+			</div>
 
 		</section>
 	`,
+	directives: [PagingComponent],
 	inputs: ['playFileEvent', 'addFileEvent', 'addDirectoryEvent'],
 	pipes: [TrackDurationPipe, TrackTitlePipe]
 })
@@ -76,10 +78,11 @@ export class ExplorerComponent {
 
 	constructor(explorerService) {
 		this._explorerService = explorerService;
-		this.currentItems = [];
+
 		this.items = [];
-		this.currentItemsFrom = 0;
-		this.currentItemsTill = 0;
+		this.currentItems = [];
+		this.itemsPerPage = 4;
+
 		this.isShowOnlyFiles = false;
 		this.currentPath = DEFAULT_PATH;
 	}
@@ -148,63 +151,17 @@ export class ExplorerComponent {
 				dirs = dirs.concat(res.dirs);
 			//}
 
-			this.items = dirs.concat(res.files).map((item) => {
+			this.items = dirs.concat(res.files);/*.map((item) => {
 				item.isWantToDelete = false;
 				return item;
-			});
-
-			this.firstPage();
+			});*/
 		});
 	}
 
-
-
-
-
-
-
-
-
-	firstPage() {
-		if (!this.items.length) {
-			this.currentItemsFrom = 0;
-			this.currentItemsTill = 0;
-		} else {
-			this.currentItemsFrom = 1;
-			this.currentItemsTill = Math.min(ITEMS_PER_PAGE, this.items.length);
-		}
-		this.render();
-	}
-
-	nextPage() {
-		if (this.items.length <= this.currentItemsTill) {
-			return;
-		}
-		this.currentItemsFrom = this.currentItemsTill + 1;
-		this.currentItemsTill = Math.min(this.currentItemsFrom + ITEMS_PER_PAGE - 1, this.items.length);
-		this.render();
-	}
-
-	prevPage() {
-		if (this.currentItemsFrom <= 1) {
-			return;
-		}
-		this.currentItemsFrom = Math.max(1, this.currentItemsFrom - ITEMS_PER_PAGE);
-		this.currentItemsTill = Math.min(this.currentItemsFrom + ITEMS_PER_PAGE - 1, this.items.length);
-		this.render();
-	}
-
-	render() {
-		if (this.currentItemsFrom && this.currentItemsTill) {
-			this.currentItems = this.items.slice(
-				this.currentItemsFrom - 1,
-				this.currentItemsTill
-			).map((item) => {
-				item.isWantToDelete = false;
-				return item;
-			});
-		} else {
-			this.currentItems = [];
-		}
+	onCurrentItemsChange(currentItems) {
+		this.currentItems = currentItems.map((item) => {
+			item.isWantToDelete = false;
+			return item;
+		});
 	}
 }
