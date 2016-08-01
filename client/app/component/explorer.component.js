@@ -7,6 +7,7 @@
 import {Component, EventEmitter} from 'angular2/core';
 import {ExplorerService} from '_app/service/explorer.service';
 import {TrackDurationPipe } from '_app/pipe/trackDuration.pipe';
+import {TrackTitlePipe } from '_app/pipe/trackTitle.pipe';
 
 const ITEMS_PER_PAGE = 4;
 const DEFAULT_PATH ='/';
@@ -36,10 +37,10 @@ const DEFAULT_PATH ='/';
 				</div>
 				<div *ngIf="isFileItem(item)" class="name-block file-name-block">
 					<p>{{ item.name }}</p>
-					<p>{{ item.title }}</p>
+					<p>{{ item.title | trackTitle }}</p>
 				</div>
 
-				<div class="actions-block" [style.visibility]=isPreviousDirectory(item)>
+				<div class="actions-block">
 					<div><span class="glyphicon-play-circle" aria-hidden="true" (click)="playItem(item)"></span></div>
 					<div><span class="glyphicon-plus-sign" aria-hidden="true" (click)="addItemToPlaylist(item)"></span></div>
 					<div><span class="glyphicon-remove-circle" aria-hidden="true" (click)="item.isWantToDelete=true"></span></div>
@@ -56,13 +57,17 @@ const DEFAULT_PATH ='/';
 			<div class="active show-only-files" [class.active]="isShowOnlyFiles" (click)="showOnlyFiles()">
 				<span class="glyphicon-align-justify" aria-hidden="true"></span>
 			</div>
+
+
 			<span class="glyphicon-arrow-left" aria-hidden="true" [style.visibility]="currentItemsFrom <= 1 ? 'hidden' : 'visible'" (click)="prevPage()"></span>
 			<p>{{ currentItemsFrom }}-{{ currentItemsTill }} of {{ items.length }}</p>
 			<span class="glyphicon-arrow-right" aria-hidden="true" [style.visibility]="currentItemsTill >= items.length ? 'hidden' : 'visible'" (click)="nextPage()"></span>
+
+
 		</section>
 	`,
-	inputs: ['playFileEvent'],
-	pipes: [TrackDurationPipe]
+	inputs: ['playFileEvent', 'addFileEvent', 'addDirectoryEvent'],
+	pipes: [TrackDurationPipe, TrackTitlePipe]
 })
 export class ExplorerComponent {
 	static get parameters() {
@@ -89,6 +94,18 @@ export class ExplorerComponent {
 
 	addItemToPlaylist(item) {
 		console.log('addItemToPlaylist');
+		if (this.isFileItem(item)) {
+			this.addFileEvent.emit({
+				title: item.title,
+				name: item.name,
+				path: this.currentPath + '/' + item.file_name,
+				duration: item.duration,
+			});
+		} else {
+			this.addDirectoryEvent.emit({
+				dir: 'addDirectoryEvent'
+			});
+		}
 	}
 
 	playItem(item) {

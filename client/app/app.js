@@ -34,8 +34,17 @@ const TABS = [
 	selector: '[my-app]',
 	template: `
 		<section id="player-explorer" [class.show-explorer]="isExplorerActive">
-			<section explorer id="explorer" [playFileEvent]="playFileEvent" (click)="isExplorerActive=true"></section>
-			<section playlist id="playlist" (click)="isExplorerActive=false"></section>
+			<section explorer id="explorer"
+				[playFileEvent]="playFileEvent"
+				[addFileEvent]="addFileEvent"
+				[addDirectoryEvent]="addDirectoryEvent"
+				(click)="isExplorerActive=true">
+			</section>
+			<section playlist id="playlist"
+				[addFileEvent]="addFileEvent"
+				[addDirectoryEvent]="addDirectoryEvent"
+				(click)="isExplorerActive=false">
+			</section>
 		</section>
 		<section player id="player" [playFileEvent]="playFileEvent"></section>
 		<nav id="navigation" [items]="tabs" (change)="onChangeMenuTab($event)"></nav>
@@ -49,6 +58,8 @@ class AppComponent {
 		this.isExplorerActive = false;
 
 		this.playFileEvent = new EventEmitter();
+		this.addFileEvent = new EventEmitter();
+		this.addDirectoryEvent = new EventEmitter();
 	}
 
 	onChangeMenuTab(itemId) {

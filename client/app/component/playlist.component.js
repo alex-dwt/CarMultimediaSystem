@@ -4,7 +4,11 @@
  * For the full copyright and license information, please view the LICENSE file that was distributed with this source code.
  */
 
-import {Component} from 'angular2/core';
+import {Component, EventEmitter, OnInit} from 'angular2/core';
+import {TrackDurationPipe } from '_app/pipe/trackDuration.pipe';
+import {TrackTitlePipe } from '_app/pipe/trackTitle.pipe';
+
+const ITEMS_PER_PAGE = 4;
 
 @Component({
 	selector: '[playlist]',
@@ -12,55 +16,16 @@ import {Component} from 'angular2/core';
 		<div class="panel-label">
 			<p>Playlist</p>
 		</div>
+
 		<ul>
-			<li class="explorer-row">
+			<li *ngFor="let item of currentItems" class="explorer-row" [class.delete-process]="item.isWantToDelete" [class.active]="item.isActive">
 				<div class="info-block">
 					<span class="glyphicon" aria-hidden="true">&nbsp;</span>
-					<span class="dir-badge length-badge">33:11</span>
+					<span class="dir-badge length-badge">{{ item.duration | trackDuration }}</span>
 				</div>
 				<div class="name-block file-name-block">
-					<p>/Video/Music/NFS/lala.mp3</p>
-					<p>Get Low Taram Taram</p>
-				</div>
-				<div class="actions-block">
-					<div><span class="glyphicon-play-circle play-file-icon" aria-hidden="true"></span></div>
-					<div><span class="glyphicon-share-alt" aria-hidden="true"></span></div>
-					<div><span class="glyphicon-remove-circle" aria-hidden="true"></span></div>
-					<div class="delete-block">
-						<p>Are you sure?</p>
-						<div><span class="glyphicon-ok" aria-hidden="true"></span></div>
-						<div><span class="glyphicon-remove" aria-hidden="true"></span></div>
-					</div>
-				</div>
-			</li>
-			<li class="explorer-row active" id="fake-deletion2">
-				<div class="info-block">
-					<span class="glyphicon" aria-hidden="true">&nbsp;</span>
-					<span class="dir-badge length-badge">33:11</span>
-				</div>
-				<div class="name-block file-name-block">
-					<p>/Video/Music/NFS/lala.mp3</p>
-					<p>Get Low Taram Taram</p>
-				</div>
-				<div class="actions-block">
-					<div><span class="glyphicon-play-circle play-file-icon" aria-hidden="true"></span></div>
-					<div><span class="glyphicon-share-alt" aria-hidden="true"></span></div>
-					<div><span class="glyphicon-remove-circle" aria-hidden="true" onclick="document.getElementById('fake-deletion2').className='explorer-row delete-process';"></span></div>
-					<div class="delete-block">
-						<p>Are you sure?</p>
-						<div><span class="glyphicon-ok" aria-hidden="true"></span></div>
-						<div><span class="glyphicon-remove" aria-hidden="true"></span></div>
-					</div>
-				</div>
-			</li>
-			<li class="explorer-row">
-				<div class="info-block">
-					<span class="glyphicon" aria-hidden="true">&nbsp;</span>
-					<span class="dir-badge length-badge">33:11</span>
-				</div>
-				<div class="name-block file-name-block">
-					<p>/Video/Music/NFS/lala.mp3</p>
-					<p>Get Low Taram Taram</p>
+					<p>{{ item.name }}</p>
+					<p>{{ item.title | trackTitle }}</p>
 				</div>
 				<div class="actions-block">
 					<div><span class="glyphicon-play-circle play-file-icon" aria-hidden="true"></span></div>
@@ -74,10 +39,16 @@ import {Component} from 'angular2/core';
 				</div>
 			</li>
 		</ul>
+
 		<section class="panel-paging">
-			<span class="glyphicon-arrow-left" aria-hidden="true"></span>
-			<p>15-30 of 80</p>
-			<span class="glyphicon-arrow-right" aria-hidden="true"></span>
+
+
+			<span class="glyphicon-arrow-left" aria-hidden="true" [style.visibility]="currentItemsFrom <= 1 ? 'hidden' : 'visible'" (click)="prevPage()"></span>
+			<p>{{ currentItemsFrom }}-{{ currentItemsTill }} of {{ items.length }}</p>
+			<span class="glyphicon-arrow-right" aria-hidden="true" [style.visibility]="currentItemsTill >= items.length ? 'hidden' : 'visible'" (click)="nextPage()"></span>
+
+
+
 			<div class="select-playlist">
 				<span id="show-current-track" class="glyphicon-new-window" aria-hidden="true"></span>
 				<span class="glyphicon-file" aria-hidden="true" onclick="document.getElementById('playlist-menu').className='active';"></span>
@@ -99,8 +70,82 @@ import {Component} from 'angular2/core';
 				</ul>
 			</section>
 		</section>
-	`
+	`,
+	inputs: ['addFileEvent', 'addDirectoryEvent'],
+	pipes: [TrackDurationPipe, TrackTitlePipe]
 })
 export class PlaylistComponent {
+	constructor() {
+		this.currentItems = [];
+		this.items = [];
+		this.currentItemsFrom = 0;
+		this.currentItemsTill = 0;
+	}
+
+	ngOnInit(){
+		this.addFileEvent.subscribe(item => {
+			this.items = this.items.filter((e) => e.path !== item.path);
+			//item.isWantToDelete = false;
+			item.isActive = false; // todo
+			this.items.push(item);
+
+			this.firstPage();
+		});
+		this.addDirectoryEvent.subscribe(item => {
+			console.log('addDirectoryEvent PLAYLIST')
+			console.log(item)
+		});
+	}
+
+
+
+
+
+
+
+
+
+	firstPage() {
+		if (!this.items.length) {
+			this.currentItemsFrom = 0;
+			this.currentItemsTill = 0;
+		} else {
+			this.currentItemsFrom = 1;
+			this.currentItemsTill = Math.min(ITEMS_PER_PAGE, this.items.length);
+		}
+		this.render();
+	}
+
+	nextPage() {
+		if (this.items.length <= this.currentItemsTill) {
+			return;
+		}
+		this.currentItemsFrom = this.currentItemsTill + 1;
+		this.currentItemsTill = Math.min(this.currentItemsFrom + ITEMS_PER_PAGE - 1, this.items.length);
+		this.render();
+	}
+
+	prevPage() {
+		if (this.currentItemsFrom <= 1) {
+			return;
+		}
+		this.currentItemsFrom = Math.max(1, this.currentItemsFrom - ITEMS_PER_PAGE);
+		this.currentItemsTill = Math.min(this.currentItemsFrom + ITEMS_PER_PAGE - 1, this.items.length);
+		this.render();
+	}
+
+	render() {
+		if (this.currentItemsFrom && this.currentItemsTill) {
+			this.currentItems = this.items.slice(
+				this.currentItemsFrom - 1,
+				this.currentItemsTill
+			).map((item) => {
+					item.isWantToDelete = false;
+					return item;
+				});
+		} else {
+			this.currentItems = [];
+		}
+	}
 
 }
