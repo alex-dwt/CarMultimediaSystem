@@ -22,6 +22,7 @@ import {PagingComponent} from '_app/component/paging.component';
 				class="explorer-row"
 				[class.delete-process]="item.isWantToDelete"
 				[class.active]="item.path === currentPlayingItemPath"
+				[class.delete-process]="item.isWantToDelete"
 			>
 				<div class="info-block">
 					<span class="glyphicon" aria-hidden="true">&nbsp;</span>
@@ -34,11 +35,11 @@ import {PagingComponent} from '_app/component/paging.component';
 				<div class="actions-block">
 					<div><span class="glyphicon-play-circle play-file-icon" aria-hidden="true" (click)="playItem(item)"></span></div>
 					<div><span class="glyphicon-share-alt" aria-hidden="true"></span></div>
-					<div><span class="glyphicon-remove-circle" aria-hidden="true"></span></div>
+					<div><span class="glyphicon-remove-circle" aria-hidden="true" (click)="item.isWantToDelete=true"></span></div>
 					<div class="delete-block">
 						<p>Are you sure?</p>
-						<div><span class="glyphicon-ok" aria-hidden="true"></span></div>
-						<div><span class="glyphicon-remove" aria-hidden="true"></span></div>
+						<div><span class="glyphicon-ok" aria-hidden="true" (click)="deleteItem(item)"></span></div>
+						<div><span class="glyphicon-remove" aria-hidden="true" (click)="item.isWantToDelete=false"></span></div>
 					</div>
 				</div>
 			</li>
@@ -109,6 +110,9 @@ export class PlaylistComponent {
 
 	playItem(item) {
 		this.playFileEvent.emit(item);
-		console.log('playlist play file');
+	}
+
+	deleteItem(item) {
+		this.items = this.items.filter((e) => e.path !== item.path);
 	}
 }
