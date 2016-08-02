@@ -4,7 +4,7 @@
  * For the full copyright and license information, please view the LICENSE file that was distributed with this source code.
  */
 
-import {Component, EventEmitter, OnChanges} from 'angular2/core';
+import {Component, EventEmitter, OnChanges, OnInit} from 'angular2/core';
 
 @Component({
 	selector: '[paging]',
@@ -21,7 +21,7 @@ import {Component, EventEmitter, OnChanges} from 'angular2/core';
 			(click)="nextPage()">
 		</span>
 	`,
-	inputs: ['items', 'itemsPerPage'],
+	inputs: ['items', 'itemsPerPage', 'showItemEvent'],
 	outputs: ['change']
 })
 export class PagingComponent {
@@ -31,6 +31,21 @@ export class PagingComponent {
 		this.currentItemsTill = 0;
 
 		this.change = new EventEmitter();
+	}
+
+	ngOnInit(){
+		if (this.showItemEvent) {
+			this.showItemEvent.subscribe(itemPath => {
+				if (itemPath !== '') {
+					let pos = this.items.map((e) => e.path).indexOf(itemPath);
+					if (pos !== -1) {
+						let page = Math.ceil((pos + 1) / this.itemsPerPage);
+						this.currentItemsFrom = ((page - 1) * this.itemsPerPage) + 1;
+						this.ngOnChanges();
+					}
+				}
+			});
+		}
 	}
 
 	ngOnChanges(){

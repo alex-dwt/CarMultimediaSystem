@@ -7,6 +7,7 @@
 import {Component, EventEmitter, OnInit} from 'angular2/core';
 import {PlayerService} from '_app/service/player.service';
 import {TrackDurationPipe } from '_app/pipe/trackDuration.pipe';
+import {TrackTitlePipe } from '_app/pipe/trackTitle.pipe';
 
 const CHECK_CURRENT_POSITION_INTERVAL = 2000;
 const CHECK_STATUS_INTERVAL = 3000;
@@ -38,7 +39,7 @@ const CHECK_DURATION_INTERVAL = 2000;
 			<div>
 				<div>
 					<h2>{{ name }}</h2>
-					<h1>{{ title }}</h1>
+					<h1>{{ title | trackTitle }}</h1>
 					<div #progressBar class="progress" (click)="rewindClick($event, progressBar)">
 						<div class="progress-bar" [style.width]="currentPositionPercent + '%'"></div>
 					</div>
@@ -49,7 +50,7 @@ const CHECK_DURATION_INTERVAL = 2000;
 		</div>
 	`,
 	inputs: ['playFileEvent'],
-	pipes: [TrackDurationPipe]
+	pipes: [TrackDurationPipe, TrackTitlePipe]
 })
 export class PlayerComponent {
 	static get parameters() {

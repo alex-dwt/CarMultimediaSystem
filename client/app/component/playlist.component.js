@@ -49,12 +49,13 @@ import {PagingComponent} from '_app/component/paging.component';
 
 			<div paging
 				(change)="onCurrentItemsChange($event)"
+				[showItemEvent]="showItemEvent"
 				[items]="items"
 				[itemsPerPage]="itemsPerPage">
 			</div>
 
 			<div class="select-playlist">
-				<span id="show-current-track" class="glyphicon-new-window" aria-hidden="true"></span>
+				<span id="show-current-track" class="glyphicon-new-window" aria-hidden="true" (click)="goToActiveItem()"></span>
 				<span class="glyphicon-file" aria-hidden="true" onclick="document.getElementById('playlist-menu').className='active';"></span>
 			</div>
 			<section id="playlist-menu">
@@ -85,6 +86,7 @@ export class PlaylistComponent {
 		this.currentItems = [];
 		this.itemsPerPage = 4;
 		this.currentPlayingItemPath = '';
+		this.showItemEvent = new EventEmitter();
 	}
 
 	ngOnInit(){
@@ -114,5 +116,11 @@ export class PlaylistComponent {
 
 	deleteItem(item) {
 		this.items = this.items.filter((e) => e.path !== item.path);
+	}
+
+	goToActiveItem() {
+		if (this.currentPlayingItemPath !== '') {
+			this.showItemEvent.emit(this.currentPlayingItemPath)
+		}
 	}
 }
