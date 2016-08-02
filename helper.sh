@@ -19,6 +19,7 @@ function main {
             ;;
         "start-dev")
             docker run  --rm -it \
+                --name=car-pi-container \
                 -v /home/pi/CarMultimediaSystem/client:/car-pi/client \
                 -v /home/pi/Audio:/Audio -v /home/pi/Video:/Video \
                 -v /opt/vc:/opt/vc:ro --device /dev/vchiq:/dev/vchiq --device /dev/fb0:/dev/fb0 \

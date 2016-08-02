@@ -26,6 +26,11 @@ WORKDIR /car-pi/server
 RUN npm install
 COPY ./server /car-pi/server/
 
+# client
+# RUN mkdir -p /car-pi/client
+# COPY ./client /car-pi/client/
+# RUN cd /car-pi/client/ && npm install
+
 
 #RUN mkdir _compiled 2>/dev/null ; \
 #    ln -s /car-pi/server/node_modules /car-pi/server/_compiled/node_modules 2>/dev/null ; \

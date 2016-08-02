@@ -18,7 +18,11 @@ import {PagingComponent} from '_app/component/paging.component';
 		</div>
 
 		<ul>
-			<li *ngFor="let item of currentItems" class="explorer-row" [class.delete-process]="item.isWantToDelete" [class.active]="item.isActive">
+			<li *ngFor="let item of currentItems"
+				class="explorer-row"
+				[class.delete-process]="item.isWantToDelete"
+				[class.active]="item.path === currentPlayingItemPath"
+			>
 				<div class="info-block">
 					<span class="glyphicon" aria-hidden="true">&nbsp;</span>
 					<span class="dir-badge length-badge">{{ item.duration | trackDuration }}</span>
@@ -79,6 +83,7 @@ export class PlaylistComponent {
 		this.items = [];
 		this.currentItems = [];
 		this.itemsPerPage = 4;
+		this.currentPlayingItemPath = '';
 	}
 
 	ngOnInit(){
@@ -91,12 +96,13 @@ export class PlaylistComponent {
 			console.log('addDirectoryEvent PLAYLIST')
 			console.log(item)
 		});
+
+		this.playFileEvent.subscribe(item => this.currentPlayingItemPath = item.path);
 	}
 
 	onCurrentItemsChange(currentItems) {
 		this.currentItems = currentItems.map((item) => {
 			item.isWantToDelete = false;
-			item.isActive = false; // todo
 			return item;
 		});
 	}
