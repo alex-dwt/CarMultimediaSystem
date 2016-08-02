@@ -32,9 +32,30 @@ const CHECK_DURATION_INTERVAL = 2000;
 				</div>
 			</div></div>
 			<div>
-				<div><span class="glyphicon-refresh" aria-hidden="true"></span></div>
-				<div><span class="glyphicon-random active" aria-hidden="true"></span></div>
-				<div><span class="glyphicon-retweet" aria-hidden="true"></span></div>
+				<div>
+					<span
+						class="glyphicon-refresh"
+						aria-hidden="true"
+						(click)="isReplayBtnActive = !isReplayBtnActive"
+						[class.active]="isReplayBtnActive">
+					</span>
+				</div>
+				<div>
+					<span
+						class="glyphicon-random"
+						aria-hidden="true"
+						(click)="isShuffleBtnActive = !isShuffleBtnActive"
+						[class.active]="isShuffleBtnActive">
+					</span>
+				</div>
+				<div>
+					<span
+						class="glyphicon-retweet"
+						aria-hidden="true"
+						(click)="isCycleBtnActive = !isCycleBtnActive"
+						[class.active]="isCycleBtnActive">
+					</span>
+				</div>
 			</div>
 			<div>
 				<div>
@@ -69,6 +90,10 @@ export class PlayerComponent {
 		this.path = '';
 
 		this._setStatus(this.STATUS_STOPPED);
+
+		this.isReplayBtnActive = false;
+		this.isShuffleBtnActive = false;
+		this.isCycleBtnActive = false;
 	}
 
 	ngOnInit(){
