@@ -37,10 +37,13 @@ export class PagingComponent {
 		if (!this.items.length) {
 			this.currentItemsFrom = 0;
 			this.currentItemsTill = 0;
+		} else if (this.currentItemsFrom && this.currentItemsFrom <= this.items.length) {
+			this.currentItemsTill = Math.min(this.currentItemsFrom + this.itemsPerPage - 1, this.items.length);
 		} else {
-			this.currentItemsFrom = 1;
-			this.currentItemsTill = Math.min(this.itemsPerPage, this.items.length);
+			this.currentItemsFrom = Math.max(1, this.currentItemsFrom - this.itemsPerPage);
+			this.currentItemsTill = Math.min(this.currentItemsFrom + this.itemsPerPage - 1, this.items.length);
 		}
+
 		this.render();
 	}
 
