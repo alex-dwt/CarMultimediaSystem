@@ -70,7 +70,7 @@ const CHECK_DURATION_INTERVAL = 2000;
 			</div>
 		</div>
 	`,
-	inputs: ['playFileEvent'],
+	inputs: ['playFileEvent', 'playNextTrackEvent'],
 	pipes: [TrackDurationPipe, TrackTitlePipe]
 })
 export class PlayerComponent {
@@ -161,7 +161,7 @@ export class PlayerComponent {
 			});
 	}
 
-	_setStatus(status, item) {
+	_setStatus(status, item, playNextTrack) {
 		switch (status) {
 			case this.STATUS_PAUSED:
 				break;
@@ -188,6 +188,14 @@ export class PlayerComponent {
 			default:
 				throw new Error('Wrong player status.');
 		}
+		
+		if (playNextTrack &&
+			status === this.STATUS_STOPPED &&
+			this.status === this.STATUS_PLAYING
+		) {
+			this.playNextTrackEvent.emit();
+		}
+
 		this.status = status;
 	}
 
@@ -219,7 +227,7 @@ export class PlayerComponent {
 	_getStatus() {
 		this._playerService.getStatus()
 			.then((res) => {
-				this._setStatus(res.status);
+				this._setStatus(res.status, null, true);
 				setTimeout(
 					() => this._getStatus(),
 					CHECK_STATUS_INTERVAL

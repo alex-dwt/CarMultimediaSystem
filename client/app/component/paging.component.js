@@ -35,15 +35,10 @@ export class PagingComponent {
 
 	ngOnInit(){
 		if (this.showItemEvent) {
-			this.showItemEvent.subscribe(itemPath => {
-				if (itemPath !== '') {
-					let pos = this.items.map((e) => e.path).indexOf(itemPath);
-					if (pos !== -1) {
-						let page = Math.ceil((pos + 1) / this.itemsPerPage);
-						this.currentItemsFrom = ((page - 1) * this.itemsPerPage) + 1;
-						this.ngOnChanges();
-					}
-				}
+			this.showItemEvent.subscribe(itemPos => {
+				let page = Math.ceil((itemPos + 1) / this.itemsPerPage);
+				this.currentItemsFrom = ((page - 1) * this.itemsPerPage) + 1;
+				this.ngOnChanges();
 			});
 		}
 	}

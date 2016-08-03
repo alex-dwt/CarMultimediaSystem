@@ -77,7 +77,7 @@ import {PagingComponent} from '_app/component/paging.component';
 		</section>
 	`,
 	directives: [PagingComponent],
-	inputs: ['addFileEvent', 'addDirectoryEvent', 'playFileEvent'],
+	inputs: ['addFileEvent', 'addDirectoryEvent', 'playFileEvent', 'playNextTrackEvent'],
 	pipes: [TrackDurationPipe, TrackTitlePipe]
 })
 export class PlaylistComponent {
@@ -101,6 +101,17 @@ export class PlaylistComponent {
 		});
 
 		this.playFileEvent.subscribe(item => this.currentPlayingItemPath = item.path);
+
+		this.playNextTrackEvent.subscribe(() => {
+			let pos = this._getPlayingItemPos();
+
+			if (pos !== false) {
+				let nextItem = this.items[pos + 1];
+				if (nextItem) {
+					this.playFileEvent.emit(nextItem);
+				}
+			}
+		});
 	}
 
 	onCurrentItemsChange(currentItems) {
@@ -119,8 +130,18 @@ export class PlaylistComponent {
 	}
 
 	goToActiveItem() {
-		if (this.currentPlayingItemPath !== '') {
-			this.showItemEvent.emit(this.currentPlayingItemPath)
+		let pos = this._getPlayingItemPos();
+		if (pos !== false) {
+			this.showItemEvent.emit(pos)
 		}
+	}
+
+	_getPlayingItemPos() {
+		let pos = -1;
+		if (this.currentPlayingItemPath !== '') {
+			pos = this.items.map((e) => e.path).indexOf(this.currentPlayingItemPath);
+		}
+
+		return pos === -1 ? false : pos;
 	}
 }
