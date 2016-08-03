@@ -102,13 +102,15 @@ export class PlaylistComponent {
 
 		this.playFileEvent.subscribe(item => this.currentPlayingItemPath = item.path);
 
-		this.playNextTrackEvent.subscribe(() => {
+		this.playNextTrackEvent.subscribe((settings) => {
 			let pos = this._getPlayingItemPos();
 
 			if (pos !== false) {
 				let item = this.items[pos + 1];
 				if (item) {
 					this.playFileEvent.emit(item);
+				} else if (settings.isStartFromFirstAllowed && this.items.length) {
+					this.playFileEvent.emit(this.items[0]);
 				}
 			}
 		});

@@ -17,7 +17,7 @@ const CHECK_DURATION_INTERVAL = 2000;
 	selector: '[player]',
 	template: `
 		<div>
-			<span class="glyphicon-arrow-down" aria-hidden="true" onclick="document.getElementById('player').className = (document.getElementById('player').className == 'minimized' ? '' : 'minimized');"></span>
+			<span class="glyphicon-arrow-down" aria-hidden="true" style="color: grey;" onclick="return false; document.getElementById('player').className = (document.getElementById('player').className == 'minimized' ? '' : 'minimized');"></span>
 			<p>Playing ... / Stopped ...</p>
 		</div>
 		<div>
@@ -103,11 +103,13 @@ export class PlayerComponent {
 	}
 
 	playPrevBtnClick() {
-		this.playPrevTrackEvent.emit();
+		this.playPrevTrackEvent.emit({ });
 	}
 
 	playNextBtnClick() {
-		this.playNextTrackEvent.emit();
+		this.playNextTrackEvent.emit({
+			isStartFromFirstAllowed: this.isCycleBtnActive
+		});
 	}
 
 	playBtnClick() {
@@ -199,7 +201,13 @@ export class PlayerComponent {
 		this.status = status;
 
 		if (playNextTrack) {
-			this.playNextTrackEvent.emit();
+			if (this.isReplayBtnActive) {
+				this._play({path: this.path});
+			} else {
+				this.playNextTrackEvent.emit({
+					isStartFromFirstAllowed: this.isCycleBtnActive
+				});
+			}
 		}
 	}
 
