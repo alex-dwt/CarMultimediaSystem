@@ -77,7 +77,7 @@ import {PagingComponent} from '_app/component/paging.component';
 		</section>
 	`,
 	directives: [PagingComponent],
-	inputs: ['addFileEvent', 'addDirectoryEvent', 'playFileEvent', 'playNextTrackEvent'],
+	inputs: ['addFileEvent', 'addDirectoryEvent', 'playFileEvent', 'playNextTrackEvent', 'playPrevTrackEvent'],
 	pipes: [TrackDurationPipe, TrackTitlePipe]
 })
 export class PlaylistComponent {
@@ -106,9 +106,20 @@ export class PlaylistComponent {
 			let pos = this._getPlayingItemPos();
 
 			if (pos !== false) {
-				let nextItem = this.items[pos + 1];
-				if (nextItem) {
-					this.playFileEvent.emit(nextItem);
+				let item = this.items[pos + 1];
+				if (item) {
+					this.playFileEvent.emit(item);
+				}
+			}
+		});
+
+		this.playPrevTrackEvent.subscribe(() => {
+			let pos = this._getPlayingItemPos();
+
+			if (pos !== false) {
+				let item = this.items[pos - 1];
+				if (item) {
+					this.playFileEvent.emit(item);
 				}
 			}
 		});

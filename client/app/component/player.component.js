@@ -26,9 +26,9 @@ const CHECK_DURATION_INTERVAL = 2000;
 					<button [class.playing]="status === STATUS_PLAYING"><span class="glyphicon-play" aria-hidden="true"></span></button>
 				</div>
 				<div>
-					<button><span class="glyphicon-chevron-left" aria-hidden="true"></span></button>
+					<button (click)="playPrevBtnClick()"><span class="glyphicon-chevron-left" aria-hidden="true"></span></button>
 					<button (click)="stopBtnClick()"><span class="glyphicon-stop" aria-hidden="true"></span></button>
-					<button><span class="glyphicon-chevron-right" aria-hidden="true"></span></button>
+					<button (click)="playNextBtnClick()"><span class="glyphicon-chevron-right" aria-hidden="true"></span></button>
 				</div>
 			</div></div>
 			<div>
@@ -44,7 +44,6 @@ const CHECK_DURATION_INTERVAL = 2000;
 					<span
 						class="glyphicon-random"
 						aria-hidden="true"
-						(click)="isShuffleBtnActive = !isShuffleBtnActive"
 						[class.active]="isShuffleBtnActive">
 					</span>
 				</div>
@@ -70,7 +69,7 @@ const CHECK_DURATION_INTERVAL = 2000;
 			</div>
 		</div>
 	`,
-	inputs: ['playFileEvent', 'playNextTrackEvent'],
+	inputs: ['playFileEvent', 'playNextTrackEvent', 'playPrevTrackEvent'],
 	pipes: [TrackDurationPipe, TrackTitlePipe]
 })
 export class PlayerComponent {
@@ -101,6 +100,14 @@ export class PlayerComponent {
 		this._getStatus();
 		this._getDuration();
 		this.playFileEvent.subscribe(item => this._play(item));
+	}
+
+	playPrevBtnClick() {
+		this.playPrevTrackEvent.emit();
+	}
+
+	playNextBtnClick() {
+		this.playNextTrackEvent.emit();
 	}
 
 	playBtnClick() {
@@ -188,15 +195,12 @@ export class PlayerComponent {
 			default:
 				throw new Error('Wrong player status.');
 		}
-		
-		if (playNextTrack &&
-			status === this.STATUS_STOPPED &&
-			this.status === this.STATUS_PLAYING
-		) {
-			this.playNextTrackEvent.emit();
-		}
 
 		this.status = status;
+
+		if (playNextTrack) {
+			this.playNextTrackEvent.emit();
+		}
 	}
 
 	_getCurrentPosition() {
@@ -227,7 +231,14 @@ export class PlayerComponent {
 	_getStatus() {
 		this._playerService.getStatus()
 			.then((res) => {
-				this._setStatus(res.status, null, true);
+				this._setStatus(
+					res.status,
+					null,
+					(
+						res.status === this.STATUS_STOPPED &&
+						this.status === this.STATUS_PLAYING
+					)
+				);
 				setTimeout(
 					() => this._getStatus(),
 					CHECK_STATUS_INTERVAL

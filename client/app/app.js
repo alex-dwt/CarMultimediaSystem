@@ -45,10 +45,15 @@ const TABS = [
 				[addFileEvent]="addFileEvent"
 				[addDirectoryEvent]="addDirectoryEvent"
 				[playNextTrackEvent]="playNextTrackEvent"
+				[playPrevTrackEvent]="playPrevTrackEvent"
 				(click)="isExplorerActive=false">
 			</section>
 		</section>
-		<section player id="player" [playFileEvent]="playFileEvent" [playNextTrackEvent]="playNextTrackEvent"></section>
+		<section player id="player"
+			[playFileEvent]="playFileEvent"
+			[playNextTrackEvent]="playNextTrackEvent"
+			[playPrevTrackEvent]="playPrevTrackEvent">
+		</section>
 		<nav id="navigation" [items]="tabs" (change)="onChangeMenuTab($event)"></nav>
 	`,
 	directives: [ExplorerComponent, NavbarComponent, PlayerComponent, PlaylistComponent]
@@ -63,6 +68,7 @@ class AppComponent {
 		this.addFileEvent = new EventEmitter();
 		this.addDirectoryEvent = new EventEmitter();
 		this.playNextTrackEvent = new EventEmitter();
+		this.playPrevTrackEvent = new EventEmitter();
 	}
 
 	onChangeMenuTab(itemId) {
