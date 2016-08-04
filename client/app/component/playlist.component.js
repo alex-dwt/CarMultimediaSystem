@@ -56,24 +56,19 @@ import {PagingComponent} from '_app/component/paging.component';
 
 			<div class="select-playlist">
 				<span id="show-current-track" class="glyphicon-new-window" aria-hidden="true" (click)="goToActiveItem()"></span>
-				<span class="glyphicon-file" aria-hidden="true" onclick="document.getElementById('playlist-menu').className='active';"></span>
+				<span class="glyphicon-file" aria-hidden="true" (click)="isShowPlaylistSelector=true"></span>
 			</div>
-			<section id="playlist-menu">
+
+			<section id="playlist-menu" [class.active]="isShowPlaylistSelector">
+				<template ngFor let-row [ngForOf]="playlistSelectorItems">
 				<ul>
-					<li>1</li>
-					<li class="active">2</li>
-					<li>3</li>
-					<li>4</li>
-					<li>5</li>
+					<li *ngFor="let item of row" [class.active]="item.isActive" (click)="selectPlaylist(item)">
+						{{ item.label }}
+					</li>
 				</ul>
-				<ul>
-					<li>6</li>
-					<li>7</li>
-					<li>8</li>
-					<li>9</li>
-					<li>10</li>
-				</ul>
+				</template>
 			</section>
+
 		</section>
 	`,
 	directives: [PagingComponent],
@@ -87,6 +82,27 @@ export class PlaylistComponent {
 		this.itemsPerPage = 4;
 		this.currentPlayingItemPath = '';
 		this.showItemEvent = new EventEmitter();
+
+		this.currentPlaylistId = 1;
+		this.isShowPlaylistSelector = false;
+		this.playlistSelectorItems = [];
+		{
+			let label = 1;
+			let id = 1;
+			for (let i = 0; i < 2; i++) {
+				let row = [];
+				for (let j = 0; j < 5; j++) {
+					row.push({
+						id,
+						label,
+						isActive: this.currentPlaylistId === id
+					});
+					label++;
+					id++;
+				}
+				this.playlistSelectorItems.push(row);
+			}
+		}
 	}
 
 	ngOnInit(){
@@ -132,6 +148,18 @@ export class PlaylistComponent {
 			item.isWantToDelete = false;
 			return item;
 		});
+	}
+
+	selectPlaylist(selectedItem) {
+		this.playlistSelectorItems.forEach((rowItem, rowIndex, row) => {
+			rowItem.forEach((item, index) => {
+				row[rowIndex][index].isActive = item.id === selectedItem.id;
+			});
+		});
+
+		this.currentPlaylistId = selectedItem.id;
+
+		this.isShowPlaylistSelector = false;
 	}
 
 	playItem(item) {
