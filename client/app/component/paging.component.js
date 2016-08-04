@@ -36,14 +36,43 @@ export class PagingComponent {
 	ngOnInit(){
 		if (this.showItemEvent) {
 			this.showItemEvent.subscribe(itemPos => {
-				let page = Math.ceil((itemPos + 1) / this.itemsPerPage);
-				this.currentItemsFrom = ((page - 1) * this.itemsPerPage) + 1;
-				this.ngOnChanges();
+				if (itemPos !== false) {
+					let page = Math.ceil((itemPos + 1) / this.itemsPerPage);
+					this.currentItemsFrom = ((page - 1) * this.itemsPerPage) + 1;
+				}
+
+				this._checkPagination();
+				this._render();
 			});
 		}
 	}
 
 	ngOnChanges(){
+		if (!this.showItemEvent) {
+			this._checkPagination();
+			this._render();
+		}
+	}
+
+	nextPage() {
+		if (this.items.length <= this.currentItemsTill) {
+			return;
+		}
+		this.currentItemsFrom = this.currentItemsTill + 1;
+		this.currentItemsTill = Math.min(this.currentItemsFrom + this.itemsPerPage - 1, this.items.length);
+		this._render();
+	}
+
+	prevPage() {
+		if (this.currentItemsFrom <= 1) {
+			return;
+		}
+		this.currentItemsFrom = Math.max(1, this.currentItemsFrom - this.itemsPerPage);
+		this.currentItemsTill = Math.min(this.currentItemsFrom + this.itemsPerPage - 1, this.items.length);
+		this._render();
+	}
+
+	_checkPagination() {
 		if (!this.items.length) {
 			this.currentItemsFrom = 0;
 			this.currentItemsTill = 0;
@@ -53,29 +82,9 @@ export class PagingComponent {
 			this.currentItemsFrom = Math.max(1, this.currentItemsFrom - this.itemsPerPage);
 			this.currentItemsTill = Math.min(this.currentItemsFrom + this.itemsPerPage - 1, this.items.length);
 		}
-
-		this.render();
 	}
 
-	nextPage() {
-		if (this.items.length <= this.currentItemsTill) {
-			return;
-		}
-		this.currentItemsFrom = this.currentItemsTill + 1;
-		this.currentItemsTill = Math.min(this.currentItemsFrom + this.itemsPerPage - 1, this.items.length);
-		this.render();
-	}
-
-	prevPage() {
-		if (this.currentItemsFrom <= 1) {
-			return;
-		}
-		this.currentItemsFrom = Math.max(1, this.currentItemsFrom - this.itemsPerPage);
-		this.currentItemsTill = Math.min(this.currentItemsFrom + this.itemsPerPage - 1, this.items.length);
-		this.render();
-	}
-
-	render() {
+	_render() {
 		let currentItems = [];
 
 		if (this.currentItemsFrom && this.currentItemsTill) {

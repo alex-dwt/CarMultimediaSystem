@@ -57,6 +57,7 @@ import {PagingComponent} from '_app/component/paging.component';
 			<div class="select-playlist">
 				<span id="show-current-track" class="glyphicon-new-window" aria-hidden="true" (click)="goToActiveItem()"></span>
 				<span class="glyphicon-file" aria-hidden="true" (click)="isShowPlaylistSelector=true"></span>
+				<p>{{ currentPlaylistId }}</p>
 			</div>
 
 			<section id="playlist-menu" [class.active]="isShowPlaylistSelector">
@@ -77,7 +78,8 @@ import {PagingComponent} from '_app/component/paging.component';
 })
 export class PlaylistComponent {
 	constructor() {
-		this.items = [];
+		this.playlistItems = [];
+
 		this.currentItems = [];
 		this.itemsPerPage = 4;
 		this.currentPlayingItemPath = '';
@@ -97,18 +99,27 @@ export class PlaylistComponent {
 						label,
 						isActive: this.currentPlaylistId === id
 					});
+					this.playlistItems[id] = [];
 					label++;
 					id++;
 				}
 				this.playlistSelectorItems.push(row);
 			}
 		}
+
+		this.items = this.playlistItems[this.currentPlaylistId];
 	}
 
 	ngOnInit(){
 		this.addFileEvent.subscribe(item => {
-			this.items = this.items.filter((e) => e.path !== item.path);
+			let i = this.items.findIndex(e => e.path === item.path);
+			if (i !== -1) {
+				this.items.splice(i,1);
+			}
 			this.items.push(item);
+
+			// redraw playlist
+			this.showItemEvent.emit(false);
 		});
 
 		this.addDirectoryEvent.subscribe(item => {
@@ -151,6 +162,12 @@ export class PlaylistComponent {
 	}
 
 	selectPlaylist(selectedItem) {
+		this.isShowPlaylistSelector = false;
+
+		if (this.currentPlaylistId === selectedItem.id) {
+			return;
+		}
+
 		this.playlistSelectorItems.forEach((rowItem, rowIndex, row) => {
 			rowItem.forEach((item, index) => {
 				row[rowIndex][index].isActive = item.id === selectedItem.id;
@@ -159,7 +176,9 @@ export class PlaylistComponent {
 
 		this.currentPlaylistId = selectedItem.id;
 
-		this.isShowPlaylistSelector = false;
+		this.items = this.playlistItems[this.currentPlaylistId];
+		// go to the 1st page in current playlist
+		this.showItemEvent.emit(0);
 	}
 
 	playItem(item) {
@@ -167,7 +186,13 @@ export class PlaylistComponent {
 	}
 
 	deleteItem(item) {
-		this.items = this.items.filter((e) => e.path !== item.path);
+		let i = this.items.findIndex(e => e.path === item.path);
+		if (i !== -1) {
+			this.items.splice(i,1);
+		}
+
+		// redraw playlist
+		this.showItemEvent.emit(false);
 	}
 
 	goToActiveItem() {
