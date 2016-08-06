@@ -5,7 +5,9 @@
  */
 
 export default class {
-	constructor(fileName, title, durationMs) {
+	constructor(fileType, path, fileName, title, durationMs) {
+		this.fileType = fileType;
+		this.path = path;
 		this.fileName = fileName;
 		this.title = title;
 		this.duration = parseInt((parseInt(durationMs) || 0) / 1000);

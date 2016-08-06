@@ -58,13 +58,13 @@ const CHECK_DURATION_INTERVAL = 2000;
 			</div>
 			<div>
 				<div>
-					<h2>{{ name }}</h2>
-					<h1>{{ title | trackTitle }}</h1>
+					<h2>{{ currentItem.name }}</h2>
+					<h1>{{ currentItem.title | trackTitle }}</h1>
 					<div #progressBar class="progress" (click)="rewindClick($event, progressBar)">
 						<div class="progress-bar" [style.width]="currentPositionPercent + '%'"></div>
 					</div>
 					<p [style.visibility]="currentPosition >= 1 ? 'visible' : 'hidden'">{{ currentPosition | trackDuration }}</p>
-					<p>{{ duration | trackDuration }}</p>
+					<p>{{ currentItem.duration | trackDuration }}</p>
 				</div>
 			</div>
 		</div>
@@ -84,9 +84,7 @@ export class PlayerComponent {
 		this.STATUS_PLAYING = 'playing';
 		this.STATUS_PAUSED = 'paused';
 
-		this.title = '';
-		this.name = '';
-		this.path = '';
+		this.currentItem = {name: '', title: '', duration: ''};
 
 		this._setStatus(this.STATUS_STOPPED);
 
@@ -113,7 +111,7 @@ export class PlayerComponent {
 	}
 
 	playBtnClick() {
-		if (!this.path) {
+		if (!this.currentItem.path) {
 			return;
 		}
 
@@ -124,7 +122,7 @@ export class PlayerComponent {
 			this._playerService.resume()
 				.then(() => this._setStatus(this.STATUS_PLAYING));
 		} else {
-			this._play({path: this.path});
+			this._play(this.currentItem);
 		}
 	}
 
@@ -141,7 +139,7 @@ export class PlayerComponent {
 
 		let width = parseInt(progressBar.clientWidth);
 		let pos = parseInt(event.layerX);
-		let duration = parseInt(this.duration);
+		let duration = parseInt(this.currentItem.duration);
 		if (width && pos && duration > 1) {
 			this._playerService.setPosition(
 				Math.min((Math.floor(duration * pos / width) || 1), duration - 1)
@@ -153,9 +151,9 @@ export class PlayerComponent {
 		value = parseInt(value) || 0;
 		this.currentPosition = value;
 
-		if (parseInt(this.duration)) {
+		if (parseInt(this.currentItem.duration)) {
 			this.currentPositionPercent = Math.min(
-				Math.ceil((this.currentPosition * 100) / parseInt(this.duration)),
+				Math.ceil((this.currentPosition * 100) / parseInt(this.currentItem.duration)),
 				100
 			);
 		} else {
@@ -164,7 +162,7 @@ export class PlayerComponent {
 	}
 
 	_play(item) {
-		this._playerService.play('audio', item.path)
+		this._playerService.play(item)
 			.then(() => {
 				this._setStatus(this.STATUS_PLAYING, item);
 			});
@@ -177,21 +175,15 @@ export class PlayerComponent {
 
 			case this.STATUS_PLAYING:
 				if (item) {
-					this.path = item.path;
-					this.duration = '';
-					if (typeof item.title !== 'undefined') {
-						this.title = item.title;
-					}
-					if (typeof item.name !== 'undefined') {
-						this.name = item.name;
-					}
+					this.currentItem = Object.assign({}, item);
+					this.currentItem.duration = '';
 					this._setCurrentPosition(1);
 				}
 				break;
 
 			case this.STATUS_STOPPED:
 				this._setCurrentPosition(0);
-				this.duration = '';
+				this.currentItem.duration = '';
 				break;
 
 			default:
@@ -202,7 +194,7 @@ export class PlayerComponent {
 
 		if (playNextTrack) {
 			if (this.isReplayBtnActive) {
-				this._play({path: this.path});
+				this._play(this.currentItem);
 			} else {
 				this.playNextTrackEvent.emit({
 					isStartFromFirstAllowed: this.isCycleBtnActive
@@ -261,12 +253,12 @@ export class PlayerComponent {
 
 	_getDuration() {
 		if ((this.status === this.STATUS_PLAYING || this.status === this.STATUS_PAUSED)
-			&& this.duration === ''
+			&& this.currentItem.duration === ''
 		) {
 			this._playerService.getDuration()
 				.then((res) => {
 					if (res.success) {
-						this.duration = res.duration;
+						this.currentItem.duration = res.duration;
 					}
 					setTimeout(
 						() => this._getDuration(),

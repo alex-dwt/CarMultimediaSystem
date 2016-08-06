@@ -120,6 +120,9 @@ describe('Files API', () => {
 							if (err) {
 								return done(err);
 							}
+
+							console.log(res.body.dirs)
+
 							assert.sameDeepMembers(
                                 res.body.dirs,
                                 [
@@ -166,17 +169,17 @@ describe('Files API', () => {
                             switch (fileType.name) {
                                 case 'audio':
                                     expectedResult = [
-                                        {name: '2', file_name: '2.mp3', title: '', duration: 9},
-                                        {name: '1', file_name: '1.mp3', title: 'Test audio title', duration: 6},
-                                        {name: 'fake', file_name: 'fake.mp3', title: '', duration: 0},
-                                        {name: '3', file_name: '3.wav', title: '', duration: 9}
+                                        {name: '2', fileName: '2.mp3', title: '', duration: 9, fileType: 'audio', path: '/dir 1/2.mp3'},
+                                        {name: '1', fileName: '1.mp3', title: 'Test audio title', duration: 6, fileType: 'audio', path: '/dir 1/1.mp3'},
+                                        {name: 'fake', fileName: 'fake.mp3', title: '', duration: 0, fileType: 'audio', path: '/dir 1/fake.mp3'},
+                                        {name: '3', fileName: '3.wav', title: '', duration: 9, fileType: 'audio', path: '/dir 1/3.wav'}
                                     ];
                                     break;
                                 case 'video':
                                     expectedResult = [
-                                        {name: '2', file_name: '2.avi', title: '', duration: 5},
-                                        {name: '1', file_name: '1.mp4', title: 'Test video title', duration: 5},
-                                        {name: 'fake', file_name: 'fake.mp4', title: '', duration: 0}
+                                        {name: '2', fileName: '2.avi', title: '', duration: 5, fileType: 'video', path: '/dir 1/2.avi'},
+                                        {name: '1', fileName: '1.mp4', title: 'Test video title', duration: 5, fileType: 'video', path: '/dir 1/1.mp4'},
+                                        {name: 'fake', fileName: 'fake.mp4', title: '', duration: 0, fileType: 'video', path: '/dir 1/fake.mp4'}
                                     ];
                                     break;
                             }

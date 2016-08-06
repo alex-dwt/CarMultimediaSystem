@@ -6,7 +6,7 @@
 
 import {HttpService} from '_app/service/http.service'
 
-const FILES_URL = 'http://192.168.100.15/files/audio';
+const FILES_URL = 'http://192.168.100.15/files/';
 
 export class ExplorerService {
 	static get parameters() {
@@ -17,9 +17,9 @@ export class ExplorerService {
 		this._httpService = HttpService;
 	}
 
-	getDirectoryContent(path) {
+	getDirectoryContent(fileType, path) {
 		return this._httpService.getRequest(
-			FILES_URL,
+			FILES_URL + fileType,
 			[['path', path]]
 		);
 	}

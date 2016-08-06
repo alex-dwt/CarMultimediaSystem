@@ -35,6 +35,7 @@ const TABS = [
 	template: `
 		<section id="player-explorer" [class.show-explorer]="isExplorerActive">
 			<section explorer id="explorer"
+				[fileType]="'audio'"
 				[playFileEvent]="playFileEvent"
 				[addFileEvent]="addFileEvent"
 				[addDirectoryEvent]="addDirectoryEvent"

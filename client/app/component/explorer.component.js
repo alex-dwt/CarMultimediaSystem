@@ -68,7 +68,7 @@ const DEFAULT_PATH ='/';
 		</section>
 	`,
 	directives: [PagingComponent],
-	inputs: ['playFileEvent', 'addFileEvent', 'addDirectoryEvent'],
+	inputs: ['fileType', 'playFileEvent', 'addFileEvent', 'addDirectoryEvent'],
 	pipes: [TrackDurationPipe, TrackTitlePipe]
 })
 export class ExplorerComponent {
@@ -88,7 +88,7 @@ export class ExplorerComponent {
 	}
 
 	isFileItem(item) {
-		return typeof item.file_name !== 'undefined';
+		return typeof item.fileName !== 'undefined';
 	}
 
 	isPreviousDirectory(item) {
@@ -98,12 +98,7 @@ export class ExplorerComponent {
 	addItemToPlaylist(item) {
 		console.log('addItemToPlaylist');
 		if (this.isFileItem(item)) {
-			this.addFileEvent.emit({
-				title: item.title,
-				name: item.name,
-				path: this.currentPath + '/' + item.file_name,
-				duration: item.duration,
-			});
+			this.addFileEvent.emit(item);
 		} else {
 			this.addDirectoryEvent.emit({
 				dir: 'addDirectoryEvent'
@@ -114,11 +109,7 @@ export class ExplorerComponent {
 	playItem(item) {
 		// play file
 		if (this.isFileItem(item)) {
-			this.playFileEvent.emit({
-				title: item.title,
-				name: item.name,
-				path: this.currentPath + '/' + item.file_name
-			});
+			this.playFileEvent.emit(item);
 			console.log('explorer play file');
 		}
 	}
@@ -136,7 +127,7 @@ export class ExplorerComponent {
 	}
 
 	selectDirectory(path = this.currentPath) {
-		this._explorerService.getDirectoryContent(path).then((res) => {
+		this._explorerService.getDirectoryContent(this.fileType, path).then((res) => {
 			this.currentPath = path
 
 			let dirs = [];

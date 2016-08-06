@@ -88,9 +88,13 @@ export default class FilesScanner {
 			files.forEach(item => {
 				let matches = item.match(/^##(.*?)##(.*?)##(.*?)##$/);
 				if (matches && matches[3]) {
-					result.files.push(
-						Snake(new File(matches[3], matches[2], matches[1]))
-					);
+					result.files.push(new File(
+						type.name,
+						((path === '/') ? path : path + '/') + matches[3],
+						matches[3],
+						matches[2],
+						matches[1]
+					));
 				}
 			});
 		}

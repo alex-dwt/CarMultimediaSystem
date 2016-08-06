@@ -17,8 +17,8 @@ export class PlayerService {
 		this._httpService = HttpService
 	}
 
-	play(type, path) {
-		return this._httpService.postRequest(URL + 'play', {type, path});
+	play(item) {
+		return this._httpService.postRequest(URL + 'play', {type: item.fileType, path: item.path});
 	}
 
 	stop() {

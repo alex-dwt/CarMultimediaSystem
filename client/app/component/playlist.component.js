@@ -116,7 +116,7 @@ export class PlaylistComponent {
 			if (i !== -1) {
 				this.items.splice(i,1);
 			}
-			this.items.push(item);
+			this.items.push(Object.assign({}, item));
 
 			// redraw playlist
 			this.showItemEvent.emit(false);
