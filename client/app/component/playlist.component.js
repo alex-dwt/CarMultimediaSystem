@@ -57,13 +57,13 @@ import {PagingComponent} from '_app/component/paging.component';
 			<div class="select-playlist">
 				<span id="show-current-track" class="glyphicon-new-window" aria-hidden="true" (click)="goToActiveItem()"></span>
 				<span class="glyphicon-file" aria-hidden="true" (click)="isShowPlaylistSelector=true"></span>
-				<p>{{ currentPlaylistId }}</p>
+				<p (click)="isShowPlaylistSelector=true">{{ currentPlaylistId }}</p>
 			</div>
 
 			<section id="playlist-menu" [class.active]="isShowPlaylistSelector">
 				<template ngFor let-row [ngForOf]="playlistSelectorItems">
 				<ul>
-					<li *ngFor="let item of row" [class.active]="item.isActive" (click)="selectPlaylist(item)">
+					<li *ngFor="let item of row" [class.active]="item.isActive" (click)="selectPlaylist(item.id)">
 						{{ item.label }}
 					</li>
 				</ul>
@@ -133,11 +133,11 @@ export class PlaylistComponent {
 			let pos = this._getPlayingItemPos();
 
 			if (pos !== false) {
-				let item = this.items[pos + 1];
+				let item = this.playlistItems[pos.playlistId][pos.pos + 1];
 				if (item) {
 					this.playFileEvent.emit(item);
-				} else if (settings.isStartFromFirstAllowed && this.items.length) {
-					this.playFileEvent.emit(this.items[0]);
+				} else if (settings.isStartFromFirstAllowed && this.playlistItems[pos.playlistId].length) {
+					this.playFileEvent.emit(this.playlistItems[pos.playlistId][0]);
 				}
 			}
 		});
@@ -146,7 +146,7 @@ export class PlaylistComponent {
 			let pos = this._getPlayingItemPos();
 
 			if (pos !== false) {
-				let item = this.items[pos - 1];
+				let item = this.playlistItems[pos.playlistId][pos.pos - 1];
 				if (item) {
 					this.playFileEvent.emit(item);
 				}
@@ -161,24 +161,28 @@ export class PlaylistComponent {
 		});
 	}
 
-	selectPlaylist(selectedItem) {
+	selectPlaylist(playlistId, itemId) {
 		this.isShowPlaylistSelector = false;
 
-		if (this.currentPlaylistId === selectedItem.id) {
+		if (this.currentPlaylistId === playlistId) {
+			if (typeof itemId !== 'undefined') {
+				this.showItemEvent.emit(itemId);
+			}
+
 			return;
 		}
 
 		this.playlistSelectorItems.forEach((rowItem, rowIndex, row) => {
 			rowItem.forEach((item, index) => {
-				row[rowIndex][index].isActive = item.id === selectedItem.id;
+				row[rowIndex][index].isActive = item.id === playlistId;
 			});
 		});
 
-		this.currentPlaylistId = selectedItem.id;
+		this.currentPlaylistId = playlistId;
 
 		this.items = this.playlistItems[this.currentPlaylistId];
-		// go to the 1st page in current playlist
-		this.showItemEvent.emit(0);
+
+		this.showItemEvent.emit(typeof itemId === 'undefined' ? 0 : itemId);
 	}
 
 	playItem(item) {
@@ -198,16 +202,30 @@ export class PlaylistComponent {
 	goToActiveItem() {
 		let pos = this._getPlayingItemPos();
 		if (pos !== false) {
-			this.showItemEvent.emit(pos)
+			this.selectPlaylist(pos.playlistId, pos.pos);
 		}
 	}
 
 	_getPlayingItemPos() {
 		let pos = -1;
+		let playlistId = this.currentPlaylistId;
+
 		if (this.currentPlayingItemPath !== '') {
-			pos = this.items.map((e) => e.path).indexOf(this.currentPlayingItemPath);
+			// find in the current playlist
+			pos = this.items.findIndex(e => e.path === this.currentPlayingItemPath);
+
+			if (pos === -1) {
+				// find in any playlist
+				this.playlistItems.some((item, index) => {
+					pos = item.findIndex(e => e.path === this.currentPlayingItemPath);
+					if (pos !== -1) {
+						playlistId = index;
+						return true;
+					}
+				});
+			}
 		}
 
-		return pos === -1 ? false : pos;
+		return pos === -1 ? false : {pos, playlistId};
 	}
 }
