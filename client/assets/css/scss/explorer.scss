@@ -4,7 +4,7 @@
  * For the full copyright and license information, please view the LICENSE file that was distributed with this source code.
  */
 
-#player-explorer {
+.player-explorer {
 	flex-grow: 10;
 	border: 2px solid #e7e7e7;
 	position: relative;
@@ -24,8 +24,11 @@
 		}
 	}
 
-	&.show-explorer {
-		#explorer {
+	[explorer] {
+		border-right: 2px solid #e7e7e7;
+		width: 7%;
+
+		&.active {
 			width: 93%;
 			ul, .panel-paging {
 				opacity: 1;
@@ -35,7 +38,17 @@
 			}
 		}
 
-		#playlist {
+		ul, .panel-paging {
+			opacity: 0;
+		}
+	}
+
+	[playlist] {
+		right: 0;
+		width: 93%;
+		overflow: hidden;
+
+		&.inactive {
 			width: 7%;
 			ul, .panel-paging {
 				opacity: 0;
@@ -44,21 +57,6 @@
 				opacity: 1;
 			}
 		}
-	}
-
-	#explorer {
-		border-right: 2px solid #e7e7e7;
-		width: 7%;
-
-		ul, .panel-paging {
-			opacity: 0;
-		}
-	}
-
-	#playlist {
-		right: 0;
-		width: 93%;
-		overflow: hidden;
 
 		.panel-label {
 			opacity: 0;
@@ -239,7 +237,7 @@
 		}
 	}
 
-	#playlist-menu {
+	.playlist-menu {
 		display: none;
 		background-color: #FFF;
 		border: 2px solid #e7e7e7;
@@ -281,7 +279,7 @@
 		}
 	}
 
-	#show-current-track {
+	.show-current-track-icon {
 		padding-right: 3vmin;
 	}
 }

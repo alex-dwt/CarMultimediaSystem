@@ -55,12 +55,12 @@ import {PagingComponent} from '_app/component/paging.component';
 			</div>
 
 			<div class="select-playlist">
-				<span id="show-current-track" class="glyphicon-new-window" aria-hidden="true" (click)="goToActiveItem()"></span>
+				<span class="glyphicon-new-window show-current-track-icon" aria-hidden="true" (click)="goToActiveItem()"></span>
 				<span class="glyphicon-file" aria-hidden="true" (click)="isShowPlaylistSelector=true"></span>
 				<p (click)="isShowPlaylistSelector=true">{{ currentPlaylistId }}</p>
 			</div>
 
-			<section id="playlist-menu" [class.active]="isShowPlaylistSelector">
+			<section class="playlist-menu" [class.active]="isShowPlaylistSelector">
 				<template ngFor let-row [ngForOf]="playlistSelectorItems">
 				<ul>
 					<li *ngFor="let item of row" [class.active]="item.isActive" (click)="selectPlaylist(item.id)">

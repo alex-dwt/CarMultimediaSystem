@@ -12,10 +12,9 @@ import {ExplorerService} from '_app/service/explorer.service';
 import {HttpService} from '_app/service/http.service'
 import {PlayerService} from '_app/service/player.service'
 
-import {ExplorerComponent} from '_app/component/explorer.component';
+import {AudioTab} from '_app/tab/audio.tab';
 import {NavbarComponent} from '_app/component/navbar.component';
 import {PlayerComponent} from '_app/component/player.component';
-import {PlaylistComponent} from '_app/component/playlist.component';
 
 const TAB_MAIN = 1;
 const TAB_MUSIC = 2;
@@ -33,31 +32,24 @@ const TABS = [
 @Component({
 	selector: '[my-app]',
 	template: `
-		<section id="player-explorer" [class.show-explorer]="isExplorerActive">
-			<section explorer id="explorer"
-				[fileType]="'audio'"
-				[playFileEvent]="playFileEvent"
-				[addFileEvent]="addFileEvent"
-				[addDirectoryEvent]="addDirectoryEvent"
-				(click)="isExplorerActive=true">
-			</section>
-			<section playlist id="playlist"
-				[playFileEvent]="playFileEvent"
-				[addFileEvent]="addFileEvent"
-				[addDirectoryEvent]="addDirectoryEvent"
-				[playNextTrackEvent]="playNextTrackEvent"
-				[playPrevTrackEvent]="playPrevTrackEvent"
-				(click)="isExplorerActive=false">
-			</section>
+
+		<section audio-tab
+			class="player-explorer"
+			[class.show-explorer]="isExplorerActive"
+			[playFileEvent]="playFileEvent"
+			[playNextTrackEvent]="playNextTrackEvent"
+			[playPrevTrackEvent]="playPrevTrackEvent">
 		</section>
+
 		<section player id="player"
 			[playFileEvent]="playFileEvent"
 			[playNextTrackEvent]="playNextTrackEvent"
 			[playPrevTrackEvent]="playPrevTrackEvent">
 		</section>
+
 		<nav id="navigation" [items]="tabs" (change)="onChangeMenuTab($event)"></nav>
 	`,
-	directives: [ExplorerComponent, NavbarComponent, PlayerComponent, PlaylistComponent]
+	directives: [NavbarComponent, PlayerComponent, AudioTab]
 })
 class AppComponent {
 	constructor() {
