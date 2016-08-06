@@ -13,29 +13,24 @@ import {HttpService} from '_app/service/http.service'
 import {PlayerService} from '_app/service/player.service'
 
 import {AudioTab} from '_app/tab/audio.tab';
+import {VideoTab} from '_app/tab/video.tab';
 import {NavbarComponent} from '_app/component/navbar.component';
 import {PlayerComponent} from '_app/component/player.component';
-
-const TAB_MAIN = 1;
-const TAB_MUSIC = 2;
-const TAB_MOVIES = 3;
-const TAB_CAMERA = 4;
-const TAB_NAVIGATION = 5;
-const TABS = [
-	{id: TAB_MAIN, icon: 'glyphicon-home', label: 'Main'},
-	{id: TAB_MUSIC, icon: 'glyphicon-cd',  label: 'Music'},
-	{id: TAB_MOVIES, icon: 'glyphicon-film',  label: 'Movies'},
-	{id: TAB_CAMERA, icon: 'glyphicon-eye-open',  label: 'Camera'},
-	{id: TAB_NAVIGATION, icon: 'glyphicon-globe',  label: 'Navigation'}
-];
 
 @Component({
 	selector: '[my-app]',
 	template: `
-
 		<section audio-tab
 			class="player-explorer"
-			[class.show-explorer]="isExplorerActive"
+			[hidden]="activeTabId !== TAB_MUSIC_ID"
+			[playFileEvent]="playFileEvent"
+			[playNextTrackEvent]="playNextTrackEvent"
+			[playPrevTrackEvent]="playPrevTrackEvent">
+		</section>
+
+		<section video-tab
+			class="player-explorer"
+			[hidden]="activeTabId !== TAB_MOVIES_ID"
 			[playFileEvent]="playFileEvent"
 			[playNextTrackEvent]="playNextTrackEvent"
 			[playPrevTrackEvent]="playPrevTrackEvent">
@@ -49,24 +44,33 @@ const TABS = [
 
 		<nav id="navigation" [items]="tabs" (change)="onChangeMenuTab($event)"></nav>
 	`,
-	directives: [NavbarComponent, PlayerComponent, AudioTab]
+	directives: [NavbarComponent, PlayerComponent, AudioTab, VideoTab]
 })
 class AppComponent {
 	constructor() {
-		this.tabs = TABS;
+		this.TAB_MAIN_ID = 1;
+		this.TAB_MUSIC_ID = 2;
+		this.TAB_MOVIES_ID = 3;
+		this.TAB_CAMERA_ID = 4;
+		this.TAB_NAVIGATION_ID = 5;
+
+		this.tabs = [
+			{id: this.TAB_MAIN_ID, icon: 'glyphicon-home', label: 'Main'},
+			{id: this.TAB_MUSIC_ID, icon: 'glyphicon-cd',  label: 'Music'},
+			{id: this.TAB_MOVIES_ID, icon: 'glyphicon-film',  label: 'Movies'},
+			{id: this.TAB_CAMERA_ID, icon: 'glyphicon-eye-open',  label: 'Camera'},
+			{id: this.TAB_NAVIGATION_ID, icon: 'glyphicon-globe',  label: 'Navigation'}
+		];
+
 		this.activeTabId = -1;
-		this.isExplorerActive = false;
 
 		this.playFileEvent = new EventEmitter();
-		this.addFileEvent = new EventEmitter();
-		this.addDirectoryEvent = new EventEmitter();
 		this.playNextTrackEvent = new EventEmitter();
 		this.playPrevTrackEvent = new EventEmitter();
 	}
 
 	onChangeMenuTab(itemId) {
 		this.activeTabId = itemId;
-		console.log(itemId)
 	}
 }
 
