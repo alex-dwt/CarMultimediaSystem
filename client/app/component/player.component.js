@@ -70,6 +70,7 @@ const CHECK_DURATION_INTERVAL = 2000;
 		</div>
 	`,
 	inputs: ['playFileEvent', 'playNextTrackEvent', 'playPrevTrackEvent'],
+	outputs: ['changeStatus'],
 	pipes: [TrackDurationPipe, TrackTitlePipe]
 })
 export class PlayerComponent {
@@ -79,6 +80,7 @@ export class PlayerComponent {
 
 	constructor(playerService) {
 		this._playerService = playerService;
+		this.changeStatus = new EventEmitter();
 
 		this.STATUS_STOPPED = 'stopped';
 		this.STATUS_PLAYING = 'playing';
@@ -201,6 +203,11 @@ export class PlayerComponent {
 				});
 			}
 		}
+
+		this.changeStatus.emit({
+			status: this.status,
+			fileType: this.currentItem.fileType
+		});
 	}
 
 	_getCurrentPosition() {

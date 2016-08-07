@@ -19,30 +19,38 @@ import {PlayerComponent} from '_app/component/player.component';
 
 @Component({
 	selector: '[my-app]',
+	host: {
+		'[class.show-only-player]' : 'isPlayingVideoFile',
+	},
 	template: `
 		<section audio-tab
 			class="player-explorer"
-			[hidden]="activeTabId !== TAB_MUSIC_ID"
 			[playFileEvent]="playFileEvent"
 			[playNextTrackEvent]="playNextTrackEvent"
-			[playPrevTrackEvent]="playPrevTrackEvent">
+			[playPrevTrackEvent]="playPrevTrackEvent"
+			[hidden]="activeTabId !== TAB_MUSIC_ID || isPlayingVideoFile">
 		</section>
 
 		<section video-tab
 			class="player-explorer"
-			[hidden]="activeTabId !== TAB_MOVIES_ID"
 			[playFileEvent]="playFileEvent"
 			[playNextTrackEvent]="playNextTrackEvent"
-			[playPrevTrackEvent]="playPrevTrackEvent">
+			[playPrevTrackEvent]="playPrevTrackEvent"
+			[hidden]="activeTabId !== TAB_MOVIES_ID || isPlayingVideoFile">
 		</section>
 
 		<section player id="player"
 			[playFileEvent]="playFileEvent"
 			[playNextTrackEvent]="playNextTrackEvent"
-			[playPrevTrackEvent]="playPrevTrackEvent">
+			[playPrevTrackEvent]="playPrevTrackEvent"
+			(changeStatus)="onChangePlayerStatus($event)">
 		</section>
 
-		<nav id="navigation" [items]="tabs" (change)="onChangeMenuTab($event)"></nav>
+		<nav id="navigation"
+			[items]="tabs"
+			(change)="onChangeMenuTab($event)"
+			[hidden]="isPlayingVideoFile">
+		</nav>
 	`,
 	directives: [NavbarComponent, PlayerComponent, AudioTab, VideoTab]
 })
@@ -67,10 +75,18 @@ class AppComponent {
 		this.playFileEvent = new EventEmitter();
 		this.playNextTrackEvent = new EventEmitter();
 		this.playPrevTrackEvent = new EventEmitter();
+
+		this.isPlayingVideoFile = false;
 	}
 
 	onChangeMenuTab(itemId) {
 		this.activeTabId = itemId;
+	}
+
+	onChangePlayerStatus(e) {
+		this.isPlayingVideoFile = (
+			(e.status === 'playing' || e.status === 'paused') && e.fileType === 'video'
+		);
 	}
 }
 
