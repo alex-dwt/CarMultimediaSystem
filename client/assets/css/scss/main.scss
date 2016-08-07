@@ -24,11 +24,11 @@ body {
 		display: flex;
 		flex-direction: column;
 		height: 100%;
-
-		&.show-only-player {
-			justify-content: flex-end;
-		}
 	}
+}
+
+#video-background {
+	flex-grow: 10;
 }
 
 span[class^='glyphicon'] {

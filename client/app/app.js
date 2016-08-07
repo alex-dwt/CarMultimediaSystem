@@ -19,10 +19,12 @@ import {PlayerComponent} from '_app/component/player.component';
 
 @Component({
 	selector: '[my-app]',
-	host: {
-		'[class.show-only-player]' : 'isPlayingVideoFile',
-	},
 	template: `
+		<div id="video-background"
+			[hidden]="!isPlayingVideoFile"
+			(click)="onVideoBackgroundClick()">
+		</div>
+
 		<section audio-tab
 			class="player-explorer"
 			[playFileEvent]="playFileEvent"
@@ -55,7 +57,13 @@ import {PlayerComponent} from '_app/component/player.component';
 	directives: [NavbarComponent, PlayerComponent, AudioTab, VideoTab]
 })
 class AppComponent {
-	constructor() {
+	static get parameters() {
+		return [	[PlayerService]];
+	}
+
+	constructor(playerService) {
+		this._playerService = playerService;
+
 		this.TAB_MAIN_ID = 1;
 		this.TAB_MUSIC_ID = 2;
 		this.TAB_MOVIES_ID = 3;
@@ -77,6 +85,7 @@ class AppComponent {
 		this.playPrevTrackEvent = new EventEmitter();
 
 		this.isPlayingVideoFile = false;
+		this.isPlayerVideoTransparent = false;
 	}
 
 	onChangeMenuTab(itemId) {
@@ -87,6 +96,12 @@ class AppComponent {
 		this.isPlayingVideoFile = (
 			(e.status === 'playing' || e.status === 'paused') && e.fileType === 'video'
 		);
+	}
+
+	onVideoBackgroundClick() {
+		this._playerService
+			.setAlpha(this.isPlayerVideoTransparent ? 255 : 100)
+			.then(() => this.isPlayerVideoTransparent = !this.isPlayerVideoTransparent);
 	}
 }
 

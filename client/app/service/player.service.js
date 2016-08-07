@@ -48,4 +48,8 @@ export class PlayerService {
 	setPosition(position) {
 		return this._httpService.postRequest(URL + 'set_position', {position});
 	}
+
+	setAlpha(alpha) {
+		return this._httpService.postRequest(URL + 'set_alpha', {alpha});
+	}
 }
