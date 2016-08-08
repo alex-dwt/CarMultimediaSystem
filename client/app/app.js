@@ -18,41 +18,47 @@ import {NavbarComponent} from '_app/component/navbar.component';
 import {PlayerComponent} from '_app/component/player.component';
 
 @Component({
-	selector: '[my-app]',
+	selector: 'body',
+	host: {
+		'[class.black]' : 'isPlayingVideoFile',
+	},
 	template: `
-		<div id="video-background"
-			[hidden]="!isPlayingVideoFile"
-			(click)="onVideoBackgroundClick()">
+		<div>
+			<div id="video-background"
+				[hidden]="!isPlayingVideoFile"
+				(click)="onVideoBackgroundClick()">
+			</div>
+
+			<section audio-tab
+				class="player-explorer"
+				[playFileEvent]="playFileEvent"
+				[playNextTrackEvent]="playNextTrackEvent"
+				[playPrevTrackEvent]="playPrevTrackEvent"
+				[hidden]="activeTabId !== TAB_MUSIC_ID || isPlayingVideoFile">
+			</section>
+
+			<section video-tab
+				class="player-explorer"
+				[playFileEvent]="playFileEvent"
+				[playNextTrackEvent]="playNextTrackEvent"
+				[playPrevTrackEvent]="playPrevTrackEvent"
+				[hidden]="activeTabId !== TAB_MOVIES_ID || isPlayingVideoFile">
+			</section>
+
+			<section player id="player"
+				[playFileEvent]="playFileEvent"
+				[playNextTrackEvent]="playNextTrackEvent"
+				[playPrevTrackEvent]="playPrevTrackEvent"
+				[hidden]="!isPlayerVideoTransparent && isPlayingVideoFile"
+				(changeStatus)="onChangePlayerStatus($event)">
+			</section>
+
+			<nav id="navigation"
+				[items]="tabs"
+				(change)="onChangeMenuTab($event)"
+				[hidden]="isPlayingVideoFile">
+			</nav>
 		</div>
-
-		<section audio-tab
-			class="player-explorer"
-			[playFileEvent]="playFileEvent"
-			[playNextTrackEvent]="playNextTrackEvent"
-			[playPrevTrackEvent]="playPrevTrackEvent"
-			[hidden]="activeTabId !== TAB_MUSIC_ID || isPlayingVideoFile">
-		</section>
-
-		<section video-tab
-			class="player-explorer"
-			[playFileEvent]="playFileEvent"
-			[playNextTrackEvent]="playNextTrackEvent"
-			[playPrevTrackEvent]="playPrevTrackEvent"
-			[hidden]="activeTabId !== TAB_MOVIES_ID || isPlayingVideoFile">
-		</section>
-
-		<section player id="player"
-			[playFileEvent]="playFileEvent"
-			[playNextTrackEvent]="playNextTrackEvent"
-			[playPrevTrackEvent]="playPrevTrackEvent"
-			(changeStatus)="onChangePlayerStatus($event)">
-		</section>
-
-		<nav id="navigation"
-			[items]="tabs"
-			(change)="onChangeMenuTab($event)"
-			[hidden]="isPlayingVideoFile">
-		</nav>
 	`,
 	directives: [NavbarComponent, PlayerComponent, AudioTab, VideoTab]
 })

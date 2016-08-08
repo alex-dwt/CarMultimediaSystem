@@ -28,6 +28,10 @@ body {
 	min-width: 770px;
 	min-height: 460px;
 
+	&.black {
+		background-color: #000;
+	}
+
 	> div {
 		padding: 0.3%;
 		justify-content: center;
@@ -92,4 +96,11 @@ nav {
 		font-size: 5vmin;
 		text-align: center;
 	}
+}
+
+.app-loader {
+	position: fixed;
+	width: 100%;
+	top: 50%;
+	text-align: center;
 }

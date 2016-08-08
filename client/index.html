@@ -16,6 +16,9 @@
 	<script src="node_modules/systemjs/dist/system.src.js"></script>
 </head>
 <body>
+	<p class="app-loader">
+		<img src="assets/loader-bar.gif">
+	</p>
 	<script>
 		SystemJS.config({
 			map: {
@@ -26,8 +29,5 @@
 		});
 		System.import('_app/app.js');
 	</script>
-	<div my-app>
-		Loading...
-	</div>
 </body>
 </html>
