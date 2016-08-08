@@ -17,7 +17,7 @@ import {PagingComponent} from '_app/component/paging.component';
 			<p>Playlist</p>
 		</div>
 
-		<ul>
+		<ul class="items-box">
 			<li *ngFor="let item of currentItems"
 				class="explorer-row"
 				[class.delete-process]="item.isWantToDelete"

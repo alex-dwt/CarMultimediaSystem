@@ -20,7 +20,7 @@ const DEFAULT_PATH ='/';
 			<p>Explorer</p>
 		</div>
 
-		<ul>
+		<ul class="items-box">
 			<li *ngFor="let item of currentItems" class="explorer-row" [class.delete-process]="item.isWantToDelete">
 				<div class="info-block">
 					<template [ngIf]="!isFileItem(item)">

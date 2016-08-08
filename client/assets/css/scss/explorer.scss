@@ -96,20 +96,19 @@
 		&.file-name-block {
 			p {
 				white-space: nowrap;
+				font-size: 4vmin;
 
 				&:first-of-type {
-					font-size: 4vmin;
+					font-size: 5vmin;
 				}
 			}
 		}
 	}
 
 	.explorer-row {
-		height: 100%;
 		display: flex;
 		align-items: center;
-		//font-size: 6vmin;
-		margin-bottom: 0.5%;
+		margin-bottom: 1%;
 
 		&.active {
 			background-color: #d9d9d9;
@@ -142,7 +141,6 @@
 		height: 100%;
 		position: relative;
 		margin-top: -2vmin;
-		//width: 10.5vmin;
 		font-size: 9vmin;
 
 		[class^=glyphicon] {
@@ -176,7 +174,7 @@
 			align-items: center;
 		}
 		span {
-			font-size: 8vmin;
+			font-size: 9vmin;
 		}
 		.delete-block {
 			align-items: center;
@@ -206,10 +204,6 @@
 			display: flex;
 			align-items: center;
 
-			span {
-				display: block;
-			}
-
 			&.active {
 				color: #000;
 			}
@@ -224,17 +218,15 @@
 			display: flex;
 			align-items: center;
 
-			span {
-				display: block;
-			}
-
 			p {
-				font-size: 4vmin;
+				font-size: 6vmin;
 			}
 		}
 
 		span[class^='glyphicon'] {
+			display: block;
 			top: 0;
+			font-size: 6vmin;
 		}
 	}
 
@@ -254,7 +246,7 @@
 
 		ul {
 			display: flex;
-			font-size: 5vmin;
+			font-size: 8vmin;
 
 			&:first-of-type {
 				li {
@@ -282,6 +274,10 @@
 
 	.show-current-track-icon {
 		padding-right: 3vmin;
+	}
+
+	.items-box {
+		height: 100%;
 	}
 }
 

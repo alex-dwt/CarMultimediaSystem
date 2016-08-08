@@ -82,16 +82,21 @@
 					> div {
 						text-align: center;
 						width: 100%;
+
+						span {
+							font-size: 6vmin;
+						}
+
 						/*
 						* Play button
 						*/
 						&:first-of-type {
-							margin-bottom: 5%;
+							margin-bottom: 2%;
 
 							button {
-								width: 11vmin;
-								height: 11vmin;
-								border-radius: 11vmin;
+								width: 15vmin;
+								height: 15vmin;
+								border-radius: 20vmin;
 
 								&.playing {
 									span {
@@ -107,13 +112,13 @@
 						*/
 						&:last-of-type {
 							button {
-								width: 9vmin;
-								height: 9vmin;
-								border-radius: 9vmin;
+								width: 13vmin;
+								height: 13vmin;
+								border-radius: 20vmin;
 
 								&:nth-of-type(2) {
 									margin: 0 4%;
-									width: 13vmin;
+									width: 18vmin;
 								}
 							}
 						}
@@ -134,17 +139,9 @@
 				div {
 					text-align: center;
 
-					&:first-of-type {
-						padding-top: 10%;
-					}
-
-					&:last-of-type {
-						padding-bottom: 10%;
-					}
-
 					span {
 						color: grey;
-						font-size: 4vmin;
+						font-size: 6vmin;
 
 						&.active {
 							color: #000;
@@ -169,23 +166,23 @@
 
 					h2 {
 						white-space: nowrap;
-						font-size: 3vmin;
+						font-size: 5vmin;
 					}
 
 					h1 {
 						white-space: nowrap;
-						font-size: 5vmin;
+						font-size: 7vmin;
 					}
 
 					.progress {
-						height: 3vmin;
-						margin: 0.5% 0;
+						height: 4vmin;
+						margin: 1% 0;
 						position: relative;
 						z-index: 10;
 					}
 
 					> p {
-						font-size: 3vmin;
+						font-size: 4vmin;
 
 						&:first-of-type {
 							float: left;
