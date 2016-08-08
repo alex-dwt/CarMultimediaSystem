@@ -25,11 +25,11 @@ const DEFAULT_PATH ='/';
 				<div class="info-block">
 					<template [ngIf]="!isFileItem(item)">
 						<span class="glyphicon-folder-close" aria-hidden="true" (click)="selectDirectory(item.path)"></span>
-						<span class="dir-badge" (click)="selectDirectory(item.path)">{{ item.is_parent_dir ? '' : item.files_count }}</span>
+						<p class="dir-badge" (click)="selectDirectory(item.path)">{{ item.is_parent_dir ? '' : item.files_count }}</p>
 					</template>
 					<template [ngIf]="isFileItem(item)">
 						<span class="glyphicon" aria-hidden="true">&nbsp;</span>
-						<span class="dir-badge length-badge">{{ item.duration | trackDuration }}</span>
+						<p class="dir-badge length-badge">{{ item.duration | trackDuration }}</p>
 					</template>
 				</div>
 

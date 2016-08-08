@@ -6,7 +6,8 @@
 
 import {HttpService} from '_app/service/http.service'
 
-const FILES_URL = 'http://192.168.100.15/files/';
+const FILES_URL = 'http://carpi/files/';
+//const FILES_URL = 'http://192.168.100.15/files/';
 
 export class ExplorerService {
 	static get parameters() {

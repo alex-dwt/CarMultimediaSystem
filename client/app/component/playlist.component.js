@@ -26,7 +26,7 @@ import {PagingComponent} from '_app/component/paging.component';
 			>
 				<div class="info-block">
 					<span class="glyphicon" aria-hidden="true">&nbsp;</span>
-					<span class="dir-badge length-badge">{{ item.duration | trackDuration }}</span>
+					<p class="dir-badge length-badge">{{ item.duration | trackDuration }}</p>
 				</div>
 				<div class="name-block file-name-block">
 					<p>{{ item.name }}</p>

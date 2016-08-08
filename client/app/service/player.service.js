@@ -6,7 +6,8 @@
 
 import {HttpService} from '_app/service/http.service'
 
-const URL = 'http://192.168.100.15/player/';
+const URL = 'http://carpi/player/';
+//const URL = 'http://192.168.100.15/player/';
 
 export class PlayerService {
 	static get parameters() {

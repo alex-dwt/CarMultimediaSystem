@@ -7,6 +7,16 @@
 * {
 	cursor: default !important;
 	border: none;
+
+	-webkit-touch-callout: none; /* iOS Safari */
+	-webkit-user-select: none;   /* Chrome/Safari/Opera */
+	-moz-user-select: none;      /* Firefox */
+	-ms-user-select: none;       /* Internet Explorer/Edge */
+	user-select: none;
+}
+
+button {
+	outline: none;
 }
 
 html {
@@ -15,7 +25,7 @@ html {
 
 body {
 	height: 100%;
-	min-width: 760px;
+	min-width: 770px;
 	min-height: 460px;
 
 	> div {
@@ -53,10 +63,8 @@ nav {
 
 		li {
 			flex-grow: 1;
-			flex-basis: 0;
 			text-align: center;
 			border-right: 2px solid #e7e7e7;
-			padding: 0 1%;
 
 			&:last-child {
 				border-right: none;

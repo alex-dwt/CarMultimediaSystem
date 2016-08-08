@@ -7,7 +7,7 @@
 #player {
 	border: 2px solid #e7e7e7;
 	margin-top: 0.3%;
-	height: 25%;
+	height: 32%;
 	width: 100%;
 	transition: height 0.2s;
 	position: relative;
@@ -77,6 +77,7 @@
 				> div {
 					align-self: center;
 					width: 100%;
+					z-index: 10;
 
 					> div {
 						text-align: center;
@@ -85,7 +86,7 @@
 						* Play button
 						*/
 						&:first-of-type {
-							margin-bottom: 2%;
+							margin-bottom: 5%;
 
 							button {
 								width: 11vmin;
@@ -106,9 +107,9 @@
 						*/
 						&:last-of-type {
 							button {
-								width: 7vmin;
-								height: 7vmin;
-								border-radius: 7vmin;
+								width: 9vmin;
+								height: 9vmin;
+								border-radius: 9vmin;
 
 								&:nth-of-type(2) {
 									margin: 0 4%;
