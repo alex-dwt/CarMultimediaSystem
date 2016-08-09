@@ -4,7 +4,18 @@
  * For the full copyright and license information, please view the LICENSE file that was distributed with this source code.
  */
 
-@import 'main.scss';
-@import 'explorer.scss';
-@import 'player.scss';
-@import 'camera.scss';
+[camera-tab] {
+	flex-grow: 10;
+	height: 0;
+
+	div {
+		display: flex;
+		justify-content: center;
+		height: 100%;
+	}
+
+	img {
+		display: block;
+		height: inherit;
+	}
+}

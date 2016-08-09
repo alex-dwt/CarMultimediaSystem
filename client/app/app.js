@@ -14,6 +14,7 @@ import {PlayerService} from '_app/service/player.service'
 
 import {AudioTab} from '_app/tab/audio.tab';
 import {VideoTab} from '_app/tab/video.tab';
+import {CameraTab} from '_app/tab/camera.tab';
 import {NavbarComponent} from '_app/component/navbar.component';
 import {PlayerComponent} from '_app/component/player.component';
 
@@ -45,11 +46,15 @@ import {PlayerComponent} from '_app/component/player.component';
 				[hidden]="activeTabId !== TAB_MOVIES_ID || isPlayingVideoFile">
 			</section>
 
+			<section camera-tab
+				*ngIf="activeTabId === TAB_CAMERA_ID && !isPlayingVideoFile">
+			</section>
+
 			<section player id="player"
 				[playFileEvent]="playFileEvent"
 				[playNextTrackEvent]="playNextTrackEvent"
 				[playPrevTrackEvent]="playPrevTrackEvent"
-				[hidden]="!isPlayerVideoTransparent && isPlayingVideoFile"
+				[hidden]="(!isPlayerVideoTransparent && isPlayingVideoFile) || activeTabId === TAB_CAMERA_ID"
 				(changeStatus)="onChangePlayerStatus($event)">
 			</section>
 
@@ -60,7 +65,7 @@ import {PlayerComponent} from '_app/component/player.component';
 			</nav>
 		</div>
 	`,
-	directives: [NavbarComponent, PlayerComponent, AudioTab, VideoTab]
+	directives: [NavbarComponent, PlayerComponent, AudioTab, VideoTab, CameraTab]
 })
 class AppComponent {
 	static get parameters() {
