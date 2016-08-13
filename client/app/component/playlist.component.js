@@ -34,8 +34,8 @@ import {ScaleOnClickDirective} from '_app/directive/scaleOnClick.directive';
 					<p>{{ item.title | trackTitle }}</p>
 				</div>
 				<div class="actions-block">
-					<div><span class="glyphicon-play-circle play-file-icon" aria-hidden="true" (click)="playItem(item)"></span></div>
-					<div><span class="glyphicon-share-alt" aria-hidden="true"></span></div>
+					<div><span scale-on-click class="glyphicon-play-circle" aria-hidden="true" (click)="playItem(item)"></span></div>
+					<div><span class="glyphicon-share-alt" aria-hidden="true" style="color: grey;"></span></div>
 					<div><span class="glyphicon-remove-circle" aria-hidden="true" (click)="item.isWantToDelete=true"></span></div>
 					<div class="delete-block">
 						<p>Are you sure?</p>

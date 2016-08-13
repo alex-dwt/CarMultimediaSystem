@@ -22,16 +22,19 @@ const CHECK_DURATION_INTERVAL = 2000;
 			<p>Playing ... / Stopped ...</p>
 		</div>
 		<div>
-			<div><div>
-				<div (click)="playBtnClick()">
-					<button [class.playing]="status === STATUS_PLAYING"><span class="glyphicon-play" aria-hidden="true"></span></button>
-				</div>
+			<div>
 				<div>
-					<button (click)="playPrevBtnClick()"><span class="glyphicon-chevron-left" aria-hidden="true"></span></button>
-					<button (click)="stopBtnClick()"><span class="glyphicon-stop" aria-hidden="true"></span></button>
-					<button (click)="playNextBtnClick()"><span class="glyphicon-chevron-right" aria-hidden="true"></span></button>
+					<div [class.playing]="status === STATUS_PLAYING">
+						<span scale-on-click class="glyphicon-play" aria-hidden="true" (click)="playBtnClick()"></span>
+					</div>
+					<div>
+						<span scale-on-click class="glyphicon-chevron-left" aria-hidden="true" (click)="playPrevBtnClick()"></span>
+						<span scale-on-click class="glyphicon-stop" aria-hidden="true" (click)="stopBtnClick()"></span>
+						<span scale-on-click class="glyphicon-chevron-right" aria-hidden="true" (click)="playNextBtnClick()"></span>
+					</div>
 				</div>
-			</div></div>
+			</div>
+
 			<div>
 				<div>
 					<span
@@ -59,6 +62,7 @@ const CHECK_DURATION_INTERVAL = 2000;
 					</span>
 				</div>
 			</div>
+
 			<div>
 				<div>
 					<h2>{{ currentItem.name }}</h2>

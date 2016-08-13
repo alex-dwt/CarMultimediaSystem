@@ -112,10 +112,6 @@
 
 		&.active {
 			background-color: #d9d9d9;
-
-			.play-file-icon {
-				visibility: hidden;
-			}
 		}
 
 		&.delete-process {
@@ -235,7 +231,7 @@
 		background-color: #FFF;
 		border: 2px solid #e7e7e7;
 		border-radius: 2vmin;
-		width: 40%;
+		width: 45%;
 		position: absolute;
 		right: 0;
 		bottom: 1vmin;
@@ -246,7 +242,7 @@
 
 		ul {
 			display: flex;
-			font-size: 8vmin;
+			font-size: 9vmin;
 
 			&:first-of-type {
 				li {
@@ -259,6 +255,7 @@
 				text-align: center;
 				display: block;
 				width: 20%;
+				padding: 1vmin;
 
 				&:last-of-type {
 					border-right: none;

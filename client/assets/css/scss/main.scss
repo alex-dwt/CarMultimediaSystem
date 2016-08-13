@@ -109,7 +109,7 @@ nav {
 	transform: scale(1.2);
 
 	&.clicked-transition {
-		transition: 0.15s all;
+		transition: 0.15s all !important;
 	}
 }
 

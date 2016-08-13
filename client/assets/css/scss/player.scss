@@ -86,24 +86,27 @@
 
 						span {
 							font-size: 6vmin;
+							border-radius: 20vmin;
+							border: 2px solid black;
+							padding: 3vmin;
+							width: 18vmin;
 						}
 
 						/*
 						* Play button
 						*/
 						&:first-of-type {
-							margin-bottom: 2%;
+							margin-bottom: 1%;
 
-							button {
-								width: 15vmin;
-								height: 15vmin;
-								border-radius: 20vmin;
+							span {
+								padding: 4vmin;
+								width: auto;
+							}
 
-								&.playing {
-									span {
-										&:before {
-											content: "\e073";
-										}
+							&.playing {
+								span {
+									&:before {
+										content: "\e073";
 									}
 								}
 							}
@@ -112,14 +115,9 @@
 						* Other buttons
 						*/
 						&:last-of-type {
-							button {
-								width: 13vmin;
-								height: 13vmin;
-								border-radius: 20vmin;
-
+							span {
 								&:nth-of-type(2) {
 									margin: 0 4%;
-									width: 18vmin;
 								}
 							}
 						}
