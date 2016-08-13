@@ -104,3 +104,12 @@ nav {
 	top: 50%;
 	text-align: center;
 }
+
+.clicked {
+	transform: scale(1.2);
+
+	&.clicked-transition {
+		transition: 0.15s all;
+	}
+}
+

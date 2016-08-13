@@ -9,6 +9,7 @@ import {TrackDurationPipe } from '_app/pipe/trackDuration.pipe';
 import {TrackTitlePipe } from '_app/pipe/trackTitle.pipe';
 
 import {PagingComponent} from '_app/component/paging.component';
+import {ScaleOnClickDirective} from '_app/directive/scaleOnClick.directive';
 
 @Component({
 	selector: '[playlist]',
@@ -55,7 +56,7 @@ import {PagingComponent} from '_app/component/paging.component';
 			</div>
 
 			<div class="select-playlist">
-				<span class="glyphicon-new-window show-current-track-icon" aria-hidden="true" (click)="goToActiveItem()"></span>
+				<span scale-on-click class="glyphicon-new-window show-current-track-icon" aria-hidden="true" (click)="goToActiveItem()"></span>
 				<span class="glyphicon-file" aria-hidden="true" (click)="isShowPlaylistSelector=true"></span>
 				<p (click)="isShowPlaylistSelector=true">{{ currentPlaylistId }}</p>
 			</div>
@@ -72,7 +73,7 @@ import {PagingComponent} from '_app/component/paging.component';
 
 		</section>
 	`,
-	directives: [PagingComponent],
+	directives: [PagingComponent, ScaleOnClickDirective],
 	inputs: ['addFileEvent', 'addDirectoryEvent', 'playFileEvent', 'playNextTrackEvent', 'playPrevTrackEvent'],
 	pipes: [TrackDurationPipe, TrackTitlePipe]
 })

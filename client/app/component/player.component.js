@@ -8,6 +8,7 @@ import {Component, EventEmitter, OnInit} from 'angular2/core';
 import {PlayerService} from '_app/service/player.service';
 import {TrackDurationPipe } from '_app/pipe/trackDuration.pipe';
 import {TrackTitlePipe } from '_app/pipe/trackTitle.pipe';
+import {ScaleOnClickDirective} from '_app/directive/scaleOnClick.directive';
 
 const CHECK_CURRENT_POSITION_INTERVAL = 2000;
 const CHECK_STATUS_INTERVAL = 3000;
@@ -34,6 +35,7 @@ const CHECK_DURATION_INTERVAL = 2000;
 			<div>
 				<div>
 					<span
+						scale-on-click
 						class="glyphicon-refresh"
 						aria-hidden="true"
 						(click)="isReplayBtnActive = !isReplayBtnActive"
@@ -49,6 +51,7 @@ const CHECK_DURATION_INTERVAL = 2000;
 				</div>
 				<div>
 					<span
+						scale-on-click
 						class="glyphicon-retweet"
 						aria-hidden="true"
 						(click)="isCycleBtnActive = !isCycleBtnActive"
@@ -69,6 +72,7 @@ const CHECK_DURATION_INTERVAL = 2000;
 			</div>
 		</div>
 	`,
+	directives: [ScaleOnClickDirective],
 	inputs: ['playFileEvent', 'playNextTrackEvent', 'playPrevTrackEvent'],
 	outputs: ['changeStatus'],
 	pipes: [TrackDurationPipe, TrackTitlePipe]

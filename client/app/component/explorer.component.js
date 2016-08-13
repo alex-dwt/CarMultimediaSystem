@@ -10,6 +10,7 @@ import {ExplorerService} from '_app/service/explorer.service';
 import {TrackDurationPipe } from '_app/pipe/trackDuration.pipe';
 import {TrackTitlePipe } from '_app/pipe/trackTitle.pipe';
 import {PagingComponent} from '_app/component/paging.component';
+import {ScaleOnClickDirective} from '_app/directive/scaleOnClick.directive';
 
 const DEFAULT_PATH ='/';
 
@@ -42,8 +43,8 @@ const DEFAULT_PATH ='/';
 				</div>
 
 				<div class="actions-block">
-					<div><span class="glyphicon-play-circle" aria-hidden="true" (click)="playItem(item)"></span></div>
-					<div><span class="glyphicon-plus-sign" aria-hidden="true" (click)="addItemToPlaylist(item)"></span></div>
+					<div><span scale-on-click class="glyphicon-play-circle" aria-hidden="true" (click)="playItem(item)"></span></div>
+					<div><span scale-on-click class="glyphicon-plus-sign" aria-hidden="true" (click)="addItemToPlaylist(item)"></span></div>
 					<div><span class="glyphicon-remove-circle" aria-hidden="true" (click)="item.isWantToDelete=true"></span></div>
 					<div class="delete-block">
 						<p>Are you sure?</p>
@@ -67,7 +68,7 @@ const DEFAULT_PATH ='/';
 
 		</section>
 	`,
-	directives: [PagingComponent],
+	directives: [PagingComponent, ScaleOnClickDirective],
 	inputs: ['fileType', 'playFileEvent', 'addFileEvent', 'addDirectoryEvent'],
 	pipes: [TrackDurationPipe, TrackTitlePipe]
 })
