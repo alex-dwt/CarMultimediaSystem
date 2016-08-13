@@ -11,7 +11,7 @@ import {Component, EventEmitter} from 'angular2/core';
 	template: `
 		<ul>
 			<li *ngFor="let item of items" [class.active]="activeTab === item.id" (click)="onClick(item)">
-				<span class="{{ item.icon }}" aria-hidden="true"></span> {{ item.label }}
+				<span class="{{ item.icon }}"></span> {{ item.label }}
 			</li>
 		</ul>
 	`,

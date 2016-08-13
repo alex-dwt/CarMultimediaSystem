@@ -26,7 +26,7 @@ import {ScaleOnClickDirective} from '_app/directive/scaleOnClick.directive';
 				[class.delete-process]="item.isWantToDelete"
 			>
 				<div class="info-block">
-					<span class="glyphicon" aria-hidden="true">&nbsp;</span>
+					<span class="glyphicon">&nbsp;</span>
 					<p class="dir-badge length-badge">{{ item.duration | trackDuration }}</p>
 				</div>
 				<div class="name-block file-name-block">
@@ -34,13 +34,13 @@ import {ScaleOnClickDirective} from '_app/directive/scaleOnClick.directive';
 					<p>{{ item.title | trackTitle }}</p>
 				</div>
 				<div class="actions-block">
-					<div><span scale-on-click class="glyphicon-play-circle" aria-hidden="true" (click)="playItem(item)"></span></div>
-					<div><span class="glyphicon-share-alt" aria-hidden="true" style="color: grey;"></span></div>
-					<div><span class="glyphicon-remove-circle" aria-hidden="true" (click)="item.isWantToDelete=true"></span></div>
+					<div><span scale-on-click class="glyphicon-play-circle" (click)="playItem(item)"></span></div>
+					<div><span class="glyphicon-share-alt" style="color: grey;"></span></div>
+					<div><span class="glyphicon-remove-circle" (click)="item.isWantToDelete=true"></span></div>
 					<div class="delete-block">
 						<p>Are you sure?</p>
-						<div><span class="glyphicon-ok" aria-hidden="true" (click)="deleteItem(item)"></span></div>
-						<div><span class="glyphicon-remove" aria-hidden="true" (click)="item.isWantToDelete=false"></span></div>
+						<div><span class="glyphicon-ok" (click)="deleteItem(item)"></span></div>
+						<div><span class="glyphicon-remove" (click)="item.isWantToDelete=false"></span></div>
 					</div>
 				</div>
 			</li>
@@ -56,8 +56,8 @@ import {ScaleOnClickDirective} from '_app/directive/scaleOnClick.directive';
 			</div>
 
 			<div class="select-playlist">
-				<span scale-on-click class="glyphicon-new-window show-current-track-icon" aria-hidden="true" (click)="goToActiveItem()"></span>
-				<span class="glyphicon-file" aria-hidden="true" (click)="isShowPlaylistSelector=true"></span>
+				<span scale-on-click class="glyphicon-new-window show-current-track-icon" (click)="goToActiveItem()"></span>
+				<span class="glyphicon-file" (click)="isShowPlaylistSelector=true"></span>
 				<p (click)="isShowPlaylistSelector=true">{{ currentPlaylistId }}</p>
 			</div>
 

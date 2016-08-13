@@ -18,19 +18,19 @@ const CHECK_DURATION_INTERVAL = 2000;
 	selector: '[player]',
 	template: `
 		<div>
-			<span class="glyphicon-arrow-down" aria-hidden="true" style="color: grey;" onclick="return false; document.getElementById('player').className = (document.getElementById('player').className == 'minimized' ? '' : 'minimized');"></span>
+			<span class="glyphicon-arrow-down" style="color: grey;" onclick="return false; document.getElementById('player').className = (document.getElementById('player').className == 'minimized' ? '' : 'minimized');"></span>
 			<p>Playing ... / Stopped ...</p>
 		</div>
 		<div>
 			<div>
 				<div>
 					<div [class.playing]="status === STATUS_PLAYING">
-						<span scale-on-click class="glyphicon-play" aria-hidden="true" (click)="playBtnClick()"></span>
+						<span scale-on-click class="glyphicon-play" (click)="playBtnClick()"></span>
 					</div>
 					<div>
-						<span scale-on-click class="glyphicon-chevron-left" aria-hidden="true" (click)="playPrevBtnClick()"></span>
-						<span scale-on-click class="glyphicon-stop" aria-hidden="true" (click)="stopBtnClick()"></span>
-						<span scale-on-click class="glyphicon-chevron-right" aria-hidden="true" (click)="playNextBtnClick()"></span>
+						<span scale-on-click class="glyphicon-chevron-left" (click)="playPrevBtnClick()"></span>
+						<span scale-on-click class="glyphicon-stop" (click)="stopBtnClick()"></span>
+						<span scale-on-click class="glyphicon-chevron-right" (click)="playNextBtnClick()"></span>
 					</div>
 				</div>
 			</div>
@@ -40,7 +40,6 @@ const CHECK_DURATION_INTERVAL = 2000;
 					<span
 						scale-on-click
 						class="glyphicon-refresh"
-						aria-hidden="true"
 						(click)="isReplayBtnActive = !isReplayBtnActive"
 						[class.active]="isReplayBtnActive">
 					</span>
@@ -48,7 +47,6 @@ const CHECK_DURATION_INTERVAL = 2000;
 				<div>
 					<span
 						class="glyphicon-random"
-						aria-hidden="true"
 						[class.active]="isShuffleBtnActive">
 					</span>
 				</div>
@@ -56,7 +54,6 @@ const CHECK_DURATION_INTERVAL = 2000;
 					<span
 						scale-on-click
 						class="glyphicon-retweet"
-						aria-hidden="true"
 						(click)="isCycleBtnActive = !isCycleBtnActive"
 						[class.active]="isCycleBtnActive">
 					</span>

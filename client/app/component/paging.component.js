@@ -10,13 +10,11 @@ import {Component, EventEmitter, OnChanges, OnInit} from 'angular2/core';
 	selector: '[paging]',
 	template: `
 		<span class="glyphicon-arrow-left"
-		 	aria-hidden="true"
 			[style.visibility]="currentItemsFrom <= 1 ? 'hidden' : 'visible'"
 			(click)="prevPage()">
 		</span>
 		<p>{{ currentItemsFrom }}-{{ currentItemsTill }} of {{ items.length }}</p>
 		<span class="glyphicon-arrow-right"
-			aria-hidden="true"
 			[style.visibility]="currentItemsTill >= items.length ? 'hidden' : 'visible'"
 			(click)="nextPage()">
 		</span>

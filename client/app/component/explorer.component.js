@@ -26,11 +26,11 @@ const DEFAULT_PATH ='/';
 			<li *ngFor="let item of currentItems" class="explorer-row" [class.delete-process]="item.isWantToDelete">
 				<div class="info-block">
 					<template [ngIf]="!isFileItem(item)">
-						<span class="glyphicon-folder-close" aria-hidden="true"></span>
+						<span class="glyphicon-folder-close"></span>
 						<p class="dir-badge">{{ isParentDir(item) ? '' : item.files_count }}</p>
 					</template>
 					<template [ngIf]="isFileItem(item)">
-						<span class="glyphicon" aria-hidden="true">&nbsp;</span>
+						<span class="glyphicon">&nbsp;</span>
 						<p class="dir-badge length-badge">{{ item.duration | trackDuration }}</p>
 					</template>
 				</div>
@@ -48,7 +48,6 @@ const DEFAULT_PATH ='/';
 						<span
 							scale-on-click
 							class="glyphicon-play-circle"
-							aria-hidden="true"
 							(click)="playItem(item)"
 							[class.display-none]="!isFileItem(item)">
 						</span>
@@ -57,7 +56,6 @@ const DEFAULT_PATH ='/';
 						<span
 							scale-on-click
 							class="glyphicon-plus-sign"
-							aria-hidden="true"
 							(click)="addItemToPlaylist(item)"
 							[class.display-none]="isParentDir(item)">
 						</span>
@@ -65,15 +63,14 @@ const DEFAULT_PATH ='/';
 					<div>
 						<span
 							class="glyphicon-remove-circle"
-							aria-hidden="true"
 							(click)="item.isWantToDelete=true"
 							[class.display-none]="isParentDir(item)">
 						</span>
 					</div>
 					<div class="delete-block">
 						<p>Are you sure?</p>
-						<div><span class="glyphicon-ok" aria-hidden="true" (click)="deleteItem(item)"></span></div>
-						<div><span class="glyphicon-remove" aria-hidden="true" (click)="item.isWantToDelete=false"></span></div>
+						<div><span class="glyphicon-ok" (click)="deleteItem(item)"></span></div>
+						<div><span class="glyphicon-remove" (click)="item.isWantToDelete=false"></span></div>
 					</div>
 				</div>
 			</li>
@@ -81,7 +78,7 @@ const DEFAULT_PATH ='/';
 
 		<section class="panel-paging">
 			<div class="active show-only-files" [class.active]="isShowOnlyFiles" (click)="showOnlyFiles()">
-				<span class="glyphicon-align-justify" aria-hidden="true"></span>
+				<span class="glyphicon-align-justify"></span>
 			</div>
 
 			<div paging
