@@ -11,6 +11,7 @@ import {TrackDurationPipe } from '_app/pipe/trackDuration.pipe';
 import {TrackTitlePipe } from '_app/pipe/trackTitle.pipe';
 import {PagingComponent} from '_app/component/paging.component';
 import {ScaleOnClickDirective} from '_app/directive/scaleOnClick.directive';
+import {UnderlineOnClickDirective} from '_app/directive/underlineOnClick.directive';
 
 const DEFAULT_PATH ='/';
 
@@ -25,8 +26,8 @@ const DEFAULT_PATH ='/';
 			<li *ngFor="let item of currentItems" class="explorer-row" [class.delete-process]="item.isWantToDelete">
 				<div class="info-block">
 					<template [ngIf]="!isFileItem(item)">
-						<span class="glyphicon-folder-close" aria-hidden="true" (click)="selectDirectory(item.path)"></span>
-						<p class="dir-badge" (click)="selectDirectory(item.path)">{{ item.is_parent_dir ? '' : item.files_count }}</p>
+						<span class="glyphicon-folder-close" aria-hidden="true"></span>
+						<p class="dir-badge">{{ item.is_parent_dir ? '' : item.files_count }}</p>
 					</template>
 					<template [ngIf]="isFileItem(item)">
 						<span class="glyphicon" aria-hidden="true">&nbsp;</span>
@@ -34,7 +35,7 @@ const DEFAULT_PATH ='/';
 					</template>
 				</div>
 
-				<div *ngIf="!isFileItem(item)" class="name-block" (click)="selectDirectory(item.path)">
+				<div underline-on-click *ngIf="!isFileItem(item)" class="name-block" (click)="selectDirectory(item.path)">
 					<span>{{ item.is_parent_dir ? '. . .' : item.dir_name }}</span>
 				</div>
 				<div *ngIf="isFileItem(item)" class="name-block file-name-block">
@@ -68,7 +69,7 @@ const DEFAULT_PATH ='/';
 
 		</section>
 	`,
-	directives: [PagingComponent, ScaleOnClickDirective],
+	directives: [PagingComponent, ScaleOnClickDirective, UnderlineOnClickDirective],
 	inputs: ['fileType', 'playFileEvent', 'addFileEvent', 'addDirectoryEvent'],
 	pipes: [TrackDurationPipe, TrackTitlePipe]
 })
