@@ -27,7 +27,7 @@ const DEFAULT_PATH ='/';
 				<div class="info-block">
 					<template [ngIf]="!isFileItem(item)">
 						<span class="glyphicon-folder-close" aria-hidden="true"></span>
-						<p class="dir-badge">{{ item.is_parent_dir ? '' : item.files_count }}</p>
+						<p class="dir-badge">{{ isParentDir(item) ? '' : item.files_count }}</p>
 					</template>
 					<template [ngIf]="isFileItem(item)">
 						<span class="glyphicon" aria-hidden="true">&nbsp;</span>
@@ -36,7 +36,7 @@ const DEFAULT_PATH ='/';
 				</div>
 
 				<div underline-on-click *ngIf="!isFileItem(item)" class="name-block" (click)="selectDirectory(item.path)">
-					<span>{{ item.is_parent_dir ? '. . .' : item.dir_name }}</span>
+					<span>{{ isParentDir(item) ? '. . .' : item.dir_name }}</span>
 				</div>
 				<div *ngIf="isFileItem(item)" class="name-block file-name-block">
 					<p>{{ item.name }}</p>
@@ -44,9 +44,32 @@ const DEFAULT_PATH ='/';
 				</div>
 
 				<div class="actions-block">
-					<div><span scale-on-click class="glyphicon-play-circle" aria-hidden="true" (click)="playItem(item)"></span></div>
-					<div><span scale-on-click class="glyphicon-plus-sign" aria-hidden="true" (click)="addItemToPlaylist(item)"></span></div>
-					<div><span class="glyphicon-remove-circle" aria-hidden="true" (click)="item.isWantToDelete=true"></span></div>
+					<div>
+						<span
+							scale-on-click
+							class="glyphicon-play-circle"
+							aria-hidden="true"
+							(click)="playItem(item)"
+							[class.display-none]="!isFileItem(item)">
+						</span>
+					</div>
+					<div>
+						<span
+							scale-on-click
+							class="glyphicon-plus-sign"
+							aria-hidden="true"
+							(click)="addItemToPlaylist(item)"
+							[class.display-none]="isParentDir(item)">
+						</span>
+					</div>
+					<div>
+						<span
+							class="glyphicon-remove-circle"
+							aria-hidden="true"
+							(click)="item.isWantToDelete=true"
+							[class.display-none]="isParentDir(item)">
+						</span>
+					</div>
 					<div class="delete-block">
 						<p>Are you sure?</p>
 						<div><span class="glyphicon-ok" aria-hidden="true" (click)="deleteItem(item)"></span></div>
@@ -93,18 +116,25 @@ export class ExplorerComponent {
 		return typeof item.fileName !== 'undefined';
 	}
 
+	isParentDir(item) {
+		return item.is_parent_dir;
+	}
+
 	isPreviousDirectory(item) {
 		return typeof item.isPreviousDirectory !== 'undefined';
 	}
 
 	addItemToPlaylist(item) {
-		console.log('addItemToPlaylist');
 		if (this.isFileItem(item)) {
+			console.log('add file to playlist');
+
 			this.addFileEvent.emit(item);
-		} else {
+		} else if (!this.isParentDir(item)){
 			this.addDirectoryEvent.emit({
 				dir: 'addDirectoryEvent'
 			});
+
+			console.log('add dir to playlist');
 		}
 	}
 
@@ -119,8 +149,10 @@ export class ExplorerComponent {
 
 
 	deleteItem(item) {
-		console.log('delete-item');
-		this.selectDirectory();
+		if (!this.isParentDir(item)) {
+			this.selectDirectory();
+			console.log('delete-item');
+		}
 	}
 
 	showOnlyFiles() {
