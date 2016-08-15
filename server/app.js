@@ -10,6 +10,7 @@ import express from 'express';
 import bodyParser from 'body-parser';
 import MediaPlayer from './service/media_player'
 import FilesScanner from './service/files_scanner'
+import SettingsSaver from './service/settings_saver'
 import HttpException from './exception/http_exception'
 
 let app = express();
@@ -64,6 +65,30 @@ app.post('/player/:action', (req, res, next) => {
 });
 
 /**
+ * Settings
+ */
+app.get('/settings/', (req, res, next) => {
+	try {
+		let result = SettingsSaver.getSettings();
+		if (typeof result === 'boolean') {
+			res.json({ success: result });
+		} else {
+			res.json(Object.assign({ success: true }, result));
+		}
+	} catch (e) {
+		next(e);
+	}
+});
+app.post('/settings/', (req, res, next) => {
+    try {
+		let result = SettingsSaver.saveSettings(req.body);
+		res.json({ success: result });
+    } catch (e) {
+        next(e);
+    }
+});
+
+/**
  * Errors handlers
  */
 app.use((req, res, next) => {
@@ -74,6 +99,7 @@ app.use((err, req, res, next) => {
 	if (err instanceof HttpException) {
 		res.status(err.code).json(err);
 	} else {
+		console.error(err.stack);
 		res.status(500).end();
 	}
 });
