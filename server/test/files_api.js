@@ -168,8 +168,8 @@ describe('Files API', () => {
                             switch (fileType.name) {
                                 case 'audio':
                                     expectedResult = [
-                                        {name: '2', fileName: '2.mp3', title: '', duration: 9, fileType: 'audio', path: '/dir 1/2.mp3'},
-                                        {name: '1', fileName: '1.mp3', title: 'Test audio title', duration: 6, fileType: 'audio', path: '/dir 1/1.mp3'},
+                                        {name: '2 \'', fileName: '2 \'.mp3', title: '', duration: 9, fileType: 'audio', path: '/dir 1/2 \'.mp3'},
+                                        {name: '1 \&', fileName: '1 \&.mp3', title: 'Test audio title', duration: 6, fileType: 'audio', path: '/dir 1/1 \&.mp3'},
                                         {name: 'fake', fileName: 'fake.mp3', title: '', duration: 0, fileType: 'audio', path: '/dir 1/fake.mp3'},
                                         {name: '3', fileName: '3.wav', title: '', duration: 9, fileType: 'audio', path: '/dir 1/3.wav'}
                                     ];
