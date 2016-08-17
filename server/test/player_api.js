@@ -13,7 +13,7 @@ import {assert} from 'chai';
 //import {server } from '../app.js'
 
 const SAMPLES = [
-	{name: 'audio', path: '/2.mp3', duration: 9},
+	{name: 'audio', path: '/3.wav', duration: 9},
 	{name: 'video', path: '/1.mp4', duration: 5}
 ];
 

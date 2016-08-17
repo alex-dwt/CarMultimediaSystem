@@ -39,6 +39,26 @@ describe('Settings API', () => {
 					})
 	);
 
+	it('Can read empty settings',
+			done => {
+				execSync("touch '" +SETTINGS_PATH + "'; exit 0");
+
+				request(server)
+					.get('/settings/')
+					.expect(200)
+					.end((err, res) => {
+						if (err) {
+							return done(err);
+						}
+
+						assert.strictEqual(res.body.success, true);
+						assert.deepEqual(res.body.settings, { });
+
+						done();
+					});
+			}
+	);
+
 	it('Can save and read settings',
 			done => {
 				let exampleSettings = {
@@ -68,7 +88,7 @@ describe('Settings API', () => {
 
 								done();
 							});
-					})
+					});
 			}
 	);
 });

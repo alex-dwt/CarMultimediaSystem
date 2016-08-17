@@ -19,6 +19,7 @@ function main {
             ;;
         "start-dev")
             touch /home/pi/CarMultimediaSystem/server/player_settings.json
+
             docker run  --rm -it \
                 --name=car-pi-container \
                 -v /home/pi/CarMultimediaSystem/server/player_settings.json:/car-pi/server/player_settings.json \

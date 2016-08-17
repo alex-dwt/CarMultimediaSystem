@@ -13,9 +13,14 @@ export default class SettingsSaver {
 
 	static getSettings() {
 		try {
-			return {
-				settings: JSON.parse(readFileSync(SETTINGS_PATH, 'utf8'))
-			};
+			let content = readFileSync(SETTINGS_PATH, 'utf8');
+			if (content === '') {
+				return {settings: { }};
+			} else {
+				return {
+					settings: JSON.parse(content)
+				};
+			}
 		} catch (e) {
 			if (e.code === 'ENOENT') {
 				return {settings: { }};
