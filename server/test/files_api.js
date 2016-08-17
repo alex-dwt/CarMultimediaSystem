@@ -121,13 +121,12 @@ describe('Files API', () => {
 								return done(err);
 							}
 
-							console.log(res.body.dirs)
-
-							assert.sameDeepMembers(
+                            assert.sameDeepMembers(
                                 res.body.dirs,
                                 [
                                     {path: '/dir 1/dir11', files_count: fileType.ext.length, dir_name: 'dir11', is_parent_dir: false},
                                     {path: '/dir 1/dir&\'12', files_count: fileType.ext.length * 2, dir_name: 'dir&\'12', is_parent_dir: false},
+                                    {path: '/dir 1/dir \\5', files_count: 0, dir_name: 'dir \\5', is_parent_dir: false},
                                     {path: '/', files_count: 0, dir_name: '', is_parent_dir: true}
                                 ]
                             );
@@ -196,18 +195,20 @@ describe('Files API', () => {
 
 /**
  * Creates following directories:
- * ./dir 1
- * ./dir 1/dir11
- * ./dir 1/dir&'12
- * ./dir 1/dir&'12/dir121
- * ./dir2
- * ./dir3
- * ./dir3/dir31
- * ./dir3/dir32
+ ├── dir 1
+ │   ├── dir11
+ │   └── dir&'12
+ │       └── dir121
+ │   └── dir \5
+ ├── dir2
+ └── dir3
+     ├── dir31
+     └── dir32
  */
 function createFakeDirs(path) {
 	execSync(`
 	    /bin/bash -c "mkdir -p ${path}/{dir1/{dir11,dir\\&\\'12/dir121},dir2,dir3/{dir31,dir32}}" && \
-	    mv ${path}/dir1 '${path}/dir 1'
+	    mv ${path}/dir1 '${path}/dir 1' && \
+	    mkdir -p "${path}/dir 1/dir \\5"
 	`);
 }

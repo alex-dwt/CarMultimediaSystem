@@ -70,8 +70,9 @@ export default class FilesScanner {
 			dirs.pop();
 			for (let i = 0, j = dirs.length; i < j; i += 2) {
 				let [p, c] = dirs.slice(i, i + 2);
-				result.dirs.push(
-					Snake(new Directory(p.replace(type.dir, ''), c))
+                p = p.replace(type.dir, '').replace(/\\{1}([^\\])/g, '$1');
+                result.dirs.push(
+					Snake(new Directory(p, c))
 				);
 			}
 		}
