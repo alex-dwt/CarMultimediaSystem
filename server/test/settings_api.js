@@ -25,7 +25,7 @@ describe('Settings API', () => {
 	it('Can read nonexistent settings',
 			done =>
 				request(server)
-					.get('/settings/')
+					.get('/settings/?key=fake')
 					.expect(200)
 					.end((err, res) => {
 						if (err) {
@@ -33,7 +33,7 @@ describe('Settings API', () => {
 						}
 
 						assert.strictEqual(res.body.success, true);
-						assert.deepEqual(res.body.settings, { });
+						assert.deepEqual(res.body.value, { });
 
 						done();
 					})
@@ -44,7 +44,7 @@ describe('Settings API', () => {
 				execSync("touch '" +SETTINGS_PATH + "'; exit 0");
 
 				request(server)
-					.get('/settings/')
+					.get('/settings/?key=fake')
 					.expect(200)
 					.end((err, res) => {
 						if (err) {
@@ -52,7 +52,7 @@ describe('Settings API', () => {
 						}
 
 						assert.strictEqual(res.body.success, true);
-						assert.deepEqual(res.body.settings, { });
+						assert.deepEqual(res.body.value, { });
 
 						done();
 					});
@@ -69,7 +69,7 @@ describe('Settings API', () => {
 
 				request(server)
 					.post('/settings/')
-					.send({settings: exampleSettings})
+					.send({key: 'example', value: exampleSettings})
 					.expect(200, {success: true})
 					.end((err, res) => {
 						if (err) {
@@ -77,14 +77,14 @@ describe('Settings API', () => {
 						}
 
 						request(server)
-							.get('/settings/')
+							.get('/settings/?key=example')
 							.end((err, res) => {
 								if (err) {
 									return done(err);
 								}
 
 								assert.strictEqual(res.body.success, true);
-								assert.deepEqual(res.body.settings, exampleSettings);
+								assert.deepEqual(res.body.value, exampleSettings);
 
 								done();
 							});

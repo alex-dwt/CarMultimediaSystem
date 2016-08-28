@@ -11,36 +11,59 @@ const SETTINGS_PATH = '/car-pi/server/player_settings.json';
 
 export default class SettingsSaver {
 
-	static getSettings() {
-		try {
-			let content = readFileSync(SETTINGS_PATH, 'utf8');
-			if (content === '') {
-				return {settings: { }};
-			} else {
-				return {
-					settings: JSON.parse(content)
-				};
-			}
-		} catch (e) {
-			if (e.code === 'ENOENT') {
-				return {settings: { }};
-			} else {
-				throw e;
-			}
+	static getSettings(key) {
+		if (typeof key === 'undefined' || key === '') {
+			throw new HttpException(422, 'Param "key" is wrong or missing');
 		}
+
+		let settings = read();
+
+		let value = (
+			typeof settings[key] === 'undefined'
+				? { }
+				: settings[key]
+		);
+
+		return {value};
 	}
 
 	static saveSettings(body) {
-		if (typeof body.settings === 'undefined') {
+		let key = String(body.key);
+		if (typeof key === 'undefined' ||
+			key === '' ||
+			typeof body.value === 'undefined'
+		) {
 			throw new HttpException(422, 'Params are wrong or missing');
 		}
 
+		let settings = read();
+		settings[key] = body.value;
+
 		writeFileSync(
 			SETTINGS_PATH,
-			JSON.stringify(body.settings),
+			JSON.stringify(settings),
 			'utf8'
 		);
 
 		return true;
+	}
+}
+
+function read()
+{
+	try {
+		let content = readFileSync(SETTINGS_PATH, 'utf8');
+
+		return (
+			content === ''
+				? { }
+				: JSON.parse(content)
+		);
+	} catch (e) {
+		if (e.code === 'ENOENT') {
+			return { };
+		} else {
+			throw e;
+		}
 	}
 }

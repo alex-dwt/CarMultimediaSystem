@@ -69,7 +69,7 @@ app.post('/player/:action', (req, res, next) => {
  */
 app.get('/settings/', (req, res, next) => {
 	try {
-		let result = SettingsSaver.getSettings();
+		let result = SettingsSaver.getSettings(String(req.query.key));
 		if (typeof result === 'boolean') {
 			res.json({ success: result });
 		} else {

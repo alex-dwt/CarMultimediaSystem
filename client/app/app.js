@@ -11,6 +11,7 @@ import {HTTP_PROVIDERS} from 'angular2/http';
 import {ExplorerService} from '_app/service/explorer.service';
 import {HttpService} from '_app/service/http.service'
 import {PlayerService} from '_app/service/player.service'
+import {SettingsService} from '_app/service/settings.service';
 
 import {AudioTab} from '_app/tab/audio.tab';
 import {VideoTab} from '_app/tab/video.tab';
@@ -116,4 +117,10 @@ class AppComponent {
 	}
 }
 
-bootstrap(AppComponent, [HTTP_PROVIDERS, ExplorerService, PlayerService, HttpService]);
+bootstrap(AppComponent, [
+	HTTP_PROVIDERS,
+	SettingsService,
+	ExplorerService,
+	PlayerService,
+	HttpService
+]);

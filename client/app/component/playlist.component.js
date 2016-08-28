@@ -7,6 +7,7 @@
 import {Component, EventEmitter, OnInit} from 'angular2/core';
 import {TrackDurationPipe } from '_app/pipe/trackDuration.pipe';
 import {TrackTitlePipe } from '_app/pipe/trackTitle.pipe';
+import {SettingsService} from '_app/service/settings.service';
 
 import {PagingComponent} from '_app/component/paging.component';
 import {ScaleOnClickDirective} from '_app/directive/scaleOnClick.directive';
@@ -78,7 +79,13 @@ import {ScaleOnClickDirective} from '_app/directive/scaleOnClick.directive';
 	pipes: [TrackDurationPipe, TrackTitlePipe]
 })
 export class PlaylistComponent {
-	constructor() {
+	static get parameters() {
+		return [[SettingsService]];
+	}
+
+	constructor(settingsService) {
+		this._settingsService = settingsService;
+
 		this.playlistItems = [];
 
 		this.currentItems = [];
@@ -121,6 +128,8 @@ export class PlaylistComponent {
 
 			// redraw playlist
 			this.showItemEvent.emit(false);
+
+			this._settingsService.save('playlistItems', this.playlistItems);
 		});
 
 		this.addDirectoryEvent.subscribe(item => {

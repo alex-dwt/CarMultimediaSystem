@@ -39,6 +39,7 @@ function main {
         "start-bash")
             docker run  --rm -it \
                 -v /opt/vc:/opt/vc:ro --device /dev/vchiq:/dev/vchiq --device /dev/fb0:/dev/fb0 \
+                -v /home/pi/CarMultimediaSystem/client:/car-pi/client \
                 -p 80:80 \
                 alex_dwt/car-pi bash
             ;;

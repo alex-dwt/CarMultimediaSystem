@@ -6,6 +6,7 @@
 
 import {Component, EventEmitter, OnInit} from 'angular2/core';
 import {PlayerService} from '_app/service/player.service';
+import {SettingsService} from '_app/service/settings.service';
 import {TrackDurationPipe } from '_app/pipe/trackDuration.pipe';
 import {TrackTitlePipe } from '_app/pipe/trackTitle.pipe';
 import {ScaleOnClickDirective} from '_app/directive/scaleOnClick.directive';
@@ -40,7 +41,7 @@ const CHECK_DURATION_INTERVAL = 2000;
 					<span
 						scale-on-click
 						class="glyphicon-refresh"
-						(click)="isReplayBtnActive = !isReplayBtnActive"
+						(click)="settingsBtnClick('ReplayBtn')"
 						[class.active]="isReplayBtnActive">
 					</span>
 				</div>
@@ -54,7 +55,7 @@ const CHECK_DURATION_INTERVAL = 2000;
 					<span
 						scale-on-click
 						class="glyphicon-retweet"
-						(click)="isCycleBtnActive = !isCycleBtnActive"
+						(click)="settingsBtnClick('CycleBtn')"
 						[class.active]="isCycleBtnActive">
 					</span>
 				</div>
@@ -80,11 +81,13 @@ const CHECK_DURATION_INTERVAL = 2000;
 })
 export class PlayerComponent {
 	static get parameters() {
-		return [	[PlayerService]];
+		return [	[PlayerService], [SettingsService]];
 	}
 
-	constructor(playerService) {
+	constructor(playerService, settingsService) {
 		this._playerService = playerService;
+		this._settingsService = settingsService;
+
 		this.changeStatus = new EventEmitter();
 
 		this.STATUS_STOPPED = 'stopped';
@@ -154,6 +157,12 @@ export class PlayerComponent {
 		}
 	}
 
+	settingsBtnClick(btnName) {
+		let key = 'is' + btnName + 'Active';
+		this[key] = ! this[key];
+		this._settingsService.save(key, this[key]);
+	}
+
 	_setCurrentPosition(value) {
 		value = parseInt(value) || 0;
 		this.currentPosition = value;
@@ -172,6 +181,7 @@ export class PlayerComponent {
 		this._playerService.play(item)
 			.then(() => {
 				this._setStatus(this.STATUS_PLAYING, item);
+				this._settingsService.save('currentPlayingItem', item);
 			});
 	}
 
