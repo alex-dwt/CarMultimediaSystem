@@ -108,6 +108,24 @@ export class PlayerComponent {
 		this._getStatus();
 		this._getDuration();
 		this.playFileEvent.subscribe(item => this._play(item));
+
+		// load settings
+		this._settingsService.read('currentPlayingItem').then(
+			(data) => {
+				if (Object.getOwnPropertyNames(data.value).length !== 0) {
+					this.playFileEvent.emit(data.value);
+				}
+			}
+		);
+		for (let prop of ['isReplayBtnActive', 'isCycleBtnActive']) {
+			this._settingsService.read(prop).then(
+				(data) => {
+					if (typeof data.value === 'boolean') {
+						this[prop] = data.value;
+					}
+				}
+			);
+		}
 	}
 
 	playPrevBtnClick() {

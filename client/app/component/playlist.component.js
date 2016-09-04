@@ -162,6 +162,18 @@ export class PlaylistComponent {
 				}
 			}
 		});
+
+		// load settings
+		this._settingsService.read('playlistItems').then(
+			(data) => {
+				if (Object.getOwnPropertyNames(data.value).length !== 0) {
+					this.playlistItems = data.value;
+					this.items = this.playlistItems[this.currentPlaylistId];
+					// redraw playlist
+					this.showItemEvent.emit(false);
+				}
+			}
+		);
 	}
 
 	onCurrentItemsChange(currentItems) {
@@ -227,10 +239,12 @@ export class PlaylistComponent {
 			if (pos === -1) {
 				// find in any playlist
 				this.playlistItems.some((item, index) => {
-					pos = item.findIndex(e => e.path === this.currentPlayingItemPath);
-					if (pos !== -1) {
-						playlistId = index;
-						return true;
+					if (item) {
+						pos = item.findIndex(e => e.path === this.currentPlayingItemPath);
+						if (pos !== -1) {
+							playlistId = index;
+							return true;
+						}
 					}
 				});
 			}

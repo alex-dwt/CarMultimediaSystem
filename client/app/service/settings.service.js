@@ -21,4 +21,8 @@ export class SettingsService {
 	save(key, value) {
 		return this._httpService.postRequest(URL, {key, value});
 	}
+
+	read(key) {
+		return this._httpService.getRequest(URL, [['key', key]]);
+	}
 }
