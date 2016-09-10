@@ -6,13 +6,10 @@ FROM sdhibit/rpi-raspbian
 MAINTAINER Alexander Lukashevich <aleksandr.dwt@gmail.com>
 
 RUN apt-get update && \
-    apt-get -y upgrade && \
-    apt-get install -y  --no-install-recommends curl mediainfo dbus libfreetype6 libssl-dev libssh-dev libsmbclient-dev
+    apt-get install -y  --no-install-recommends wget ca-certificates mediainfo dbus libfreetype6 libssl-dev libssh-dev libsmbclient-dev
 
 COPY ./build/* /tmp/
 RUN dpkg -i /tmp/omxplayer.deb && rm -f /tmp/omxplayer.deb
-
-RUN apt-get install -y wget
 
 RUN cd /tmp && mkdir _node && \
     wget -O node.tar.xz https://nodejs.org/dist/v6.2.2/node-v6.2.2-linux-armv7l.tar.xz && \
