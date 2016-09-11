@@ -5,14 +5,59 @@
  */
 
 import {Component} from 'angular2/core';
+import {CameraService} from '_app/service/camera.service';
+
+const CHECK_CAMERA_DELAY = 1;
 
 @Component({
 	selector: '[camera-tab]',
 	template: `
 		<div>
-			<img src="http://carpi:6100/?action=stream"/>
+			<img src="{{ url }}">
 		</div>
 	`
 })
 export class CameraTab {
+	static get parameters() {
+		return [	[CameraService]];
+	}
+
+	constructor(cameraService) {
+		this._cameraService = cameraService;
+		this.url = null;
+		checkCameraAvailability.call(this);
+	}
+
+	ngOnInit(){
+		this.url = '';
+		this._cameraService.enableCamera();
+	}
+
+	ngOnDestroy(){
+		this.url = null;
+		this._cameraService.disableCamera();
+	}
+}
+
+function checkCameraAvailability() {
+	if (this.url === '') {
+		this._cameraService
+			.getCameraUrl()
+			.then((url) => {
+				this.url = url;
+				setTimeout.call(this);
+			})
+			.catch(() => setTimeout.call(this));
+
+		return;
+	}
+
+	setTimeout.call(this);
+}
+
+function setTimeout() {
+	window.setTimeout(
+		() => checkCameraAvailability.call(this),
+		CHECK_CAMERA_DELAY * 1000
+	);
 }

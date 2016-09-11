@@ -16,13 +16,17 @@ export class HttpService {
 		this._http = http
 	}
 
-	getRequest(url, urlParams = []){
+	getRequest(url, urlParams = [], makeDeleteRequest = false){
 		let params = new URLSearchParams();
 		urlParams
 			.concat([['_rand', Math.random()]])
 			.forEach(param => params.set(param[0], param[1]));
 
-		return this._http.get(
+		let requestType = !makeDeleteRequest
+			? 'get'
+			: 'delete';
+
+		return this._http[requestType](
 			url,
 			new RequestOptions({
 				headers: new Headers({ 'Content-Type': 'application/json' }),
@@ -33,8 +37,12 @@ export class HttpService {
 			.toPromise();
 	}
 
-	postRequest(url, data = { }){
-		return this._http.post(
+	postRequest(url, data = { }, makePutRequest = false){
+		let requestType = !makePutRequest
+			? 'post'
+			: 'put';
+
+		return this._http[requestType](
 			url,
 			JSON.stringify(data),
 			new RequestOptions({
