@@ -17,6 +17,28 @@ function main {
         "build")
             docker build -t alex_dwt/car-pi $WORK_DIR
             ;;
+        "start")
+            docker rm -f car-pi-container >/dev/null 2>&1
+
+            touch /home/pi/CarMultimediaSystem/server/player_settings.json
+
+            docker run  -d \
+                --name=car-pi-container \
+                -v /home/pi/CarMultimediaSystem/server/player_settings.json:/car-pi/server/player_settings.json \
+                -v /home/pi/CarMultimediaSystem/client:/car-pi/client \
+                -v /home/pi/Audio:/Audio \
+                -v /home/pi/Video:/Video \
+                -v /opt/vc:/opt/vc:ro --device /dev/vchiq:/dev/vchiq --device /dev/fb0:/dev/fb0 \
+                -p 80:80 \
+                alex_dwt/car-pi  >/dev/null 2>&1
+
+            if [ $? -ne 0 ]
+            then
+              echo 'Failure!'
+            else
+              echo 'Successfully started!'
+            fi
+            ;;
         "start-dev")
             touch /home/pi/CarMultimediaSystem/server/player_settings.json
 
