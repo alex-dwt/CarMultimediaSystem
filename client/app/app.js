@@ -13,7 +13,9 @@ import {HttpService} from '_app/service/http.service'
 import {PlayerService} from '_app/service/player.service'
 import {SettingsService} from '_app/service/settings.service';
 import {CameraService} from '_app/service/camera.service';
+import {GpsService} from '_app/service/gps.service';
 
+import {MainTab} from '_app/tab/main.tab';
 import {AudioTab} from '_app/tab/audio.tab';
 import {VideoTab} from '_app/tab/video.tab';
 import {CameraTab} from '_app/tab/camera.tab';
@@ -32,8 +34,13 @@ import {PlayerComponent} from '_app/component/player.component';
 				(click)="onVideoBackgroundClick()">
 			</div>
 
+			<section main-tab
+				class="common-tab"
+				[hidden]="activeTabId !== TAB_MAIN_ID || isPlayingVideoFile">
+			</section>
+
 			<section audio-tab
-				class="player-explorer"
+				class="common-tab player-explorer"
 				[playFileEvent]="playFileEvent"
 				[playNextTrackEvent]="playNextTrackEvent"
 				[playPrevTrackEvent]="playPrevTrackEvent"
@@ -41,7 +48,7 @@ import {PlayerComponent} from '_app/component/player.component';
 			</section>
 
 			<section video-tab
-				class="player-explorer"
+				class="common-tab player-explorer"
 				[playFileEvent]="playFileEvent"
 				[playNextTrackEvent]="playNextTrackEvent"
 				[playPrevTrackEvent]="playPrevTrackEvent"
@@ -67,7 +74,7 @@ import {PlayerComponent} from '_app/component/player.component';
 			</nav>
 		</div>
 	`,
-	directives: [NavbarComponent, PlayerComponent, AudioTab, VideoTab, CameraTab]
+	directives: [NavbarComponent, PlayerComponent, AudioTab, VideoTab, CameraTab, MainTab]
 })
 class AppComponent {
 	static get parameters() {
@@ -124,5 +131,6 @@ bootstrap(AppComponent, [
 	ExplorerService,
 	PlayerService,
 	CameraService,
+	GpsService,
 	HttpService
 ]);

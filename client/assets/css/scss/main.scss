@@ -123,3 +123,10 @@ nav {
 	display: none !important;
 }
 
+// all tabs common style
+.common-tab {
+	flex-grow: 10;
+	border: 2px solid #e7e7e7;
+	position: relative;
+	border-radius: 2vmin;
+}
