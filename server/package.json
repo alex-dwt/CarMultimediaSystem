@@ -4,8 +4,10 @@
   "description": "",
   "main": "app.js",
   "scripts": {
-    "start": "babel-node app.js",
-    "test": "mocha --timeout 10000 --compilers js:babel-core/register"
+    "start": "node ./build/app.js",
+    "start-babel": "babel-node app.js",
+    "test": "mocha --timeout 10000 --compilers js:babel-core/register",
+    "build": "babel --ignore node_modules,test -d ./build ."
   },
   "author": "",
   "license": "ISC",

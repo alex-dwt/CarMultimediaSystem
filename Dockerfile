@@ -22,6 +22,11 @@ COPY ./server/package.json /car-pi/server/
 WORKDIR /car-pi/server
 RUN npm install
 COPY ./server /car-pi/server/
+RUN mkdir build && \
+    npm run build && \
+    ln -s /car-pi/server/node_modules /car-pi/server/build/node_modules
+
+
 
 # client
 # RUN mkdir -p /car-pi/client
