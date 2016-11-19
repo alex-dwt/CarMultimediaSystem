@@ -4,7 +4,7 @@
 # For the full copyright and license information, please view the LICENSE file that was distributed with this source code.
 
 DAEMON_DELAY=60
-BROWSER_DELAY=30
+BROWSER_DELAY=60
 BROWSER_WINDOWS_COUNT=6
 
 #######
