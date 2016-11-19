@@ -6,13 +6,15 @@
 
 import {Component} from 'angular2/core';
 import {GpsComponent} from '_app/component/gps.component';
+import {ShutdownComponent} from '_app/component/shutdown.component';
 
 @Component({
 	selector: '[main-tab]',
 	template: `
 		<section id="gps-info-block"></section>
+		<section id="shutdown-block"></section>
 	`,
-	directives: [GpsComponent]
+	directives: [GpsComponent, ShutdownComponent]
 })
 export class MainTab {
 

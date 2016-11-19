@@ -14,6 +14,7 @@ import {PlayerService} from '_app/service/player.service'
 import {SettingsService} from '_app/service/settings.service';
 import {CameraService} from '_app/service/camera.service';
 import {GpsService} from '_app/service/gps.service';
+import {SystemService} from '_app/service/system.service';
 
 import {MainTab} from '_app/tab/main.tab';
 import {AudioTab} from '_app/tab/audio.tab';
@@ -132,5 +133,6 @@ bootstrap(AppComponent, [
 	PlayerService,
 	CameraService,
 	GpsService,
+	SystemService,
 	HttpService
 ]);

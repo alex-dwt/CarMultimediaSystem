@@ -1,0 +1,18 @@
+# This file is part of the CarMultimediaSystem package.
+# (c) Alexander Lukashevich <aleksandr.dwt@gmail.com>
+# For the full copyright and license information, please view the LICENSE file that was distributed with this source code.
+
+[Unit]
+Description=car system
+After=rc-local.service
+
+[Service]
+User=pi
+Type=oneshot
+ExecStart=/bin/bash -c '/home/pi/CarMultimediaSystem/start_application.sh &'
+ExecStop=/bin/bash -c '/home/pi/CarMultimediaSystem/stop_application.sh'
+RemainAfterExit=yes
+StandardOutput=tty
+
+[Install]
+WantedBy=multi-user.target

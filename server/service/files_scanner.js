@@ -60,7 +60,7 @@ export default class FilesScanner {
 
         let dirs = execSync(`
             fullPath="${fullPath}"; \
-			find "$fullPath" -maxdepth 1 -not -path "$fullPath" -type d -print0 2>/dev/null \
+			find "$fullPath" -L -maxdepth 1 -not -path "$fullPath" -type d -print0 2>/dev/null \
             | xargs -I {} -0 -n1 bash -c 'temp=$(printf "%q" "{}"); echo "$temp"; echo \
             $(find "{}" -type f -regex ".+\\.\\(${type.ext.join('\\|')}\\)$" | wc -l)' 2>/dev/null
 		`).toString();

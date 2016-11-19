@@ -1,0 +1,5 @@
+# This file is part of the CarMultimediaSystem package.
+# (c) Alexander Lukashevich <aleksandr.dwt@gmail.com>
+# For the full copyright and license information, please view the LICENSE file that was distributed with this source code.
+
+ACTION=="add", KERNEL=="sd[a-z]1", SUBSYSTEM=="block", RUN+="/bin/mount -t auto -o uid=1000,noexec,nodev,noatime,nodiratime /dev/%k /home/pi/Audio/__usb/"

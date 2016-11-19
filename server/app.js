@@ -11,6 +11,7 @@ import bodyParser from 'body-parser';
 import MediaPlayer from './service/media_player'
 import FilesScanner from './service/files_scanner'
 import SettingsSaver from './service/settings_saver'
+import SystemService from './service/system_service'
 import HttpException from './exception/http_exception'
 
 let app = express();
@@ -26,6 +27,18 @@ app.use(function(req, res, next) {
 		res.status(204).send();
 	} else {
 		next();
+	}
+});
+
+/**
+ * System
+ */
+app.post('/system/:command', (req, res, next) => {
+	try {
+		SystemService.doCommand(req.params.command);
+		res.json({ success: true });
+	} catch (e) {
+		next(e);
 	}
 });
 

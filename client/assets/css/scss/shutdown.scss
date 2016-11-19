@@ -1,0 +1,24 @@
+/*
+ * This file is part of the CarMultimediaSystem package.
+ * (c) Alexander Lukashevich <aleksandr.dwt@gmail.com>
+ * For the full copyright and license information, please view the LICENSE file that was distributed with this source code.
+ */
+
+#shutdown-block {
+	margin: 2%;
+	display: flex;
+	justify-content: flex-end;
+
+	span {
+		margin-right: 2%;
+		font-size: 5vmin;
+		border: 2px solid #e7e7e7;
+		border-radius: 2vmin;
+		padding: 2vmin;
+		display: block;
+
+		&:last-child {
+			margin-right: 0;
+		}
+	}
+}

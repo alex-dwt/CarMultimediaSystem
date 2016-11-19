@@ -24,6 +24,7 @@ function main {
 
             docker run  -d \
                 --name=car-pi-container \
+                -v /run/systemd:/run/systemd \
                 -v /home/pi/CarMultimediaSystem/server/player_settings.json:/car-pi/server/player_settings.json \
                 -v /home/pi/CarMultimediaSystem/client:/car-pi/client \
                 -v /home/pi/Audio:/Audio \
@@ -44,6 +45,7 @@ function main {
 
             docker run  --rm -it \
                 --name=car-pi-container \
+                -v /run/systemd:/run/systemd \
                 -v /home/pi/CarMultimediaSystem/server/player_settings.json:/car-pi/server/player_settings.json \
                 -v /home/pi/CarMultimediaSystem/client:/car-pi/client \
                 -v /home/pi/Audio:/Audio \

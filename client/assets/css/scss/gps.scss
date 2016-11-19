@@ -5,13 +5,14 @@
  */
 
 #gps-info-block {
+	float: left;
 	width: 35%;
 	margin: 2%;
 	border-radius: 2vmin;
 	border: 2px solid #e7e7e7;
 	padding: 1%;
 	overflow: hidden;
-	font-size: 3vmin;
+	font-size: 3.5vmin;
 
 	> div:first-child {
 		width: 20%;
