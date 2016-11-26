@@ -15,7 +15,7 @@ import {Component, EventEmitter} from 'angular2/core';
 			</li>
 		</ul>
 	`,
-	inputs: ['items'],
+	inputs: ['items', 'activeTab'],
 	outputs: ['change']
 })
 export class NavbarComponent {

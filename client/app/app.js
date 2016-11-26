@@ -69,6 +69,7 @@ import {PlayerComponent} from '_app/component/player.component';
 			</section>
 
 			<nav id="navigation"
+				[activeTab]="TAB_MAIN_ID"
 				[items]="tabs"
 				(change)="onChangeMenuTab($event)"
 				[hidden]="isPlayingVideoFile">
@@ -99,7 +100,7 @@ class AppComponent {
 			{id: this.TAB_NAVIGATION_ID, icon: 'glyphicon-globe',  label: 'Navigation'}
 		];
 
-		this.activeTabId = -1;
+		this.activeTabId = this.TAB_MAIN_ID;
 
 		this.playFileEvent = new EventEmitter();
 		this.playNextTrackEvent = new EventEmitter();
