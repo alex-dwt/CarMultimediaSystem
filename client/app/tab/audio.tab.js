@@ -22,6 +22,7 @@ import {ExplorerComponent} from '_app/component/explorer.component';
 		</section>
 		<section playlist
 			[class.inactive]="isExplorerActive"
+			[fileType]="'audio'"
 			[addFileEvent]="addFileEvent"
 			[addDirectoryEvent]="addDirectoryEvent"
 			[playFileEvent]="playFileEvent"

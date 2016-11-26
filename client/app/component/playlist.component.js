@@ -75,7 +75,7 @@ import {ScaleOnClickDirective} from '_app/directive/scaleOnClick.directive';
 		</section>
 	`,
 	directives: [PagingComponent, ScaleOnClickDirective],
-	inputs: ['addFileEvent', 'addDirectoryEvent', 'playFileEvent', 'playNextTrackEvent', 'playPrevTrackEvent'],
+	inputs: ['fileType', 'addFileEvent', 'addDirectoryEvent', 'playFileEvent', 'playNextTrackEvent', 'playPrevTrackEvent'],
 	pipes: [TrackDurationPipe, TrackTitlePipe]
 })
 export class PlaylistComponent {
@@ -129,7 +129,10 @@ export class PlaylistComponent {
 			// redraw playlist
 			this.showItemEvent.emit(false);
 
-			this._settingsService.save('playlistItems', this.playlistItems);
+			this._settingsService.save(
+				`playlistItems-${this.fileType}`,
+				this.playlistItems
+			);
 		});
 
 		this.addDirectoryEvent.subscribe(item => {
@@ -164,7 +167,7 @@ export class PlaylistComponent {
 		});
 
 		// load settings
-		this._settingsService.read('playlistItems').then(
+		this._settingsService.read(`playlistItems-${this.fileType}`).then(
 			(data) => {
 				if (Object.getOwnPropertyNames(data.value).length !== 0) {
 					this.playlistItems = data.value;
