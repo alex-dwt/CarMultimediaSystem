@@ -77,8 +77,8 @@ const DEFAULT_PATH ='/';
 		</ul>
 
 		<section class="panel-paging">
-			<div class="active show-only-files" [class.active]="isShowOnlyFiles" (click)="showOnlyFiles()">
-				<span class="glyphicon-align-justify"></span>
+			<div scale-on-click class="refresh-cur-dir" (click)="selectDirectory()">
+				<span class="glyphicon-refresh"></span>
 			</div>
 
 			<div paging
@@ -105,7 +105,6 @@ export class ExplorerComponent {
 		this.currentItems = [];
 		this.itemsPerPage = 4;
 
-		this.isShowOnlyFiles = false;
 		this.currentPath = DEFAULT_PATH;
 	}
 
@@ -152,26 +151,13 @@ export class ExplorerComponent {
 		}
 	}
 
-	showOnlyFiles() {
-		this.isShowOnlyFiles = !this.isShowOnlyFiles;
-		this.selectDirectory();
-	}
-
 	selectDirectory(path = this.currentPath) {
 		this._explorerService.getDirectoryContent(this.fileType, path).then((res) => {
 			this.currentPath = path
 
 			let dirs = [];
 
-			//if (this.currentPath !== DEFAULT_PATH) {
-			//	dirs.push({
-			//		isPreviousDirectory: true,
-			//	});
-			//}
-
-			//if (!this.isShowOnlyFiles) {
-				dirs = dirs.concat(res.dirs);
-			//}
+			dirs = dirs.concat(res.dirs);
 
 			this.items = dirs.concat(res.files);/*.map((item) => {
 				item.isWantToDelete = false;

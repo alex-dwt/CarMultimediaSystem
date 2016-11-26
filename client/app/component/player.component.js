@@ -40,7 +40,7 @@ const CHECK_DURATION_INTERVAL = 2000;
 				<div>
 					<span
 						scale-on-click
-						class="glyphicon-refresh"
+						class="glyphicon-repeat"
 						(click)="settingsBtnClick('ReplayBtn')"
 						[class.active]="isReplayBtnActive">
 					</span>

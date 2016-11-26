@@ -187,18 +187,13 @@
 		justify-content: center;
 		align-items: center;
 
-		.show-only-files {
+		.refresh-cur-dir {
 			position: absolute;
 			top: 0;
 			left: 0;
 			height: 100%;
-			color: grey;
+			color: #000;
 			display: flex;
-			align-items: center;
-
-			&.active {
-				color: #000;
-			}
 		}
 
 		.select-playlist {
