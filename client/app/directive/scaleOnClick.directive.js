@@ -24,7 +24,7 @@ export class ScaleOnClickDirective {
 		this.isTransitionable = this.isClicked = true;
 		setTimeout(
 			() => this.isTransitionable = this.isClicked = false,
-			150
+			200
 		);
 	}
 }

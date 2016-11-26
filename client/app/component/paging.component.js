@@ -5,21 +5,25 @@
  */
 
 import {Component, EventEmitter, OnChanges, OnInit} from 'angular2/core';
+import {ScaleOnClickDirective} from '_app/directive/scaleOnClick.directive';
 
 @Component({
 	selector: '[paging]',
 	template: `
 		<span class="glyphicon-arrow-left"
+			scale-on-click
 			[style.visibility]="currentItemsFrom <= 1 ? 'hidden' : 'visible'"
 			(click)="prevPage()">
 		</span>
 		<p>{{ currentItemsFrom }}-{{ currentItemsTill }} of {{ items.length }}</p>
 		<span class="glyphicon-arrow-right"
+			scale-on-click
 			[style.visibility]="currentItemsTill >= items.length ? 'hidden' : 'visible'"
 			(click)="nextPage()">
 		</span>
 	`,
 	inputs: ['items', 'itemsPerPage', 'showItemEvent'],
+	directives: [ScaleOnClickDirective],
 	outputs: ['change']
 })
 export class PagingComponent {

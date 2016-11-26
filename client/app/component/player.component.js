@@ -65,7 +65,7 @@ const CHECK_DURATION_INTERVAL = 2000;
 				<div>
 					<h2>{{ currentItem.name }}</h2>
 					<h1>{{ currentItem.title | trackTitle }}</h1>
-					<div #progressBar class="progress" (click)="rewindClick($event, progressBar)">
+					<div #progressBar scale-on-click class="progress" (click)="rewindClick($event, progressBar)">
 						<div class="progress-bar" [style.width]="currentPositionPercent + '%'"></div>
 					</div>
 					<p [style.visibility]="currentPosition >= 1 ? 'visible' : 'hidden'">{{ currentPosition | trackDuration }}</p>
