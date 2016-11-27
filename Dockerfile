@@ -22,7 +22,8 @@ COPY ./server/package.json /car-pi/server/
 WORKDIR /car-pi/server
 RUN npm install
 COPY ./server /car-pi/server/
-RUN mkdir build && \
+RUN mkdir /Usb && mkdir /Audio && mkdir /Video && ln -s /Usb /Audio/usb && ln -s /Usb /Video/usb && \
+    mkdir build && \
     npm run build && \
     ln -s /car-pi/server/node_modules /car-pi/server/build/node_modules
 

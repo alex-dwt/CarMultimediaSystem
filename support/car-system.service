@@ -9,8 +9,8 @@ After=rc-local.service
 [Service]
 User=pi
 Type=oneshot
-ExecStart=/bin/bash -c '/home/pi/CarMultimediaSystem/start_application.sh &'
-ExecStop=/bin/bash -c '/home/pi/CarMultimediaSystem/stop_application.sh'
+ExecStart=/bin/bash -c '/home/pi/CarMultimediaSystem/support/start_application.sh &'
+ExecStop=/bin/bash -c '/home/pi/CarMultimediaSystem/support/stop_application.sh'
 RemainAfterExit=yes
 StandardOutput=tty
 
