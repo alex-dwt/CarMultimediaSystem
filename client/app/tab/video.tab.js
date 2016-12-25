@@ -16,7 +16,6 @@ import {ExplorerComponent} from '_app/component/explorer.component';
 			[class.active]="isExplorerActive"
 			[fileType]="'video'"
 			[addFileEvent]="addFileEvent"
-			[addDirectoryEvent]="addDirectoryEvent"
 			[playFileQueueEvent]="playFileQueueEvent"
 			(click)="isExplorerActive=true">
 		</section>
@@ -24,7 +23,6 @@ import {ExplorerComponent} from '_app/component/explorer.component';
 			[class.inactive]="isExplorerActive"
 			[fileType]="'video'"
 			[addFileEvent]="addFileEvent"
-			[addDirectoryEvent]="addDirectoryEvent"
 			[playingItemChangedEvent]="playingItemChangedEvent"
 			[playFileQueueEvent]="playFileQueueEvent"
 			[playNextTrackEvent]="playNextTrackEvent"
@@ -39,6 +37,5 @@ export class VideoTab {
 	constructor() {
 		this.isExplorerActive = false;
 		this.addFileEvent = new EventEmitter();
-		this.addDirectoryEvent = new EventEmitter();
 	}
 }

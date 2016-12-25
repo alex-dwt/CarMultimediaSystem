@@ -12,6 +12,7 @@ import {TrackTitlePipe } from '_app/pipe/trackTitle.pipe';
 import {PagingComponent} from '_app/component/paging.component';
 import {ScaleOnClickDirective} from '_app/directive/scaleOnClick.directive';
 import {UnderlineOnClickDirective} from '_app/directive/underlineOnClick.directive';
+import {ChangeColorOnClick} from '_app/directive/changeColorOnClick.directive';
 
 const DEFAULT_PATH ='/';
 
@@ -47,6 +48,7 @@ const DEFAULT_PATH ='/';
 					<div>
 						<span
 							scale-on-click
+							change-color-on-click
 							class="glyphicon-plus-sign"
 							(click)="addItemToPlaylist(item)"
 							[class.display-none]="isParentDir(item)">
@@ -81,8 +83,8 @@ const DEFAULT_PATH ='/';
 
 		</section>
 	`,
-	directives: [PagingComponent, ScaleOnClickDirective, UnderlineOnClickDirective],
-	inputs: ['fileType', 'playFileQueueEvent', 'addFileEvent', 'addDirectoryEvent'],
+	directives: [PagingComponent, ScaleOnClickDirective, UnderlineOnClickDirective, ChangeColorOnClick],
+	inputs: ['fileType', 'playFileQueueEvent', 'addFileEvent'],
 	pipes: [TrackDurationPipe, TrackTitlePipe]
 })
 export class ExplorerComponent {
@@ -114,15 +116,15 @@ export class ExplorerComponent {
 
 	addItemToPlaylist(item) {
 		if (this.isFileItem(item)) {
-			console.log('add file to playlist');
-
 			this.addFileEvent.emit(item);
-		} else if (!this.isParentDir(item)){
-			this.addDirectoryEvent.emit({
-				dir: 'addDirectoryEvent'
-			});
-
-			console.log('add dir to playlist');
+		} else if (!this.isParentDir(item)) {
+			this._explorerService
+				.getDirectoryContent(this.fileType, item.path)
+				.then((res) => {
+					for (let item of res.files) {
+						this.addFileEvent.emit(item);
+					}
+				});
 		}
 	}
 

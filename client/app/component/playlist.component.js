@@ -75,7 +75,7 @@ import {UnderlineOnClickDirective} from '_app/directive/underlineOnClick.directi
 		</section>
 	`,
 	directives: [PagingComponent, ScaleOnClickDirective, UnderlineOnClickDirective],
-	inputs: ['fileType', 'addFileEvent', 'addDirectoryEvent', 'playingItemChangedEvent', 'playFileQueueEvent', 'playNextTrackEvent', 'playPrevTrackEvent'],
+	inputs: ['fileType', 'addFileEvent', 'playingItemChangedEvent', 'playFileQueueEvent', 'playNextTrackEvent', 'playPrevTrackEvent'],
 	pipes: [TrackDurationPipe, TrackTitlePipe]
 })
 export class PlaylistComponent {
@@ -133,11 +133,6 @@ export class PlaylistComponent {
 				`playlistItems-${this.fileType}`,
 				this.playlistItems
 			);
-		});
-
-		this.addDirectoryEvent.subscribe(item => {
-			console.log('addDirectoryEvent PLAYLIST')
-			console.log(item)
 		});
 
 		this.playingItemChangedEvent.subscribe(item => this.currentPlayingItemPath = item.path);
