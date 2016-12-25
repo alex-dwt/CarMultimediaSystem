@@ -229,6 +229,7 @@
 		position: absolute;
 		right: 0;
 		bottom: 1vmin;
+		z-index: 99;
 
 		&.active {
 			display: block;
