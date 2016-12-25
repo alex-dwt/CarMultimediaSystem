@@ -11,6 +11,7 @@ import {SettingsService} from '_app/service/settings.service';
 
 import {PagingComponent} from '_app/component/paging.component';
 import {ScaleOnClickDirective} from '_app/directive/scaleOnClick.directive';
+import {UnderlineOnClickDirective} from '_app/directive/underlineOnClick.directive';
 
 @Component({
 	selector: '[playlist]',
@@ -30,12 +31,11 @@ import {ScaleOnClickDirective} from '_app/directive/scaleOnClick.directive';
 					<span class="glyphicon">&nbsp;</span>
 					<p class="dir-badge length-badge">{{ item.duration | trackDuration }}</p>
 				</div>
-				<div class="name-block file-name-block">
-					<p>{{ item.name }}</p>
+				<div underline-on-click class="name-block file-name-block" (click)="playItem(item)">
+					<p><span>{{ item.name }}</span></p>
 					<p>{{ item.title | trackTitle }}</p>
 				</div>
 				<div class="actions-block">
-					<div><span scale-on-click class="glyphicon-play-circle" (click)="playItem(item)"></span></div>
 					<div><span class="glyphicon-share-alt" style="color: grey;"></span></div>
 					<div><span class="glyphicon-remove-circle" (click)="item.isWantToDelete=true"></span></div>
 					<div class="delete-block">
@@ -74,7 +74,7 @@ import {ScaleOnClickDirective} from '_app/directive/scaleOnClick.directive';
 
 		</section>
 	`,
-	directives: [PagingComponent, ScaleOnClickDirective],
+	directives: [PagingComponent, ScaleOnClickDirective, UnderlineOnClickDirective],
 	inputs: ['fileType', 'addFileEvent', 'addDirectoryEvent', 'playingItemChangedEvent', 'playFileQueueEvent', 'playNextTrackEvent', 'playPrevTrackEvent'],
 	pipes: [TrackDurationPipe, TrackTitlePipe]
 })

@@ -38,20 +38,12 @@ const DEFAULT_PATH ='/';
 				<div underline-on-click *ngIf="!isFileItem(item)" class="name-block" (click)="selectDirectory(item.path)">
 					<span>{{ isParentDir(item) ? '. . .' : item.dir_name }}</span>
 				</div>
-				<div *ngIf="isFileItem(item)" class="name-block file-name-block">
-					<p>{{ item.name }}</p>
+				<div underline-on-click *ngIf="isFileItem(item)" class="name-block file-name-block" (click)="playItem(item)">
+					<p><span>{{ item.name }}</span></p>
 					<p>{{ item.title | trackTitle }}</p>
 				</div>
 
 				<div class="actions-block">
-					<div>
-						<span
-							scale-on-click
-							class="glyphicon-play-circle"
-							(click)="playItem(item)"
-							[class.display-none]="!isFileItem(item)">
-						</span>
-					</div>
 					<div>
 						<span
 							scale-on-click

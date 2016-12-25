@@ -95,6 +95,9 @@
 
 				&:first-of-type {
 					font-size: 5vmin;
+					* {
+						font-size: 5vmin;
+					}
 				}
 			}
 		}
