@@ -12,7 +12,7 @@ import {TrackTitlePipe } from '_app/pipe/trackTitle.pipe';
 import {ScaleOnClickDirective} from '_app/directive/scaleOnClick.directive';
 
 const CHECK_CURRENT_POSITION_INTERVAL = 2000;
-const CHECK_STATUS_INTERVAL = 3000;
+const CHECK_STATUS_INTERVAL = 1500;
 const CHECK_DURATION_INTERVAL = 2000;
 
 @Component({
@@ -75,7 +75,7 @@ const CHECK_DURATION_INTERVAL = 2000;
 		</div>
 	`,
 	directives: [ScaleOnClickDirective],
-	inputs: ['playFileEvent', 'playNextTrackEvent', 'playPrevTrackEvent'],
+	inputs: ['playingItemChangedEvent', 'playFileQueueEvent', 'playNextTrackEvent', 'playPrevTrackEvent'],
 	outputs: ['changeStatus'],
 	pipes: [TrackDurationPipe, TrackTitlePipe]
 })
@@ -95,6 +95,7 @@ export class PlayerComponent {
 		this.STATUS_PAUSED = 'paused';
 
 		this.currentItem = {name: '', title: '', duration: ''};
+		this.nextItem = null;
 
 		this._setStatus(this.STATUS_STOPPED);
 
@@ -107,13 +108,13 @@ export class PlayerComponent {
 		this._getCurrentPosition();
 		this._getStatus();
 		this._getDuration();
-		this.playFileEvent.subscribe(item => this._play(item));
+		this.playFileQueueEvent.subscribe(item => this.nextItem = Object.assign({}, item));
 
 		// load settings
 		this._settingsService.read('currentPlayingItem').then(
 			(data) => {
 				if (Object.getOwnPropertyNames(data.value).length !== 0) {
-					this.playFileEvent.emit(data.value);
+					this.playFileQueueEvent.emit(data.value);
 				}
 			}
 		);
@@ -150,7 +151,7 @@ export class PlayerComponent {
 			this._playerService.resume()
 				.then(() => this._setStatus(this.STATUS_PLAYING));
 		} else {
-			this._play(this.currentItem);
+			this.playFileQueueEvent.emit(this.currentItem);
 		}
 	}
 
@@ -195,21 +196,15 @@ export class PlayerComponent {
 		}
 	}
 
-	_play(item) {
-		this._playerService.play(item)
-			.then(() => {
-				this._setStatus(this.STATUS_PLAYING, item);
-				this._settingsService.save('currentPlayingItem', item);
-			});
-	}
-
-	_setStatus(status, item, playNextTrack) {
+	_setStatus(status, item) {
 		switch (status) {
 			case this.STATUS_PAUSED:
 				break;
 
 			case this.STATUS_PLAYING:
 				if (item) {
+					this._settingsService.save('currentPlayingItem', item);
+					this.playingItemChangedEvent.emit(item);
 					this.currentItem = Object.assign({}, item);
 					this.currentItem.duration = '';
 					this._setCurrentPosition(1);
@@ -226,16 +221,6 @@ export class PlayerComponent {
 		}
 
 		this.status = status;
-
-		if (playNextTrack) {
-			if (this.isReplayBtnActive) {
-				this._play(this.currentItem);
-			} else {
-				this.playNextTrackEvent.emit({
-					isStartFromFirstAllowed: this.isCycleBtnActive
-				});
-			}
-		}
 
 		this.changeStatus.emit({
 			status: this.status,
@@ -271,14 +256,26 @@ export class PlayerComponent {
 	_getStatus() {
 		this._playerService.getStatus()
 			.then((res) => {
-				this._setStatus(
-					res.status,
-					null,
-					(
-						res.status === this.STATUS_STOPPED &&
-						this.status === this.STATUS_PLAYING
-					)
-				);
+				if (this.nextItem) {
+					this._playerService.play(this.nextItem)
+						.then(() => {
+							this._setStatus(this.STATUS_PLAYING, this.nextItem);
+							this.nextItem = null;
+						});
+				} else if (res.status === this.STATUS_STOPPED
+						&& this.status === this.STATUS_PLAYING
+				) {
+					if (this.isReplayBtnActive) {
+						this.playFileQueueEvent.emit(this.currentItem);
+					} else {
+						this.playNextTrackEvent.emit({
+							isStartFromFirstAllowed: this.isCycleBtnActive
+						});
+					}
+				}
+
+				this._setStatus(res.status);
+
 				setTimeout(
 					() => this._getStatus(),
 					CHECK_STATUS_INTERVAL

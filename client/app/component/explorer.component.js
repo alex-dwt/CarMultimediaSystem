@@ -90,7 +90,7 @@ const DEFAULT_PATH ='/';
 		</section>
 	`,
 	directives: [PagingComponent, ScaleOnClickDirective, UnderlineOnClickDirective],
-	inputs: ['fileType', 'playFileEvent', 'addFileEvent', 'addDirectoryEvent'],
+	inputs: ['fileType', 'playFileQueueEvent', 'addFileEvent', 'addDirectoryEvent'],
 	pipes: [TrackDurationPipe, TrackTitlePipe]
 })
 export class ExplorerComponent {
@@ -137,7 +137,7 @@ export class ExplorerComponent {
 	playItem(item) {
 		// play file
 		if (this.isFileItem(item)) {
-			this.playFileEvent.emit(item);
+			this.playFileQueueEvent.emit(item);
 			console.log('explorer play file');
 		}
 	}

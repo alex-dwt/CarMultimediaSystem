@@ -42,7 +42,8 @@ import {PlayerComponent} from '_app/component/player.component';
 
 			<section audio-tab
 				class="common-tab player-explorer"
-				[playFileEvent]="playFileEvent"
+				[playFileQueueEvent]="playFileQueueEvent"
+				[playingItemChangedEvent]="playingItemChangedEvent"
 				[playNextTrackEvent]="playNextTrackEvent"
 				[playPrevTrackEvent]="playPrevTrackEvent"
 				[hidden]="activeTabId !== TAB_MUSIC_ID || isPlayingVideoFile">
@@ -50,7 +51,8 @@ import {PlayerComponent} from '_app/component/player.component';
 
 			<section video-tab
 				class="common-tab player-explorer"
-				[playFileEvent]="playFileEvent"
+				[playFileQueueEvent]="playFileQueueEvent"
+				[playingItemChangedEvent]="playingItemChangedEvent"
 				[playNextTrackEvent]="playNextTrackEvent"
 				[playPrevTrackEvent]="playPrevTrackEvent"
 				[hidden]="activeTabId !== TAB_MOVIES_ID || isPlayingVideoFile">
@@ -61,7 +63,8 @@ import {PlayerComponent} from '_app/component/player.component';
 			</section>
 
 			<section player id="player"
-				[playFileEvent]="playFileEvent"
+				[playFileQueueEvent]="playFileQueueEvent"
+				[playingItemChangedEvent]="playingItemChangedEvent"
 				[playNextTrackEvent]="playNextTrackEvent"
 				[playPrevTrackEvent]="playPrevTrackEvent"
 				[hidden]="(!isPlayerVideoTransparent && isPlayingVideoFile) || activeTabId === TAB_CAMERA_ID"
@@ -102,7 +105,8 @@ class AppComponent {
 
 		this.activeTabId = this.TAB_MAIN_ID;
 
-		this.playFileEvent = new EventEmitter();
+		this.playFileQueueEvent = new EventEmitter();
+		this.playingItemChangedEvent = new EventEmitter();
 		this.playNextTrackEvent = new EventEmitter();
 		this.playPrevTrackEvent = new EventEmitter();
 

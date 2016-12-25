@@ -75,7 +75,7 @@ import {ScaleOnClickDirective} from '_app/directive/scaleOnClick.directive';
 		</section>
 	`,
 	directives: [PagingComponent, ScaleOnClickDirective],
-	inputs: ['fileType', 'addFileEvent', 'addDirectoryEvent', 'playFileEvent', 'playNextTrackEvent', 'playPrevTrackEvent'],
+	inputs: ['fileType', 'addFileEvent', 'addDirectoryEvent', 'playingItemChangedEvent', 'playFileQueueEvent', 'playNextTrackEvent', 'playPrevTrackEvent'],
 	pipes: [TrackDurationPipe, TrackTitlePipe]
 })
 export class PlaylistComponent {
@@ -140,7 +140,7 @@ export class PlaylistComponent {
 			console.log(item)
 		});
 
-		this.playFileEvent.subscribe(item => this.currentPlayingItemPath = item.path);
+		this.playingItemChangedEvent.subscribe(item => this.currentPlayingItemPath = item.path);
 
 		this.playNextTrackEvent.subscribe((settings) => {
 			let pos = this._getPlayingItemPos();
@@ -148,9 +148,9 @@ export class PlaylistComponent {
 			if (pos !== false) {
 				let item = this.playlistItems[pos.playlistId][pos.pos + 1];
 				if (item) {
-					this.playFileEvent.emit(item);
+					this.playFileQueueEvent.emit(item);
 				} else if (settings.isStartFromFirstAllowed && this.playlistItems[pos.playlistId].length) {
-					this.playFileEvent.emit(this.playlistItems[pos.playlistId][0]);
+					this.playFileQueueEvent.emit(this.playlistItems[pos.playlistId][0]);
 				}
 			}
 		});
@@ -161,7 +161,7 @@ export class PlaylistComponent {
 			if (pos !== false) {
 				let item = this.playlistItems[pos.playlistId][pos.pos - 1];
 				if (item) {
-					this.playFileEvent.emit(item);
+					this.playFileQueueEvent.emit(item);
 				}
 			}
 		});
@@ -211,7 +211,7 @@ export class PlaylistComponent {
 	}
 
 	playItem(item) {
-		this.playFileEvent.emit(item);
+		this.playFileQueueEvent.emit(item);
 	}
 
 	deleteItem(item) {

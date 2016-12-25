@@ -17,7 +17,7 @@ import {ExplorerComponent} from '_app/component/explorer.component';
 			[fileType]="'video'"
 			[addFileEvent]="addFileEvent"
 			[addDirectoryEvent]="addDirectoryEvent"
-			[playFileEvent]="playFileEvent"
+			[playFileQueueEvent]="playFileQueueEvent"
 			(click)="isExplorerActive=true">
 		</section>
 		<section playlist
@@ -25,14 +25,15 @@ import {ExplorerComponent} from '_app/component/explorer.component';
 			[fileType]="'video'"
 			[addFileEvent]="addFileEvent"
 			[addDirectoryEvent]="addDirectoryEvent"
-			[playFileEvent]="playFileEvent"
+			[playingItemChangedEvent]="playingItemChangedEvent"
+			[playFileQueueEvent]="playFileQueueEvent"
 			[playNextTrackEvent]="playNextTrackEvent"
 			[playPrevTrackEvent]="playPrevTrackEvent"
 			(click)="isExplorerActive=false">
 		</section>
 	`,
 	directives: [ExplorerComponent, PlaylistComponent],
-	inputs: ['playFileEvent', 'playNextTrackEvent', 'playPrevTrackEvent']
+	inputs: ['playingItemChangedEvent', 'playFileQueueEvent', 'playNextTrackEvent', 'playPrevTrackEvent']
 })
 export class VideoTab {
 	constructor() {
