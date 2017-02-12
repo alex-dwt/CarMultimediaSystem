@@ -52,9 +52,9 @@ export default class FilesScanner {
 		if (path !== '/') {
 			let pos = path.lastIndexOf('/');
 			if (pos === 0) {
-				result.dirs.push(Snake(new Directory('/', 0, true)));
+				result.dirs.push(new Directory(type.name, '/', 0, true));
 			} else if (pos > 0) {
-				result.dirs.push(Snake(new Directory(path.substring(0, pos), 0, true)));
+				result.dirs.push(new Directory(type.name, path.substring(0, pos), 0, true));
 			}
 		}
 
@@ -62,7 +62,7 @@ export default class FilesScanner {
             fullPath="${fullPath}"; \
 			find "$fullPath" -maxdepth 1 -not -path "$fullPath" -type d -print0 2>/dev/null \
             | xargs -I {} -0 -n1 bash -c 'temp=$(printf "%q" "{}"); echo "$temp"; echo \
-            $(find "{}" -type f -regex ".+\\.\\(${type.ext.join('\\|')}\\)$" | wc -l)' 2>/dev/null
+            $(find "{}" -type f -iregex ".+\\.\\(${type.ext.join('\\|')}\\)$" | wc -l)' 2>/dev/null
 		`).toString();
 
 		if (dirs) {
@@ -71,9 +71,7 @@ export default class FilesScanner {
 			for (let i = 0, j = dirs.length; i < j; i += 2) {
 				let [p, c] = dirs.slice(i, i + 2);
                 p = p.replace(type.dir, '').replace(/\\{1}([^\\])/g, '$1');
-                result.dirs.push(
-					Snake(new Directory(p, c))
-				);
+                result.dirs.push(new Directory(type.name, p, c));
 			}
 		}
 

@@ -17,6 +17,7 @@ import {ExplorerComponent} from '_app/component/explorer.component';
 			[fileType]="'audio'"
 			[addFileEvent]="addFileEvent"
 			[playFileQueueEvent]="playFileQueueEvent"
+			[deleteItemSubject]="deleteItemSubject"
 			(click)="isExplorerActive=true">
 		</section>
 		<section playlist
@@ -27,11 +28,12 @@ import {ExplorerComponent} from '_app/component/explorer.component';
 			[playFileQueueEvent]="playFileQueueEvent"
 			[playNextTrackEvent]="playNextTrackEvent"
 			[playPrevTrackEvent]="playPrevTrackEvent"
+			[deleteItemSubject]="deleteItemSubject"
 			(click)="isExplorerActive=false">
 		</section>
 	`,
 	directives: [ExplorerComponent, PlaylistComponent],
-	inputs: ['playingItemChangedEvent', 'playFileQueueEvent', 'playNextTrackEvent', 'playPrevTrackEvent']
+	inputs: ['playingItemChangedEvent', 'playFileQueueEvent', 'playNextTrackEvent', 'playPrevTrackEvent', 'deleteItemSubject']
 })
 export class AudioTab {
 	constructor() {

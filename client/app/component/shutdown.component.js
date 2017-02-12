@@ -12,7 +12,6 @@ import {ScaleOnClickDirective} from '_app/directive/scaleOnClick.directive';
 @Component({
 	selector: '[id=shutdown-block]',
 	template: `
-		<span class="glyphicon-hdd" scale-on-click></span>
 		<span class="glyphicon-log-in" scale-on-click (click)="reboot()"></span>
 		<span class="glyphicon-off" scale-on-click (click)="shutdown()"></span>
 	`,

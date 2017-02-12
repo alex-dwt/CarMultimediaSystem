@@ -5,8 +5,9 @@
  */
 
 import {bootstrap} from 'angular2/platform/browser';
-import {Component, EventEmitter} from 'angular2/core';
+import {Component, EventEmitter, enableProdMode} from 'angular2/core';
 import {HTTP_PROVIDERS} from 'angular2/http';
+import {Subject} from 'rxjs/Subject';
 
 import {ExplorerService} from '_app/service/explorer.service';
 import {HttpService} from '_app/service/http.service'
@@ -42,6 +43,7 @@ import {PlayerComponent} from '_app/component/player.component';
 
 			<section audio-tab
 				class="common-tab player-explorer"
+				[deleteItemSubject]="deleteItemSubject"
 				[playFileQueueEvent]="playFileQueueEvent"
 				[playingItemChangedEvent]="playingItemChangedEvent"
 				[playNextTrackEvent]="playNextTrackEvent"
@@ -51,6 +53,7 @@ import {PlayerComponent} from '_app/component/player.component';
 
 			<section video-tab
 				class="common-tab player-explorer"
+				[deleteItemSubject]="deleteItemSubject"
 				[playFileQueueEvent]="playFileQueueEvent"
 				[playingItemChangedEvent]="playingItemChangedEvent"
 				[playNextTrackEvent]="playNextTrackEvent"
@@ -67,6 +70,7 @@ import {PlayerComponent} from '_app/component/player.component';
 				[playingItemChangedEvent]="playingItemChangedEvent"
 				[playNextTrackEvent]="playNextTrackEvent"
 				[playPrevTrackEvent]="playPrevTrackEvent"
+				[deleteItemSubject]="deleteItemSubject"
 				[hidden]="(!isPlayerVideoTransparent && isPlayingVideoFile) || activeTabId === TAB_CAMERA_ID"
 				(changeStatus)="onChangePlayerStatus($event)">
 			</section>
@@ -109,6 +113,7 @@ class AppComponent {
 		this.playingItemChangedEvent = new EventEmitter();
 		this.playNextTrackEvent = new EventEmitter();
 		this.playPrevTrackEvent = new EventEmitter();
+		this.deleteItemSubject = new Subject();
 
 		this.isPlayingVideoFile = false;
 		this.isPlayerVideoTransparent = false;
@@ -130,6 +135,8 @@ class AppComponent {
 			.then(() => this.isPlayerVideoTransparent = !this.isPlayerVideoTransparent);
 	}
 }
+
+enableProdMode();
 
 bootstrap(AppComponent, [
 	HTTP_PROVIDERS,

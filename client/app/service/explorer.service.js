@@ -24,4 +24,12 @@ export class ExplorerService {
 			[['path', path]]
 		);
 	}
+
+	deleteFile(fileType, path) {
+		return this._httpService.getRequest(
+			FILES_URL + fileType,
+			[['path', path]],
+			true
+		);
+	}
 }

@@ -5,8 +5,9 @@
  */
 
 export default class {
-	constructor(path, filesCount, isParentDir = false) {
-		this.path = path;
+	constructor(fileType, path, filesCount, isParentDir = false) {
+        this.fileType = fileType;
+        this.path = path;
 		this.filesCount = parseInt(filesCount) || 0;
 		this.isParentDir = isParentDir;
 		this.dirName = '';

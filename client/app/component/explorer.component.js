@@ -28,7 +28,7 @@ const DEFAULT_PATH ='/';
 				<div class="info-block">
 					<template [ngIf]="!isFileItem(item)">
 						<span class="glyphicon-folder-close"></span>
-						<p class="dir-badge">{{ isParentDir(item) ? '' : item.files_count }}</p>
+						<p class="dir-badge">{{ isParentDir(item) ? '' : item.filesCount }}</p>
 					</template>
 					<template [ngIf]="isFileItem(item)">
 						<span class="glyphicon">&nbsp;</span>
@@ -37,7 +37,7 @@ const DEFAULT_PATH ='/';
 				</div>
 
 				<div underline-on-click *ngIf="!isFileItem(item)" class="name-block" (click)="selectDirectory(item.path)">
-					<span>{{ isParentDir(item) ? '. . .' : item.dir_name }}</span>
+					<span>{{ isParentDir(item) ? '. . .' : item.dirName }}</span>
 				</div>
 				<div underline-on-click *ngIf="isFileItem(item)" class="name-block file-name-block" (click)="playItem(item)">
 					<p><span>{{ item.name }}</span></p>
@@ -63,7 +63,7 @@ const DEFAULT_PATH ='/';
 					</div>
 					<div class="delete-block">
 						<p>Are you sure?</p>
-						<div><span class="glyphicon-ok" (click)="deleteItem(item)"></span></div>
+						<div><span change-color-on-click class="glyphicon-ok" (click)="deleteItem(item)"></span></div>
 						<div><span class="glyphicon-remove" (click)="item.isWantToDelete=false"></span></div>
 					</div>
 				</div>
@@ -84,7 +84,7 @@ const DEFAULT_PATH ='/';
 		</section>
 	`,
 	directives: [PagingComponent, ScaleOnClickDirective, UnderlineOnClickDirective, ChangeColorOnClick],
-	inputs: ['fileType', 'playFileQueueEvent', 'addFileEvent'],
+	inputs: ['fileType', 'playFileQueueEvent', 'addFileEvent', 'deleteItemSubject'],
 	pipes: [TrackDurationPipe, TrackTitlePipe]
 })
 export class ExplorerComponent {
@@ -102,12 +102,27 @@ export class ExplorerComponent {
 		this.currentPath = DEFAULT_PATH;
 	}
 
+    ngOnInit(){
+        this.deleteItemSubject.subscribe((item) => {
+            if (!item.canBeRemoved
+				|| item.item.fileType !== this.fileType
+			) {
+                return;
+            }
+
+			this._explorerService
+				.deleteFile(item.item.fileType, item.item.path)
+				.then(() => this.selectDirectory())
+				.catch(() => this.selectDirectory());
+		});
+    }
+
 	isFileItem(item) {
 		return typeof item.fileName !== 'undefined';
 	}
 
 	isParentDir(item) {
-		return item.is_parent_dir;
+		return item.isParentDir;
 	}
 
 	isPreviousDirectory(item) {
@@ -132,22 +147,21 @@ export class ExplorerComponent {
 		// play file
 		if (this.isFileItem(item)) {
 			this.playFileQueueEvent.emit(item);
-			console.log('explorer play file');
 		}
 	}
 
-
-
 	deleteItem(item) {
 		if (!this.isParentDir(item)) {
-			this.selectDirectory();
-			console.log('delete-item');
+            this.deleteItemSubject.next({
+            	item,
+				canBeRemoved: false
+            });
 		}
 	}
 
 	selectDirectory(path = this.currentPath) {
 		this._explorerService.getDirectoryContent(this.fileType, path).then((res) => {
-			this.currentPath = path
+			this.currentPath = path;
 
 			let dirs = [];
 

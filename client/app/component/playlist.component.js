@@ -12,6 +12,7 @@ import {SettingsService} from '_app/service/settings.service';
 import {PagingComponent} from '_app/component/paging.component';
 import {ScaleOnClickDirective} from '_app/directive/scaleOnClick.directive';
 import {UnderlineOnClickDirective} from '_app/directive/underlineOnClick.directive';
+import {ChangeColorOnClick} from '_app/directive/changeColorOnClick.directive';
 
 @Component({
 	selector: '[playlist]',
@@ -40,7 +41,8 @@ import {UnderlineOnClickDirective} from '_app/directive/underlineOnClick.directi
 					<div><span class="glyphicon-remove-circle" (click)="item.isWantToDelete=true"></span></div>
 					<div class="delete-block">
 						<p>Are you sure?</p>
-						<div><span class="glyphicon-ok" (click)="deleteItem(item)"></span></div>
+						<div><span change-color-on-click class="glyphicon-fire" (click)="deleteItemTotally(item)"></span></div>
+						<div><span change-color-on-click class="glyphicon-ok" (click)="deleteItem(item)"></span></div>
 						<div><span class="glyphicon-remove" (click)="item.isWantToDelete=false"></span></div>
 					</div>
 				</div>
@@ -74,8 +76,8 @@ import {UnderlineOnClickDirective} from '_app/directive/underlineOnClick.directi
 
 		</section>
 	`,
-	directives: [PagingComponent, ScaleOnClickDirective, UnderlineOnClickDirective],
-	inputs: ['fileType', 'addFileEvent', 'playingItemChangedEvent', 'playFileQueueEvent', 'playNextTrackEvent', 'playPrevTrackEvent'],
+	directives: [PagingComponent, ScaleOnClickDirective, UnderlineOnClickDirective, ChangeColorOnClick],
+	inputs: ['fileType', 'addFileEvent', 'playingItemChangedEvent', 'playFileQueueEvent', 'playNextTrackEvent', 'playPrevTrackEvent', 'deleteItemSubject'],
 	pipes: [TrackDurationPipe, TrackTitlePipe]
 })
 export class PlaylistComponent {
@@ -128,11 +130,7 @@ export class PlaylistComponent {
 
 			// redraw playlist
 			this.showItemEvent.emit(false);
-
-			this._settingsService.save(
-				`playlistItems-${this.fileType}`,
-				this.playlistItems
-			);
+			this._savePlaylistOnServer();
 		});
 
 		this.playingItemChangedEvent.subscribe(item => this.currentPlayingItemPath = item.path);
@@ -159,6 +157,34 @@ export class PlaylistComponent {
 					this.playFileQueueEvent.emit(item);
 				}
 			}
+		});
+
+        this.deleteItemSubject.subscribe((item) => {
+            if (item.canBeRemoved
+				|| item.item.fileType !== this.fileType
+			) {
+                return;
+            }
+
+			// delete item from playlists
+			this.playlistItems.forEach((file, index) => {
+				if (file) {
+                    let pos = 0;
+                    while (pos !== -1) {
+                        pos = file.findIndex(e =>
+                            typeof item.item.fileName !== 'undefined'
+                                ? e.path === item.item.path
+                                : e.path.indexOf(item.item.path) === 0
+                        );
+                        if (pos !== -1) {
+                            this.playlistItems[index].splice(pos,1);
+                        }
+					}
+				}
+			});
+
+			this.showItemEvent.emit(false);
+			this._savePlaylistOnServer();
 		});
 
 		// load settings
@@ -217,6 +243,14 @@ export class PlaylistComponent {
 
 		// redraw playlist
 		this.showItemEvent.emit(false);
+        this._savePlaylistOnServer();
+    }
+
+    deleteItemTotally(item) {
+        this.deleteItemSubject.next({
+            item,
+            canBeRemoved: false
+        });
 	}
 
 	goToActiveItem() {
@@ -249,5 +283,12 @@ export class PlaylistComponent {
 		}
 
 		return pos === -1 ? false : {pos, playlistId};
+	}
+
+	_savePlaylistOnServer() {
+        this._settingsService.save(
+            `playlistItems-${this.fileType}`,
+            this.playlistItems
+        );
 	}
 }

@@ -30,7 +30,7 @@ const CHECK_DURATION_INTERVAL = 2000;
 					</div>
 					<div>
 						<span scale-on-click class="glyphicon-chevron-left" (click)="playPrevBtnClick()"></span>
-						<span scale-on-click class="glyphicon-stop" (click)="stopBtnClick()"></span>
+						<span scale-on-click class="glyphicon-stop" (click)="stopPlaying()"></span>
 						<span scale-on-click class="glyphicon-chevron-right" (click)="playNextBtnClick()"></span>
 					</div>
 				</div>
@@ -75,7 +75,7 @@ const CHECK_DURATION_INTERVAL = 2000;
 		</div>
 	`,
 	directives: [ScaleOnClickDirective],
-	inputs: ['playingItemChangedEvent', 'playFileQueueEvent', 'playNextTrackEvent', 'playPrevTrackEvent'],
+	inputs: ['playingItemChangedEvent', 'playFileQueueEvent', 'playNextTrackEvent', 'playPrevTrackEvent', 'deleteItemSubject'],
 	outputs: ['changeStatus'],
 	pipes: [TrackDurationPipe, TrackTitlePipe]
 })
@@ -110,7 +110,50 @@ export class PlayerComponent {
 		this._getDuration();
 		this.playFileQueueEvent.subscribe(item => this.nextItem = Object.assign({}, item));
 
-		// load settings
+		this.deleteItemSubject.subscribe((item) => {
+            if (item.canBeRemoved) {
+            	return;
+			}
+
+            // stop playing if current item or directory with current item will be deleted
+			let isPlaying = false;
+
+			if (typeof this.currentItem.fileType !== 'undefined'
+				&& this.currentItem.fileType === item.item.fileType
+				&& typeof this.currentItem.path !== 'undefined'
+			) {
+				if (
+					(
+						// file is going to be removed
+						typeof item.item.fileName !== 'undefined' &&
+						this.currentItem.path === item.item.path
+					) ||
+					(
+						// dir is going to be removed
+						typeof item.item.fileName === 'undefined' &&
+						this.currentItem.path.indexOf(item.item.path) === 0
+					)
+				) {
+					isPlaying = true;
+				}
+			}
+
+			let res = {
+                item: item.item,
+                canBeRemoved: true
+            };
+
+			if (isPlaying) {
+				// stop and then remove
+				this.stopPlaying()
+					.then(() => this.deleteItemSubject.next(res))
+					.catch(() => this.deleteItemSubject.next(res));
+			} else {
+				this.deleteItemSubject.next(res)
+			}
+		});
+
+        // load settings
 		this._settingsService.read('currentPlayingItem').then(
 			(data) => {
 				if (Object.getOwnPropertyNames(data.value).length !== 0) {
@@ -155,8 +198,8 @@ export class PlayerComponent {
 		}
 	}
 
-	stopBtnClick() {
-		this._playerService.stop().then((res) => {
+    stopPlaying() {
+		return this._playerService.stop().then((res) => {
 			this._setStatus(this.STATUS_STOPPED)
 		});
 	}
