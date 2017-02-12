@@ -97,14 +97,16 @@ class AppComponent {
 		this.TAB_MUSIC_ID = 2;
 		this.TAB_MOVIES_ID = 3;
 		this.TAB_CAMERA_ID = 4;
-		this.TAB_NAVIGATION_ID = 5;
+		this.TAB_RECORDER_ID = 5;
+		this.TAB_NAVIGATION_ID = 6;
 
 		this.tabs = [
-			{id: this.TAB_MAIN_ID, icon: 'glyphicon-home', label: 'Main'},
-			{id: this.TAB_MUSIC_ID, icon: 'glyphicon-cd',  label: 'Music'},
-			{id: this.TAB_MOVIES_ID, icon: 'glyphicon-film',  label: 'Movies'},
-			{id: this.TAB_CAMERA_ID, icon: 'glyphicon-eye-open',  label: 'Camera'},
-			{id: this.TAB_NAVIGATION_ID, icon: 'glyphicon-globe',  label: 'Navigation'}
+			{id: this.TAB_MAIN_ID, icon: 'glyphicon-home'},
+			{id: this.TAB_MUSIC_ID, icon: 'glyphicon-cd'},
+			{id: this.TAB_MOVIES_ID, icon: 'glyphicon-film'},
+			{id: this.TAB_CAMERA_ID, icon: 'glyphicon-eye-open'},
+			{id: this.TAB_RECORDER_ID, icon: 'glyphicon-facetime-video'},
+			{id: this.TAB_NAVIGATION_ID, icon: 'glyphicon-globe'}
 		];
 
 		this.activeTabId = this.TAB_MAIN_ID;
