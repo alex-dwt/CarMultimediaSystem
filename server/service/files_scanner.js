@@ -19,7 +19,7 @@ const TYPES = [
 	{
 		name: 'video',
 		dir: '/Video',
-		ext: ['mp4', 'avi']
+		ext: ['mp4', 'avi', 'mkv']
 	}
 ];
 
@@ -58,11 +58,12 @@ export default class FilesScanner {
 			}
 		}
 
+		let searchPath = (path === '/usb' ? fullPath + '/' : fullPath);
         let dirs = execSync(`
-            fullPath="${fullPath}"; \
-			find "$fullPath" -maxdepth 1 -not -path "$fullPath" -type d -print0 2>/dev/null \
+            fullPath="${searchPath}"; \
+			find "$fullPath" -maxdepth 1 -not -path "$fullPath" \\( -type l -o -type d \\) -print0 2>/dev/null \
             | xargs -I {} -0 -n1 bash -c 'temp=$(printf "%q" "{}"); echo "$temp"; echo \
-            $(find "{}" -type f -iregex ".+\\.\\(${type.ext.join('\\|')}\\)$" | wc -l)' 2>/dev/null
+            $(find "{}/" -type f -iregex ".+\\.\\(${type.ext.join('\\|')}\\)$" | wc -l)' 2>/dev/null
 		`).toString();
 
 		if (dirs) {

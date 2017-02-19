@@ -10,7 +10,7 @@ DEV=/dev/$1
 #######
 ### Mount USB on host
 #######
-mount -t auto -o uid=1000,noexec,nodev,noatime,nodiratime $DEV /home/pi/Usb
+mount -t auto -o noexec,nodev,noatime,nodiratime $DEV /home/pi/Usb
 
 
 #######
