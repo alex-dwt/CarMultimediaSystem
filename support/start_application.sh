@@ -10,15 +10,15 @@ BROWSER_WINDOWS_COUNT=6
 #######
 ### Enable monitor by GPIO
 #######
-sleep 5
+#sleep 5
 printf "\033c"
-echo ''
-echo -n '#'
-gpio mode 1 out
-gpio write 1 0
-sleep 2
-gpio mode 1 down 
-gpio mode 1 in
+#echo ''
+#echo -n '#'
+#gpio mode 1 out
+#gpio write 1 0
+#sleep 2
+#gpio mode 1 down
+#gpio mode 1 in
 echo -n '#'
 
 #######
@@ -29,6 +29,8 @@ echo -n '#'
 /home/pi/RemoteGpsSensorListener/helper.sh start 6070 >/dev/null 2>&1
 echo -n '#'
 /home/pi/RemoteCameraControl/helper.sh start 6060 >/dev/null 2>&1
+echo -n '#'
+/home/pi/RaspiVideoRecorder/helper.sh start 6080 >/dev/null 2>&1
 
 #######
 ### Waiting the main application

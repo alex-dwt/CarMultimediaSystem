@@ -16,10 +16,12 @@ import {SettingsService} from '_app/service/settings.service';
 import {CameraService} from '_app/service/camera.service';
 import {GpsService} from '_app/service/gps.service';
 import {SystemService} from '_app/service/system.service';
+import {RecorderService} from '_app/service/recorder.service';
 
 import {MainTab} from '_app/tab/main.tab';
 import {AudioTab} from '_app/tab/audio.tab';
 import {VideoTab} from '_app/tab/video.tab';
+import {RecorderTab} from '_app/tab/recorder.tab';
 import {CameraTab} from '_app/tab/camera.tab';
 import {NavbarComponent} from '_app/component/navbar.component';
 import {PlayerComponent} from '_app/component/player.component';
@@ -64,6 +66,11 @@ import {PlayerComponent} from '_app/component/player.component';
 			<section camera-tab
 				*ngIf="activeTabId === TAB_CAMERA_ID && !isPlayingVideoFile">
 			</section>
+			
+			<section recorder-tab
+				class="common-tab"
+				[hidden]="activeTabId !== TAB_RECORDER_ID || isPlayingVideoFile">
+			</section>
 
 			<section player id="player"
 				[playFileQueueEvent]="playFileQueueEvent"
@@ -83,7 +90,7 @@ import {PlayerComponent} from '_app/component/player.component';
 			</nav>
 		</div>
 	`,
-	directives: [NavbarComponent, PlayerComponent, AudioTab, VideoTab, CameraTab, MainTab]
+	directives: [NavbarComponent, PlayerComponent, AudioTab, VideoTab, CameraTab, RecorderTab, MainTab]
 })
 class AppComponent {
 	static get parameters() {
@@ -146,6 +153,7 @@ bootstrap(AppComponent, [
 	ExplorerService,
 	PlayerService,
 	CameraService,
+    RecorderService,
 	GpsService,
 	SystemService,
 	HttpService

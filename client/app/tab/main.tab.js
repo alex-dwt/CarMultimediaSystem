@@ -11,7 +11,7 @@ import {ShutdownComponent} from '_app/component/shutdown.component';
 @Component({
 	selector: '[main-tab]',
 	template: `
-		<section id="gps-info-block"></section>
+		<section id="gps-info-block" class="two-row-status-block pull-left"></section>
 		<section id="shutdown-block"></section>
 	`,
 	directives: [GpsComponent, ShutdownComponent]

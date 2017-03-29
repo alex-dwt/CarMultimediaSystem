@@ -14,14 +14,14 @@ const PROPERTIES = ['lat', 'lon', 'speed', 'time'];
 @Component({
 	selector: '[id=gps-info-block]',
 	template: `
-		<div>
+		<div class="left-block">
 			<p>Date:</p>
 			<p>Time:</p>
 			<p>Speed:</p>
 			<p>Lat:</p>
 			<p>Lon:</p>
 		</div>
-		<div>
+		<div class="right-block">
 			<p>{{ time | gpsInfo:"date" }}</p>
 			<p>{{ time | gpsInfo:"time" }}</p>
 			<p>{{ speed | gpsInfo:"speed" }}</p>

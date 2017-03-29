@@ -134,3 +134,36 @@ nav {
 	position: relative;
 	border-radius: 2vmin;
 }
+
+// two-row common status block
+.two-row-status-block {
+	width: 35%;
+	margin: 2%;
+	border-radius: 2vmin;
+	border: 2px solid #e7e7e7;
+	padding: 1%;
+	overflow: hidden;
+
+	p {
+		font-size: 3.5vmin;
+		line-height: 4.5vmin;
+	}
+
+	.left-block {
+		width: 20%;
+		float: left;
+
+		p {
+			text-align: right;
+		}
+	}
+
+	.right-block {
+		width: 80%;
+		float: right;
+
+		p {
+			text-align: center;
+		}
+	}
+}
