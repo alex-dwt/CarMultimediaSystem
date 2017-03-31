@@ -70,7 +70,7 @@ const DEFAULT_PATH ='/';
 			</li>
 		</ul>
 
-		<section class="panel-paging">
+		<section class="panel-paging-common">
 			<div scale-on-click class="refresh-cur-dir" (click)="selectDirectory()">
 				<span class="glyphicon-refresh"></span>
 			</div>

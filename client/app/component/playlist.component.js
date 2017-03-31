@@ -49,7 +49,7 @@ import {ChangeColorOnClick} from '_app/directive/changeColorOnClick.directive';
 			</li>
 		</ul>
 
-		<section class="panel-paging">
+		<section class="panel-paging-common">
 
 			<div paging
 				(change)="onCurrentItemsChange($event)"
@@ -58,7 +58,7 @@ import {ChangeColorOnClick} from '_app/directive/changeColorOnClick.directive';
 				[itemsPerPage]="itemsPerPage">
 			</div>
 
-			<div class="select-playlist">
+			<div class="select-playlist-btn">
 				<span scale-on-click class="glyphicon-new-window show-current-track-icon" (click)="goToActiveItem()"></span>
 				<span class="glyphicon-file" (click)="isShowPlaylistSelector=true"></span>
 				<p (click)="isShowPlaylistSelector=true">{{ currentPlaylistId }}</p>

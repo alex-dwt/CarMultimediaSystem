@@ -167,3 +167,29 @@ nav {
 		}
 	}
 }
+
+// paging at the bottom
+.panel-paging-common {
+	position: absolute;
+	bottom: 0;
+	left: 1%;
+	right: 2%;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+
+	.refresh-cur-dir {
+		position: absolute;
+		top: 0;
+		left: 0;
+		height: 100%;
+		color: #000;
+		display: flex;
+	}
+
+	span[class^='glyphicon'] {
+		display: block;
+		top: 0;
+		font-size: 6vmin;
+	}
+}

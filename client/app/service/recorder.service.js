@@ -32,10 +32,10 @@ export class RecorderService {
 		return this._httpService.getRequest(RECORDER_URL);
 	}
 
-	// getDirs() {
-	// 	return this._httpService.getRequest(EXPLORER_URL, [], true);
-	// }
-    //
+	getDirs() {
+		return this._httpService.getRequest(EXPLORER_URL + '/dirs');
+	}
+
 	// saveDir() {
 	// 	return this._httpService.getRequest(EXPLORER_URL, [], true);
 	// }

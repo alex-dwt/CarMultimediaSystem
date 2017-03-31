@@ -4,26 +4,107 @@
  * For the full copyright and license information, please view the LICENSE file that was distributed with this source code.
  */
 
-#recorder-status-block {
-	position: relative;
+[recorder-tab] {
+	> div {
+		display: flex;
+		position: absolute;
+		top: 0;
+		bottom: 0;
+		width: 100%;
+		flex-direction: column;
+		//padding: 0 1%;
 
-	.status {
-		color: darkred;
+		// status line
+		> div:first-child  {
 
-		&.active {
-			color: green;
+		}
+
+		// explorer
+		> div:last-child  {
+			flex-grow: 10;
+
+			> div {
+				position: relative;
+			}
+
+			li {
+				font-size: 5.5vmin;
+				line-height: 1.6;
+				text-align: center;
+
+				.recorder-explorer-btn {
+					padding-left: 2%;
+					display: none;
+					position: relative;
+					top: 4px;
+
+					&.display-inline {
+						display: inline-block;
+					}
+				}
+
+				.delete-block {
+					display: none;
+					width: 100%;
+					font-size: 5.5vmin;
+
+					* {
+						font-size: 5.5vmin;
+					}
+				}
+
+				&.delete-process {
+					> * {
+						display: none !important;
+					}
+
+					.delete-block {
+						display: inline-block !important;
+					}
+				}
+			}
+
+			> div:first-child  {
+				border-right: 2px solid #e7e7e7;
+			}
+
+			> div:last-child  {
+
+			}
 		}
 	}
-}
 
-.recorder-action-btn {
-	top: 0;
-	right: 0;
-	position: absolute !important;
-	font-size: 5vmin;
-	padding: 2vmin;
-	display: block !important;
-	border: 2px solid #e7e7e7;
-	border-right: 0;
-	border-top: 0;
+	#recorder-status-block {
+		position: relative;
+		margin-bottom: 1%;
+
+		.status {
+			color: darkred;
+
+			&.active {
+				color: green;
+			}
+		}
+	}
+
+	.recorder-action-btn {
+		top: 0;
+		right: 0;
+		position: absolute !important;
+		font-size: 5vmin;
+		padding: 2vmin;
+		display: block !important;
+		border: 2px solid #e7e7e7;
+		border-right: 0;
+		border-top: 0;
+	}
+
+	#recorder-explorer {
+		display: flex;
+		padding: 0 1% 0 1%;
+
+		> div {
+			width: 50%;
+		}
+	}
 }
