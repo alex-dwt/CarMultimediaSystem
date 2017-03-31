@@ -33,10 +33,14 @@ export class RecorderService {
 	}
 
 	getDirs() {
-		return this._httpService.getRequest(EXPLORER_URL + '/dirs');
+		return this._httpService.getRequest(EXPLORER_URL);
 	}
 
-	// saveDir() {
-	// 	return this._httpService.getRequest(EXPLORER_URL, [], true);
-	// }
+	saveDir(dirName) {
+        return this._httpService.postRequest(EXPLORER_URL + '/' + dirName, { }, true);
+	}
+
+    deleteDir(dirName) {
+        return this._httpService.getRequest(EXPLORER_URL + '/' + dirName, [], true);
+    }
 }

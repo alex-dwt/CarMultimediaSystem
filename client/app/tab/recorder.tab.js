@@ -21,8 +21,8 @@ let statusTimeout;
 	selector: '[recorder-tab]',
 	template: `
         <div>
-            <div>            
-                <section id="recorder-status-block" class="two-row-status-block pull-left">
+            <div id="recorder-status">
+                <section class="two-row-status-block">
                     <span class="glyphicon recorder-action-btn"
                         scale-on-click
                         (click)="toggleRecorder()"
@@ -43,8 +43,33 @@ let statusTimeout;
                                     [class.glyphicon-ok]="isRecorderWorking">
                                 </span>
                             </p>
-                            <p>{{ recorderCurrentFps }}</p>
-                            <p>{{ recorderCurrentFile }}</p>
+                            <p>{{ recorderFps }}</p>
+                            <p>{{ recorderFile }}</p>
+                        </div>
+                    </div>
+                </section>
+                <section class="two-row-status-block">
+                    <span class="glyphicon recorder-action-btn"
+                        scale-on-click
+                        [class.glyphicon-play]="! isConverterWorking"
+                        [class.glyphicon-stop]="isConverterWorking">
+                    </span>
+                    <div>
+                        <div class="left-block">
+                            <p>Active:</p>
+                            <p>Progress:</p>
+                            <p>File:</p>
+                        </div>
+                        <div class="right-block">
+                            <p>
+                                <span class="status glyphicon"
+                                    [class.active]="isConverterWorking"
+                                    [class.glyphicon-ban-circle]="! isConverterWorking"
+                                    [class.glyphicon-ok]="isConverterWorking">
+                                </span>
+                            </p>
+                            <p>{{ converterFile }}</p>
+                            <p>{{ converterProgress }}</p>
                         </div>
                     </div>
                 </section>	
@@ -108,8 +133,13 @@ export class RecorderTab {
 
         // recorder
         this.isRecorderWorking = false;
-        this.recorderCurrentFile = '-';
-        this.recorderCurrentFps = '-';
+        this.recorderFile = '-';
+        this.recorderFps = '-';
+
+        // converter
+        this.isConverterWorking = false;
+        this.converterFile = '-';
+        this.converterProgress = '-';
 
         // explorer
         this.itemsPerPage = 3;
@@ -145,11 +175,11 @@ export class RecorderTab {
                 .catch(() => this.updateStatus());
     }
 
-    updateStatus(data) {
+    updateStatus(data = {}) {
         clearTimeout(statusTimeout);
 
-        this.recorderCurrentFile = data.currentFile || '-';
-        this.recorderCurrentFps = data.currentFps || '-';
+        this.recorderFile = data.currentFile || '-';
+        this.recorderFps = data.currentFps || '-';
         this.isRecorderWorking = (typeof data.isWorking !== 'undefined')
 			? !! data.isWorking
 			: false;
@@ -169,14 +199,16 @@ export class RecorderTab {
     }
 
     saveDir(item) {
-        // todo
-        console.log('save');
+        this._recorderService.saveDir(item.dirName).then(() => {
+            this.getDirs()
+        });
     }
 
     deleteDir(item) {
-        // todo
         item.isWantToDelete=false;
-        console.log('delete');
+        this._recorderService.deleteDir(item.dirName).then(() => {
+            this.getDirs()
+        });
     }
 
     getDirs() {

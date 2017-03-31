@@ -74,15 +74,21 @@
 		}
 	}
 
-	#recorder-status-block {
-		position: relative;
-		margin-bottom: 1%;
+	#recorder-status {
+		display: flex;
+		justify-content: space-around;
 
-		.status {
-			color: darkred;
+		> * {
+			position: relative;
+			margin-bottom: 1%;
+			width: 50%;
 
-			&.active {
-				color: green;
+			.status {
+				color: darkred;
+
+				&.active {
+					color: green;
+				}
 			}
 		}
 	}
