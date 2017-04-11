@@ -8,6 +8,14 @@ set -e
 DEV=/dev/$1
 
 #######
+###  Do not mount My Transcend USB
+#######
+if [ $(blkid "$DEV" | grep -c 8f6d9cb8-84ac-449c-ba2a-939bd59d72eb) -eq 1 ]; then
+    exit
+fi
+
+
+#######
 ### Mount USB on host
 #######
 mount -t auto -o noexec,nodev,noatime,nodiratime $DEV /home/pi/Usb
