@@ -12,7 +12,7 @@
 		bottom: 0;
 		width: 100%;
 		flex-direction: column;
-		//padding: 0 1%;
+		padding-top: 2%;
 
 		// status line
 		> div:first-child  {
@@ -77,11 +77,12 @@
 	#recorder-status {
 		display: flex;
 		justify-content: space-around;
+		margin: 0 2%;
 
 		> * {
 			position: relative;
-			margin-bottom: 1%;
-			width: 50%;
+			margin: 0 !important;
+			width: 48%;
 
 			.status {
 				color: darkred;

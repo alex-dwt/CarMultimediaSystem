@@ -25,7 +25,7 @@ let statusTimeout;
                 <section class="two-row-status-block">
                     <span class="glyphicon recorder-action-btn"
                         scale-on-click
-                        (click)="toggleRecorder()"
+                        (click)="toggle(true)"
                         [class.glyphicon-play]="! isRecorderWorking"
                         [class.glyphicon-stop]="isRecorderWorking">
                     </span>
@@ -51,6 +51,7 @@ let statusTimeout;
                 <section class="two-row-status-block">
                     <span class="glyphicon recorder-action-btn"
                         scale-on-click
+                        (click)="toggle(false)"
                         [class.glyphicon-play]="! isConverterWorking"
                         [class.glyphicon-stop]="isConverterWorking">
                     </span>
@@ -68,8 +69,8 @@ let statusTimeout;
                                     [class.glyphicon-ok]="isConverterWorking">
                                 </span>
                             </p>
-                            <p>{{ converterFile }}</p>
                             <p>{{ converterProgress }}</p>
+                            <p>{{ converterFile }}</p>
                         </div>
                     </div>
                 </section>	
@@ -159,18 +160,25 @@ export class RecorderTab {
 
     getStatus() {
         this._recorderService
-			.getRecordingStatus()
+			.getStatus()
 			.then((data) => this.updateStatus(data))
 			.catch(() => this.updateStatus());
     }
 
-    toggleRecorder() {
-        let func = this.isRecorderWorking
-            ? 'stopRecording'
-            : 'startRecording';
+    toggle(isToggleRecorder) {
+        let func = isToggleRecorder
+            ? (
+                this.isRecorderWorking
+                    ? 'stopRecording'
+                    : 'startRecording'
+            ) : (
+                this.isConverterWorking
+                    ? 'stopConverting'
+                    : 'startConverting'
+            );
 
             this._recorderService[func]()
-                .then(() => this._recorderService.getRecordingStatus())
+                .then(() => this._recorderService.getStatus())
                 .then((data) => this.updateStatus(data))
                 .catch(() => this.updateStatus());
     }
@@ -178,10 +186,16 @@ export class RecorderTab {
     updateStatus(data = {}) {
         clearTimeout(statusTimeout);
 
-        this.recorderFile = data.currentFile || '-';
-        this.recorderFps = data.currentFps || '-';
-        this.isRecorderWorking = (typeof data.isWorking !== 'undefined')
-			? !! data.isWorking
+        this.recorderFile = data.recorder.currentFile || '-';
+        this.recorderFps = data.recorder.currentFps || '-';
+        this.isRecorderWorking = (typeof data.recorder.isWorking !== 'undefined')
+			? !! data.recorder.isWorking
+			: false;
+
+        this.converterFile = data.converter.currentFile || '-';
+        this.converterProgress = data.converter.currentProgress || '-';
+        this.isConverterWorking = (typeof data.converter.isWorking !== 'undefined')
+			? !! data.converter.isWorking
 			: false;
 
         statusTimeout = window.setTimeout(

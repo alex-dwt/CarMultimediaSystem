@@ -9,7 +9,9 @@ import {HttpService} from '_app/service/http.service'
 const PORT = 6080;
 const URL = 'http://carpi:' + PORT;
 const RECORDER_URL = URL + '/recorder';
+const CONVERTER_URL = URL + '/converter';
 const EXPLORER_URL = URL + '/explorer';
+const STATUS_URL = URL + '/status';
 
 export class RecorderService {
 	static get parameters() {
@@ -28,8 +30,16 @@ export class RecorderService {
 		return this._httpService.getRequest(RECORDER_URL, [], true);
 	}
 
-	getRecordingStatus() {
-		return this._httpService.getRequest(RECORDER_URL);
+	startConverting() {
+		return this._httpService.postRequest(CONVERTER_URL, { }, true);
+	}
+
+    stopConverting() {
+		return this._httpService.getRequest(CONVERTER_URL, [], true);
+	}
+
+	getStatus() {
+		return this._httpService.getRequest(STATUS_URL);
 	}
 
 	getDirs() {
