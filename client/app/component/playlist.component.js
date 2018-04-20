@@ -22,6 +22,8 @@ import {ChangeColorOnClick} from '_app/directive/changeColorOnClick.directive';
 		</div>
 
 		<ul class="items-box">
+            <li class="first-explorer-row" style="visibility: hidden; margin-bottom: 0">Path</li>
+            
 			<li *ngFor="let item of currentItems"
 				class="explorer-row"
 				[class.delete-process]="item.isWantToDelete"

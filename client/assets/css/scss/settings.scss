@@ -1,0 +1,29 @@
+/*
+ * This file is part of the CarMultimediaSystem package.
+ * (c) Alexander Lukashevich <aleksandr.dwt@gmail.com>
+ * For the full copyright and license information, please view the LICENSE file that was distributed with this source code.
+ */
+
+#settings-block {
+  margin: 5% 4% 0 0;
+  float: right;
+  width: 30%;
+
+  .rs-tooltip {
+    display: none;
+  }
+
+  ins {
+    visibility: hidden;
+  }
+
+  .rs-container .rs-scale span::before {
+    background-color: #888888;
+    width: 3px;
+  }
+
+  .rs-container .rs-selected {
+    background-color: #888888;
+    border: 1px solid #888888;
+  }
+}

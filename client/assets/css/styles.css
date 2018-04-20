@@ -1,2 +1,585 @@
-*{cursor:default !important;border:none;-webkit-touch-callout:none;-webkit-user-select:none;-moz-user-select:none;-ms-user-select:none;user-select:none}button{outline:none}html{height:100%}body{height:100%;min-width:770px;min-height:460px}body.black{background-color:#000}body>div{padding:0.3%;justify-content:center;display:flex;flex-direction:column;height:100%}#video-background{flex-grow:10}span[class^='glyphicon']{top:0.1vmin;font-size:4vmin;position:relative;display:inline-block;font-family:'Glyphicons Halflings';font-style:normal}nav ul{border:2px solid #e7e7e7;border-radius:2vmin;display:flex;font-size:5vmin;line-height:10vmin;color:#777;width:100%;margin-top:0.3%}nav ul li{flex-grow:1;text-align:center;border-right:2px solid #e7e7e7}nav ul li:last-child{border-right:none}nav ul li.active{background-color:#e7e7e7;color:#555}[paging]{display:flex;align-items:center}[paging] span{display:block;font-size:6vmin;padding:0 3vmin}[paging] p{font-size:5vmin;text-align:center}.app-loader{position:fixed;width:100%;top:50%;text-align:center}.clicked{transform:scale(1.2)}.clicked.clicked-transition{transition:0.15s all !important}.underline-inset span{box-shadow:0px -2px 0 0 #000 inset}.changed-color{color:#777 !important}.display-none{display:none !important}.common-tab{flex-grow:10;border:2px solid #e7e7e7;position:relative;border-radius:2vmin}.two-row-status-block{width:35%;margin:2%;border-radius:2vmin;border:2px solid #e7e7e7;padding:1%;overflow:hidden}.two-row-status-block p{font-size:3.5vmin;line-height:4.5vmin}.two-row-status-block .left-block{width:20%;float:left}.two-row-status-block .left-block p{text-align:right}.two-row-status-block .right-block{width:80%;float:right}.two-row-status-block .right-block p{text-align:center}.panel-paging-common{position:absolute;bottom:0;left:1%;right:2%;display:flex;justify-content:center;align-items:center}.panel-paging-common .refresh-cur-dir{position:absolute;top:0;left:0;height:100%;color:#000;display:flex}.panel-paging-common span[class^='glyphicon']{display:block;top:0;font-size:6vmin}.player-explorer>section{padding-left:1%;padding-top:1%;padding-right:2%;position:absolute;top:0;bottom:0;transition:width 0.2s}.player-explorer>section *{transition:opacity 0.2s}.player-explorer [explorer]{border-right:2px solid #e7e7e7;width:7%}.player-explorer [explorer].active{width:93%}.player-explorer [explorer].active ul,.player-explorer [explorer].active .panel-paging-common{opacity:1}.player-explorer [explorer].active .panel-label{opacity:0}.player-explorer [explorer] ul,.player-explorer [explorer] .panel-paging-common{opacity:0}.player-explorer [playlist]{right:0;width:93%;overflow:hidden}.player-explorer [playlist].inactive{width:7%}.player-explorer [playlist].inactive ul,.player-explorer [playlist].inactive .panel-paging-common{opacity:0}.player-explorer [playlist].inactive .panel-label{opacity:1}.player-explorer [playlist] .panel-label{opacity:0}.player-explorer .panel-label{position:absolute;left:0;top:0;bottom:0;right:0;display:flex;justify-content:center;align-items:center}.player-explorer .panel-label p{font-size:6vmin;transform:rotate(90deg) scale(-1, -1)}.player-explorer .name-block{margin-left:1%;margin-right:1%;overflow:hidden;z-index:1;flex-grow:1}.player-explorer .name-block span{white-space:nowrap;font-size:6vmin;min-width:0;display:inline-block}.player-explorer .name-block.file-name-block p{white-space:nowrap;font-size:4vmin}.player-explorer .name-block.file-name-block p:first-of-type{font-size:5vmin}.player-explorer .name-block.file-name-block p:first-of-type *{font-size:5vmin}.player-explorer .explorer-row{display:flex;align-items:center;margin-bottom:1%}.player-explorer .explorer-row.active{background-color:#d9d9d9}.player-explorer .explorer-row.delete-process .info-block,.player-explorer .explorer-row.delete-process .name-block{width:0;overflow:hidden}.player-explorer .explorer-row.delete-process .actions-block{width:100%}.player-explorer .explorer-row.delete-process .actions-block>div:not(.delete-block){display:none}.player-explorer .explorer-row.delete-process .actions-block .delete-block{display:flex}.player-explorer .info-block{height:100%;position:relative;margin-top:-2vmin;font-size:9vmin}.player-explorer .info-block [class^=glyphicon]{top:auto;font-size:inherit}.player-explorer .dir-badge{color:#FFF;position:absolute;top:35%;font-size:50%;width:100%;text-align:center}.player-explorer .dir-badge.length-badge{color:#000;top:37%;font-size:40%}.player-explorer .actions-block{display:flex;justify-content:flex-end;font-size:6vmin}.player-explorer .actions-block>div:not(.delete-block){padding:0 2vmin;display:flex;align-items:center}.player-explorer .actions-block span{font-size:9vmin}.player-explorer .actions-block .delete-block{align-items:center;display:none}.player-explorer .actions-block .delete-block>*{padding:0 2vmin}.player-explorer .select-playlist-btn{position:absolute;top:0;right:0;height:100%;color:#000;display:flex;align-items:center}.player-explorer .select-playlist-btn p{font-size:6vmin}.player-explorer .playlist-menu{display:none;background-color:#FFF;border:2px solid #e7e7e7;border-radius:2vmin;width:45%;position:absolute;right:0;bottom:1vmin;z-index:99}.player-explorer .playlist-menu.active{display:block}.player-explorer .playlist-menu ul{display:flex;font-size:9vmin}.player-explorer .playlist-menu ul:first-of-type li{border-bottom:1px solid #e7e7e7}.player-explorer .playlist-menu ul li{border-right:1px solid #e7e7e7;text-align:center;display:block;width:20%;padding:1vmin}.player-explorer .playlist-menu ul li:last-of-type{border-right:none}.player-explorer .playlist-menu ul li.active{background-color:#e7e7e7;color:#555}.player-explorer .show-current-track-icon{padding-right:3vmin}.player-explorer .items-box{height:100%}#player{border:2px solid #e7e7e7;margin-top:0.3%;height:32%;width:100%;transition:height 0.2s;position:relative;border-radius:2vmin;background-color:#FFF}#player *{transition:opacity 0.2s}#player.minimized{height:10%}#player.minimized>div:first-child p{display:block;height:100%;line-height:190%;opacity:1}#player.minimized>div:first-child span{top:20%}#player.minimized>div:first-child span:before{content:"\e093"}#player.minimized>div:last-child *{opacity:0}#player>div:first-child{position:absolute;width:100%;height:100%}#player>div:first-child p{text-align:center;opacity:0;font-size:5vmin}#player>div:first-child span{position:absolute;left:1%;top:2%;z-index:10}#player>div:last-child{height:100%}#player>div:last-child>div{height:100%}#player>div:last-child>div:first-child{float:left;width:38%;display:flex;justify-content:center}#player>div:last-child>div:first-child>div{align-self:center;width:100%;z-index:10}#player>div:last-child>div:first-child>div>div{text-align:center;width:100%}#player>div:last-child>div:first-child>div>div span{font-size:6vmin;border-radius:20vmin;border:2px solid black;padding:3vmin;width:18vmin}#player>div:last-child>div:first-child>div>div:first-of-type{margin-bottom:1%}#player>div:last-child>div:first-child>div>div:first-of-type span{padding:4vmin;width:auto}#player>div:last-child>div:first-child>div>div:first-of-type.playing span:before{content:"\e073"}#player>div:last-child>div:first-child>div>div:last-of-type span:nth-of-type(2){margin:0 4%}#player>div:last-child>div:nth-child(2){float:left;width:5%;display:flex;justify-content:space-around;flex-direction:column}#player>div:last-child>div:nth-child(2) div{text-align:center}#player>div:last-child>div:nth-child(2) div span{color:grey;font-size:6vmin}#player>div:last-child>div:nth-child(2) div span.active{color:#000}#player>div:last-child>div:last-child{float:right;width:57%;display:flex;justify-content:center}#player>div:last-child>div:last-child>div{overflow:hidden;align-self:center;width:90%}#player>div:last-child>div:last-child>div h2{white-space:nowrap;font-size:5vmin}#player>div:last-child>div:last-child>div h1{white-space:nowrap;font-size:7vmin}#player>div:last-child>div:last-child>div .progress{height:4vmin;margin:1% 0;position:relative;z-index:10}#player>div:last-child>div:last-child>div>p{font-size:4vmin}#player>div:last-child>div:last-child>div>p:first-of-type{float:left}#player>div:last-child>div:last-child>div>p:last-of-type{float:right}[camera-tab]{flex-grow:10;height:0}[camera-tab] div{display:flex;justify-content:center;height:100%}[camera-tab] img{display:block;height:inherit}#shutdown-block{margin:2%;display:flex;justify-content:flex-end}#shutdown-block span{margin-right:2%;font-size:5vmin;border:2px solid #e7e7e7;border-radius:2vmin;padding:2vmin;display:block}#shutdown-block span:last-child{margin-right:0}[recorder-tab]>div{display:flex;position:absolute;top:0;bottom:0;width:100%;flex-direction:column;padding-top:2%}[recorder-tab]>div>div:last-child{flex-grow:10}[recorder-tab]>div>div:last-child>div{position:relative}[recorder-tab]>div>div:last-child li{font-size:5.5vmin;line-height:1.6;text-align:center}[recorder-tab]>div>div:last-child li .recorder-explorer-btn{padding-left:2%;display:none;position:relative;top:4px}[recorder-tab]>div>div:last-child li .recorder-explorer-btn.display-inline{display:inline-block}[recorder-tab]>div>div:last-child li .delete-block{display:none;width:100%;font-size:5.5vmin}[recorder-tab]>div>div:last-child li .delete-block *{font-size:5.5vmin}[recorder-tab]>div>div:last-child li.delete-process>*{display:none !important}[recorder-tab]>div>div:last-child li.delete-process .delete-block{display:inline-block !important}[recorder-tab]>div>div:last-child>div:first-child{border-right:2px solid #e7e7e7}[recorder-tab] #recorder-status{display:flex;justify-content:space-around;margin:0 2%}[recorder-tab] #recorder-status>*{position:relative;margin:0 !important;width:48%}[recorder-tab] #recorder-status>* .status{color:darkred}[recorder-tab] #recorder-status>* .status.active{color:green}[recorder-tab] .recorder-action-btn{top:0;right:0;position:absolute !important;font-size:5vmin;padding:2vmin;display:block !important;border:2px solid #e7e7e7;border-right:0;border-top:0}[recorder-tab] #recorder-explorer{display:flex;padding:0 1% 0 1%}[recorder-tab] #recorder-explorer>div{width:50%}
+/*
+ * This file is part of the CarMultimediaSystem package.
+ * (c) Alexander Lukashevich <aleksandr.dwt@gmail.com>
+ * For the full copyright and license information, please view the LICENSE file that was distributed with this source code.
+ */
+/*
+ * This file is part of the CarMultimediaSystem package.
+ * (c) Alexander Lukashevich <aleksandr.dwt@gmail.com>
+ * For the full copyright and license information, please view the LICENSE file that was distributed with this source code.
+ */
+* {
+  cursor: default !important;
+  border: none;
+  -webkit-touch-callout: none;
+  /* iOS Safari */
+  -webkit-user-select: none;
+  /* Chrome/Safari/Opera */
+  -moz-user-select: none;
+  /* Firefox */
+  -ms-user-select: none;
+  /* Internet Explorer/Edge */
+  user-select: none; }
 
+button {
+  outline: none; }
+
+html {
+  height: 100%;
+  background-color: #000; }
+
+body {
+  height: 100%;
+  min-width: 770px;
+  min-height: 460px;
+  opacity: 1; }
+  body.black {
+    background-color: #000; }
+  body > div {
+    padding: 0.3%;
+    justify-content: center;
+    display: flex;
+    flex-direction: column;
+    height: 100%; }
+
+#video-background {
+  flex-grow: 10; }
+
+span[class^='glyphicon'] {
+  top: 0.1vmin;
+  font-size: 4vmin;
+  position: relative;
+  display: inline-block;
+  font-family: 'Glyphicons Halflings';
+  font-style: normal; }
+
+nav ul {
+  border: 2px solid #e7e7e7;
+  border-radius: 2vmin;
+  display: flex;
+  font-size: 5vmin;
+  line-height: 10vmin;
+  color: #777;
+  width: 100%;
+  margin-top: 0.3%; }
+  nav ul li {
+    flex-grow: 1;
+    text-align: center;
+    border-right: 2px solid #e7e7e7; }
+    nav ul li:last-child {
+      border-right: none; }
+    nav ul li.active {
+      background-color: #e7e7e7;
+      color: #555; }
+
+[paging] {
+  display: flex;
+  align-items: center; }
+  [paging] span {
+    display: block;
+    font-size: 6vmin;
+    padding: 0 3vmin; }
+  [paging] p {
+    font-size: 5vmin;
+    text-align: center; }
+
+.app-loader {
+  position: fixed;
+  width: 100%;
+  top: 50%;
+  text-align: center; }
+
+.clicked {
+  transform: scale(1.2); }
+  .clicked.clicked-transition {
+    transition: 0.15s all !important; }
+
+.underline-inset span {
+  box-shadow: 0px -2px 0 0 #000 inset; }
+
+.changed-color {
+  color: #777 !important; }
+
+.display-none {
+  display: none !important; }
+
+.common-tab {
+  flex-grow: 10;
+  border: 2px solid #e7e7e7;
+  position: relative;
+  border-radius: 2vmin; }
+
+.two-row-status-block {
+  width: 35%;
+  margin: 2%;
+  border-radius: 2vmin;
+  border: 2px solid #e7e7e7;
+  padding: 1%;
+  overflow: hidden; }
+  .two-row-status-block p {
+    font-size: 3.5vmin;
+    line-height: 4.5vmin; }
+  .two-row-status-block .left-block {
+    width: 20%;
+    float: left; }
+    .two-row-status-block .left-block p {
+      text-align: right; }
+  .two-row-status-block .right-block {
+    width: 80%;
+    float: right; }
+    .two-row-status-block .right-block p {
+      text-align: center; }
+
+.panel-paging-common {
+  position: absolute;
+  bottom: 0;
+  left: 1%;
+  right: 2%;
+  display: flex;
+  justify-content: center;
+  align-items: center; }
+  .panel-paging-common .refresh-cur-dir {
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 100%;
+    color: #000;
+    display: flex; }
+  .panel-paging-common span[class^='glyphicon'] {
+    display: block;
+    top: 0;
+    font-size: 6vmin; }
+
+/*
+ * This file is part of the CarMultimediaSystem package.
+ * (c) Alexander Lukashevich <aleksandr.dwt@gmail.com>
+ * For the full copyright and license information, please view the LICENSE file that was distributed with this source code.
+ */
+.player-explorer > section {
+  padding-left: 1%;
+  padding-top: 1%;
+  padding-right: 2%;
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  transition: width 0.2s; }
+  .player-explorer > section * {
+    transition: opacity 0.2s; }
+
+.player-explorer [explorer] {
+  border-right: 2px solid #e7e7e7;
+  width: 7%; }
+  .player-explorer [explorer].active {
+    width: 93%; }
+    .player-explorer [explorer].active ul, .player-explorer [explorer].active .panel-paging-common {
+      opacity: 1; }
+    .player-explorer [explorer].active .panel-label {
+      opacity: 0; }
+  .player-explorer [explorer] ul, .player-explorer [explorer] .panel-paging-common {
+    opacity: 0; }
+
+.player-explorer [playlist] {
+  right: 0;
+  width: 93%;
+  overflow: hidden; }
+  .player-explorer [playlist].inactive {
+    width: 7%; }
+    .player-explorer [playlist].inactive ul, .player-explorer [playlist].inactive .panel-paging-common {
+      opacity: 0; }
+    .player-explorer [playlist].inactive .panel-label {
+      opacity: 1; }
+  .player-explorer [playlist] .panel-label {
+    opacity: 0; }
+
+.player-explorer .panel-label {
+  position: absolute;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  right: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center; }
+  .player-explorer .panel-label p {
+    font-size: 6vmin;
+    transform: rotate(90deg) scale(-1, -1); }
+
+.player-explorer .name-block {
+  margin-left: 1%;
+  margin-right: 1%;
+  overflow: hidden;
+  z-index: 1;
+  flex-grow: 1; }
+  .player-explorer .name-block span {
+    white-space: nowrap;
+    font-size: 6vmin;
+    min-width: 0;
+    display: inline-block; }
+  .player-explorer .name-block.file-name-block p {
+    white-space: nowrap;
+    font-size: 4vmin; }
+    .player-explorer .name-block.file-name-block p:first-of-type {
+      font-size: 5vmin; }
+      .player-explorer .name-block.file-name-block p:first-of-type * {
+        font-size: 5vmin; }
+
+.player-explorer .first-explorer-row {
+  font-size: 5vmin;
+  margin-bottom: 1%;
+  overflow: hidden; }
+
+.player-explorer .explorer-row {
+  display: flex;
+  align-items: center;
+  margin-bottom: 1%; }
+  .player-explorer .explorer-row.active {
+    background-color: #d9d9d9; }
+  .player-explorer .explorer-row.delete-process .info-block, .player-explorer .explorer-row.delete-process .name-block {
+    width: 0;
+    overflow: hidden; }
+  .player-explorer .explorer-row.delete-process .actions-block {
+    width: 100%; }
+    .player-explorer .explorer-row.delete-process .actions-block > div:not(.delete-block) {
+      display: none; }
+    .player-explorer .explorer-row.delete-process .actions-block .delete-block {
+      display: flex; }
+
+.player-explorer .info-block {
+  height: 100%;
+  position: relative;
+  margin-top: -2vmin;
+  font-size: 9vmin; }
+  .player-explorer .info-block [class^=glyphicon] {
+    top: auto;
+    font-size: inherit; }
+
+.player-explorer .dir-badge {
+  color: #FFF;
+  position: absolute;
+  top: 35%;
+  font-size: 50%;
+  width: 100%;
+  text-align: center; }
+  .player-explorer .dir-badge.length-badge {
+    color: #000;
+    top: 37%;
+    font-size: 40%; }
+
+.player-explorer .actions-block {
+  display: flex;
+  justify-content: flex-end;
+  font-size: 6vmin; }
+  .player-explorer .actions-block > div:not(.delete-block) {
+    padding: 0 2vmin;
+    display: flex;
+    align-items: center; }
+  .player-explorer .actions-block span {
+    font-size: 9vmin; }
+  .player-explorer .actions-block .delete-block {
+    align-items: center;
+    display: none; }
+    .player-explorer .actions-block .delete-block > * {
+      padding: 0 2vmin; }
+
+.player-explorer .select-playlist-btn {
+  position: absolute;
+  top: 0;
+  right: 0;
+  height: 100%;
+  color: #000;
+  display: flex;
+  align-items: center; }
+  .player-explorer .select-playlist-btn p {
+    font-size: 6vmin; }
+
+.player-explorer .playlist-menu {
+  display: none;
+  background-color: #FFF;
+  border: 2px solid #e7e7e7;
+  border-radius: 2vmin;
+  width: 45%;
+  position: absolute;
+  right: 0;
+  bottom: 1vmin;
+  z-index: 99; }
+  .player-explorer .playlist-menu.active {
+    display: block; }
+  .player-explorer .playlist-menu ul {
+    display: flex;
+    font-size: 9vmin; }
+    .player-explorer .playlist-menu ul:first-of-type li {
+      border-bottom: 1px solid #e7e7e7; }
+    .player-explorer .playlist-menu ul li {
+      border-right: 1px solid #e7e7e7;
+      text-align: center;
+      display: block;
+      width: 20%;
+      padding: 1vmin; }
+      .player-explorer .playlist-menu ul li:last-of-type {
+        border-right: none; }
+      .player-explorer .playlist-menu ul li.active {
+        background-color: #e7e7e7;
+        color: #555; }
+
+.player-explorer .show-current-track-icon {
+  padding-right: 3vmin; }
+
+.player-explorer .items-box {
+  height: 100%; }
+
+/*
+ * This file is part of the CarMultimediaSystem package.
+ * (c) Alexander Lukashevich <aleksandr.dwt@gmail.com>
+ * For the full copyright and license information, please view the LICENSE file that was distributed with this source code.
+ */
+#player {
+  border: 2px solid #e7e7e7;
+  margin-top: 0.3%;
+  height: 32%;
+  width: 100%;
+  transition: height 0.2s;
+  position: relative;
+  border-radius: 2vmin;
+  background-color: #FFF;
+  /*
+	* Minimize button
+	*/ }
+  #player * {
+    transition: opacity 0.2s; }
+  #player.minimized {
+    height: 10%; }
+    #player.minimized > div:first-child p {
+      display: block;
+      height: 100%;
+      line-height: 190%;
+      opacity: 1; }
+    #player.minimized > div:first-child span {
+      top: 20%; }
+      #player.minimized > div:first-child span:before {
+        content: "\e093"; }
+    #player.minimized > div:last-child * {
+      opacity: 0; }
+  #player > div:first-child {
+    position: absolute;
+    width: 100%;
+    height: 100%; }
+    #player > div:first-child p {
+      text-align: center;
+      opacity: 0;
+      font-size: 5vmin; }
+    #player > div:first-child span {
+      position: absolute;
+      left: 1%;
+      top: 2%;
+      z-index: 10; }
+  #player > div:last-child {
+    height: 100%; }
+    #player > div:last-child > div {
+      height: 100%;
+      /*
+			* Buttons
+			*/
+      /*
+			* Additional Buttons
+			*/
+      /*
+			* Track info
+			*/ }
+      #player > div:last-child > div:first-child {
+        float: left;
+        width: 38%;
+        display: flex;
+        justify-content: center; }
+        #player > div:last-child > div:first-child > div {
+          align-self: center;
+          width: 100%;
+          z-index: 10; }
+          #player > div:last-child > div:first-child > div > div {
+            text-align: center;
+            width: 100%;
+            /*
+						* Play button
+						*/
+            /*
+						* Other buttons
+						*/ }
+            #player > div:last-child > div:first-child > div > div span {
+              font-size: 6vmin;
+              border-radius: 20vmin;
+              border: 2px solid black;
+              padding: 3vmin;
+              width: 18vmin; }
+            #player > div:last-child > div:first-child > div > div:first-of-type {
+              margin-bottom: 1%; }
+              #player > div:last-child > div:first-child > div > div:first-of-type span {
+                padding: 4vmin;
+                width: auto; }
+              #player > div:last-child > div:first-child > div > div:first-of-type.playing span:before {
+                content: "\e073"; }
+            #player > div:last-child > div:first-child > div > div:last-of-type span:nth-of-type(2) {
+              margin: 0 4%; }
+      #player > div:last-child > div:nth-child(2) {
+        float: left;
+        width: 5%;
+        display: flex;
+        justify-content: space-around;
+        flex-direction: column; }
+        #player > div:last-child > div:nth-child(2) div {
+          text-align: center; }
+          #player > div:last-child > div:nth-child(2) div span {
+            color: grey;
+            font-size: 6vmin; }
+            #player > div:last-child > div:nth-child(2) div span.active {
+              color: #000; }
+      #player > div:last-child > div:last-child {
+        float: right;
+        width: 57%;
+        display: flex;
+        justify-content: center; }
+        #player > div:last-child > div:last-child > div {
+          overflow: hidden;
+          align-self: center;
+          width: 90%; }
+          #player > div:last-child > div:last-child > div h2 {
+            white-space: nowrap;
+            font-size: 5vmin; }
+          #player > div:last-child > div:last-child > div h1 {
+            white-space: nowrap;
+            font-size: 7vmin; }
+          #player > div:last-child > div:last-child > div .progress {
+            height: 4vmin;
+            margin: 1% 0;
+            position: relative;
+            z-index: 10; }
+          #player > div:last-child > div:last-child > div > p {
+            font-size: 4vmin; }
+            #player > div:last-child > div:last-child > div > p:first-of-type {
+              float: left; }
+            #player > div:last-child > div:last-child > div > p:last-of-type {
+              float: right; }
+
+/*
+ * This file is part of the CarMultimediaSystem package.
+ * (c) Alexander Lukashevich <aleksandr.dwt@gmail.com>
+ * For the full copyright and license information, please view the LICENSE file that was distributed with this source code.
+ */
+[camera-tab] {
+  flex-grow: 10;
+  height: 0; }
+  [camera-tab] div {
+    display: flex;
+    justify-content: center;
+    height: 100%; }
+  [camera-tab] img {
+    display: block;
+    height: inherit; }
+
+/*
+ * This file is part of the CarMultimediaSystem package.
+ * (c) Alexander Lukashevich <aleksandr.dwt@gmail.com>
+ * For the full copyright and license information, please view the LICENSE file that was distributed with this source code.
+ */
+#shutdown-block {
+  margin: 2%;
+  display: flex;
+  justify-content: flex-end; }
+  #shutdown-block span {
+    margin-right: 2%;
+    font-size: 5vmin;
+    border: 2px solid #e7e7e7;
+    border-radius: 2vmin;
+    padding: 2vmin;
+    display: block; }
+    #shutdown-block span:last-child {
+      margin-right: 0; }
+
+/*
+ * This file is part of the CarMultimediaSystem package.
+ * (c) Alexander Lukashevich <aleksandr.dwt@gmail.com>
+ * For the full copyright and license information, please view the LICENSE file that was distributed with this source code.
+ */
+[recorder-tab] > div {
+  display: flex;
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  width: 100%;
+  flex-direction: column;
+  padding-top: 2%; }
+  [recorder-tab] > div > div:last-child {
+    flex-grow: 10; }
+    [recorder-tab] > div > div:last-child > div {
+      position: relative; }
+    [recorder-tab] > div > div:last-child li {
+      font-size: 5.5vmin;
+      line-height: 1.6;
+      text-align: center; }
+      [recorder-tab] > div > div:last-child li .recorder-explorer-btn {
+        padding-left: 2%;
+        display: none;
+        position: relative;
+        top: 4px; }
+        [recorder-tab] > div > div:last-child li .recorder-explorer-btn.display-inline {
+          display: inline-block; }
+      [recorder-tab] > div > div:last-child li .delete-block {
+        display: none;
+        width: 100%;
+        font-size: 5.5vmin; }
+        [recorder-tab] > div > div:last-child li .delete-block * {
+          font-size: 5.5vmin; }
+      [recorder-tab] > div > div:last-child li.delete-process > * {
+        display: none !important; }
+      [recorder-tab] > div > div:last-child li.delete-process .delete-block {
+        display: inline-block !important; }
+    [recorder-tab] > div > div:last-child > div:first-child {
+      border-right: 2px solid #e7e7e7; }
+
+[recorder-tab] #recorder-status {
+  display: flex;
+  justify-content: space-around;
+  margin: 0 2%; }
+  [recorder-tab] #recorder-status > * {
+    position: relative;
+    margin: 0 !important;
+    width: 48%; }
+    [recorder-tab] #recorder-status > * .status {
+      color: darkred; }
+      [recorder-tab] #recorder-status > * .status.active {
+        color: green; }
+
+[recorder-tab] .recorder-action-btn {
+  top: 0;
+  right: 0;
+  position: absolute !important;
+  font-size: 5vmin;
+  padding: 2vmin;
+  display: block !important;
+  border: 2px solid #e7e7e7;
+  border-right: 0;
+  border-top: 0; }
+
+[recorder-tab] #recorder-explorer {
+  display: flex;
+  padding: 0 1% 0 1%; }
+  [recorder-tab] #recorder-explorer > div {
+    width: 50%; }
+
+/*
+ * This file is part of the CarMultimediaSystem package.
+ * (c) Alexander Lukashevich <aleksandr.dwt@gmail.com>
+ * For the full copyright and license information, please view the LICENSE file that was distributed with this source code.
+ */
+#settings-block {
+  margin: 5% 4% 0 0;
+  float: right;
+  width: 30%; }
+  #settings-block .rs-tooltip {
+    display: none; }
+  #settings-block ins {
+    visibility: hidden; }
+  #settings-block .rs-container .rs-scale span::before {
+    background-color: #888888;
+    width: 3px; }
+  #settings-block .rs-container .rs-selected {
+    background-color: #888888;
+    border: 1px solid #888888; }

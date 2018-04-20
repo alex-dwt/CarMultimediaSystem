@@ -24,6 +24,8 @@ const DEFAULT_PATH ='/';
 		</div>
 
 		<ul class="items-box">
+			<li class="first-explorer-row">{{ currentPath }}</li>
+			
 			<li *ngFor="let item of currentItems" class="explorer-row" [class.delete-process]="item.isWantToDelete">
 				<div class="info-block">
 					<template [ngIf]="!isFileItem(item)">
