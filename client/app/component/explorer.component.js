@@ -78,6 +78,7 @@ const DEFAULT_PATH ='/';
 			</div>
 
 			<div paging
+				[showItemEvent]="pagingEvent"
 				(change)="onCurrentItemsChange($event)"
 				[items]="items"
 				[itemsPerPage]="itemsPerPage">
@@ -102,7 +103,10 @@ export class ExplorerComponent {
 		this.itemsPerPage = 4;
 
 		this.currentPath = DEFAULT_PATH;
-	}
+
+        this.history = [];
+        this.pagingEvent = new EventEmitter();
+    }
 
     ngOnInit(){
         this.deleteItemSubject.subscribe((item) => {
@@ -117,6 +121,8 @@ export class ExplorerComponent {
 				.then(() => this.selectDirectory())
 				.catch(() => this.selectDirectory());
 		});
+
+        this.pagingEvent.emit(false);
     }
 
 	isFileItem(item) {
@@ -173,13 +179,33 @@ export class ExplorerComponent {
 				item.isWantToDelete = false;
 				return item;
 			});*/
+
+
+			let pos = false;
+			const historyItem = this.history.find(o => o.path === path);
+			if (historyItem) {
+                pos = historyItem.currentItem;
+			}
+            this.pagingEvent.emit(pos);
 		});
 	}
 
-	onCurrentItemsChange(currentItems) {
-		this.currentItems = currentItems.map((item) => {
+	onCurrentItemsChange(event) {
+		this.currentItems = event.items.map((item) => {
 			item.isWantToDelete = false;
 			return item;
+		});
+
+        const path = this.currentPath;
+        const i = this.history.findIndex(o => o.path === path);
+
+        if (i !== -1) {
+            this.history.splice(i, 1);
+		}
+
+        this.history.push({
+			path,
+            currentItem: event.currentItem,
 		});
 	}
 }

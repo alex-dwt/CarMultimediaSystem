@@ -41,18 +41,14 @@ export class PagingComponent {
 				if (itemPos !== false) {
 					let page = Math.ceil((itemPos + 1) / this.itemsPerPage);
 					this.currentItemsFrom = ((page - 1) * this.itemsPerPage) + 1;
+				} else {
+                    this.currentItemsFrom = 0;
+                    this.currentItemsTill = 0;
 				}
 
 				this._checkPagination();
 				this._render();
 			});
-		}
-	}
-
-	ngOnChanges(){
-		if (!this.showItemEvent) {
-			this._checkPagination();
-			this._render();
 		}
 	}
 
@@ -87,15 +83,18 @@ export class PagingComponent {
 	}
 
 	_render() {
-		let currentItems = [];
+		let items = [];
 
 		if (this.currentItemsFrom && this.currentItemsTill) {
-			currentItems = this.items.slice(
+            items = this.items.slice(
 				this.currentItemsFrom - 1,
 				this.currentItemsTill
 			);
 		}
 
-		this.change.emit(currentItems);
+		this.change.emit({
+			items,
+			currentItem: this.currentItemsFrom
+		});
 	}
 }

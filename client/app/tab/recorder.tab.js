@@ -235,10 +235,10 @@ export class RecorderTab {
         });
     }
 
-    onDirsItemsChange(paginatedItems, type) {
+    onDirsItemsChange(event, type) {
         this.explorerItems
             .find(o => o.type === type)
-            .paginatedItems = paginatedItems.map((item) => {
+            .paginatedItems = event.items.map((item) => {
                 item.isWantToDelete = false;
                 return item;
             });

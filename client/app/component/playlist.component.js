@@ -202,8 +202,8 @@ export class PlaylistComponent {
 		);
 	}
 
-	onCurrentItemsChange(currentItems) {
-		this.currentItems = currentItems.map((item) => {
+	onCurrentItemsChange(event) {
+		this.currentItems = event.items.map((item) => {
 			item.isWantToDelete = false;
 			return item;
 		});
