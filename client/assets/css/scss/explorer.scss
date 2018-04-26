@@ -202,15 +202,7 @@
 	}
 
 	.playlist-menu {
-		display: none;
-		background-color: #FFF;
-		border: 2px solid #e7e7e7;
-		border-radius: 2vmin;
 		width: 45%;
-		position: absolute;
-		right: 0;
-		bottom: 1vmin;
-		z-index: 99;
 
 		&.active {
 			display: block;
@@ -249,8 +241,38 @@
 		padding-right: 3vmin;
 	}
 
+	.clear-full-playlist-icon {
+		padding-left: 2vmin;
+	}
+
 	.items-box {
 		height: 100%;
+	}
+
+	#clear-playlist-confirmation {
+		width: 36%;
+		justify-content: space-around;
+		align-items: center;
+		padding: 1%;
+
+		&.active {
+			display: flex;
+		}
+
+		p {
+			font-size: 5vmin;
+		}
+	}
+
+	.right-bottom-block {
+		display: none;
+		background-color: #FFF;
+		border: 2px solid #e7e7e7;
+		border-radius: 2vmin;
+		position: absolute;
+		right: 0;
+		bottom: 1vmin;
+		z-index: 99;
 	}
 }
 

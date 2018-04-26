@@ -64,9 +64,10 @@ import {ChangeColorOnClick} from '_app/directive/changeColorOnClick.directive';
 				<span scale-on-click class="glyphicon-new-window show-current-track-icon" (click)="goToActiveItem()"></span>
 				<span class="glyphicon-file" (click)="isShowPlaylistSelector=true"></span>
 				<p (click)="isShowPlaylistSelector=true">{{ currentPlaylistId }}</p>
+                <span class="glyphicon-ban-circle clear-full-playlist-icon" (click)="isShowClearPlaylistConfirmation=true"></span>
 			</div>
 
-			<section class="playlist-menu" [class.active]="isShowPlaylistSelector">
+			<section class="playlist-menu right-bottom-block" [class.active]="isShowPlaylistSelector">
 				<template ngFor let-row [ngForOf]="playlistSelectorItems">
 				<ul>
 					<li *ngFor="let item of row" [class.active]="item.isActive" (click)="selectPlaylist(item.id)">
@@ -74,6 +75,12 @@ import {ChangeColorOnClick} from '_app/directive/changeColorOnClick.directive';
 					</li>
 				</ul>
 				</template>
+			</section>
+
+			<section class="right-bottom-block" id="clear-playlist-confirmation" [class.active]="isShowClearPlaylistConfirmation">
+                <p>Are you sure?</p>
+                <div><span change-color-on-click class="glyphicon-ok" (click)="deleteItem(); isShowClearPlaylistConfirmation=false"></span></div>
+                <div><span class="glyphicon-remove" (click)="isShowClearPlaylistConfirmation=false"></span></div>
 			</section>
 
 		</section>
@@ -99,6 +106,7 @@ export class PlaylistComponent {
 
 		this.currentPlaylistId = 1;
 		this.isShowPlaylistSelector = false;
+		this.isShowClearPlaylistConfirmation = false;
 		this.playlistSelectorItems = [];
 		{
 			let label = 1;
@@ -237,10 +245,15 @@ export class PlaylistComponent {
 		this.playFileQueueEvent.emit(item);
 	}
 
-	deleteItem(item) {
-		let i = this.items.findIndex(e => e.path === item.path);
-		if (i !== -1) {
-			this.items.splice(i,1);
+	deleteItem(item = false) {
+		if (item === false) {
+			// clear full playlist
+            this.items.splice(0);
+		} else {
+            let i = this.items.findIndex(e => e.path === item.path);
+            if (i !== -1) {
+                this.items.splice(i,1);
+            }
 		}
 
 		// redraw playlist

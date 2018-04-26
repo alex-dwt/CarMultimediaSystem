@@ -293,15 +293,7 @@ nav ul {
     font-size: 6vmin; }
 
 .player-explorer .playlist-menu {
-  display: none;
-  background-color: #FFF;
-  border: 2px solid #e7e7e7;
-  border-radius: 2vmin;
-  width: 45%;
-  position: absolute;
-  right: 0;
-  bottom: 1vmin;
-  z-index: 99; }
+  width: 45%; }
   .player-explorer .playlist-menu.active {
     display: block; }
   .player-explorer .playlist-menu ul {
@@ -324,8 +316,31 @@ nav ul {
 .player-explorer .show-current-track-icon {
   padding-right: 3vmin; }
 
+.player-explorer .clear-full-playlist-icon {
+  padding-left: 2vmin; }
+
 .player-explorer .items-box {
   height: 100%; }
+
+.player-explorer #clear-playlist-confirmation {
+  width: 36%;
+  justify-content: space-around;
+  align-items: center;
+  padding: 1%; }
+  .player-explorer #clear-playlist-confirmation.active {
+    display: flex; }
+  .player-explorer #clear-playlist-confirmation p {
+    font-size: 5vmin; }
+
+.player-explorer .right-bottom-block {
+  display: none;
+  background-color: #FFF;
+  border: 2px solid #e7e7e7;
+  border-radius: 2vmin;
+  position: absolute;
+  right: 0;
+  bottom: 1vmin;
+  z-index: 99; }
 
 /*
  * This file is part of the CarMultimediaSystem package.
