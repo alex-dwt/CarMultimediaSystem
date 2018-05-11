@@ -27,11 +27,11 @@ RUN mkdir /Usb && mkdir /Audio && mkdir /Video && ln -s /Usb /Audio/usb && ln -s
     npm run build && \
     ln -s /car-pi/server/node_modules /car-pi/server/build/node_modules
 
+CMD ["npm","start"]
+
 # client
 RUN mkdir -p /car-pi/client
 COPY ./client/package.json /car-pi/client/
 RUN cd /car-pi/client/ && npm install
 COPY ./client /car-pi/client/
 RUN cd /car-pi/client && npm run compile
-
-CMD ["npm","start"]
