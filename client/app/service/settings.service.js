@@ -4,7 +4,7 @@
  * For the full copyright and license information, please view the LICENSE file that was distributed with this source code.
  */
 
-import {HttpService} from '_app/service/http.service'
+import {HttpService} from 'app/service/http.service'
 
 const URL = 'http://carpi/settings/';
 //const URL = 'http://192.168.100.15/settings/';

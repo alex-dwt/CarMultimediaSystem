@@ -5,10 +5,10 @@
  */
 
 import {Component, EventEmitter} from 'angular2/core';
-import {RecorderService} from '_app/service/recorder.service';
-import {ScaleOnClickDirective} from '_app/directive/scaleOnClick.directive';
-import {PagingComponent} from '_app/component/paging.component';
-import {ChangeColorOnClick} from '_app/directive/changeColorOnClick.directive';
+import {RecorderService} from 'app/service/recorder.service';
+import {ScaleOnClickDirective} from 'app/directive/scaleOnClick.directive';
+import {PagingComponent} from 'app/component/paging.component';
+import {ChangeColorOnClick} from 'app/directive/changeColorOnClick.directive';
 
 const GET_STATUS_DELAY = 3;
 const EXPLORER_TYPES = [

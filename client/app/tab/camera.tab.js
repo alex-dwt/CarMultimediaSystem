@@ -5,7 +5,7 @@
  */
 
 import {Component} from 'angular2/core';
-import {CameraService} from '_app/service/camera.service';
+import {CameraService} from 'app/service/camera.service';
 
 const CHECK_CAMERA_DELAY = 1;
 

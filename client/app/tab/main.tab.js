@@ -5,9 +5,9 @@
  */
 
 import {Component} from 'angular2/core';
-import {GpsComponent} from '_app/component/gps.component';
-import {ShutdownComponent} from '_app/component/shutdown.component';
-import {SettingsComponent} from '_app/component/settings.component';
+import {GpsComponent} from 'app/component/gps.component';
+import {ShutdownComponent} from 'app/component/shutdown.component';
+import {SettingsComponent} from 'app/component/settings.component';
 
 @Component({
 	selector: '[main-tab]',

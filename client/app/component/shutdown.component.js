@@ -6,8 +6,8 @@
 
 import {Component} from 'angular2/core';
 
-import {SystemService} from '_app/service/system.service';
-import {ScaleOnClickDirective} from '_app/directive/scaleOnClick.directive';
+import {SystemService} from 'app/service/system.service';
+import {ScaleOnClickDirective} from 'app/directive/scaleOnClick.directive';
 
 @Component({
 	selector: '[id=shutdown-block]',

@@ -5,7 +5,7 @@
  */
 
 import {Component, EventEmitter, OnChanges, OnInit} from 'angular2/core';
-import {ScaleOnClickDirective} from '_app/directive/scaleOnClick.directive';
+import {ScaleOnClickDirective} from 'app/directive/scaleOnClick.directive';
 
 @Component({
 	selector: '[paging]',

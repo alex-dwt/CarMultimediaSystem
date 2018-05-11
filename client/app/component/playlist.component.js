@@ -5,14 +5,14 @@
  */
 
 import {Component, EventEmitter, OnInit} from 'angular2/core';
-import {TrackDurationPipe } from '_app/pipe/trackDuration.pipe';
-import {TrackTitlePipe } from '_app/pipe/trackTitle.pipe';
-import {SettingsService} from '_app/service/settings.service';
+import {TrackDurationPipe } from 'app/pipe/trackDuration.pipe';
+import {TrackTitlePipe } from 'app/pipe/trackTitle.pipe';
+import {SettingsService} from 'app/service/settings.service';
 
-import {PagingComponent} from '_app/component/paging.component';
-import {ScaleOnClickDirective} from '_app/directive/scaleOnClick.directive';
-import {UnderlineOnClickDirective} from '_app/directive/underlineOnClick.directive';
-import {ChangeColorOnClick} from '_app/directive/changeColorOnClick.directive';
+import {PagingComponent} from 'app/component/paging.component';
+import {ScaleOnClickDirective} from 'app/directive/scaleOnClick.directive';
+import {UnderlineOnClickDirective} from 'app/directive/underlineOnClick.directive';
+import {ChangeColorOnClick} from 'app/directive/changeColorOnClick.directive';
 
 @Component({
 	selector: '[playlist]',

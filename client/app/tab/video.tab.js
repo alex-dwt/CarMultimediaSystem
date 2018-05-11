@@ -6,8 +6,8 @@
 
 import {Component, EventEmitter} from 'angular2/core';
 
-import {PlaylistComponent} from '_app/component/playlist.component';
-import {ExplorerComponent} from '_app/component/explorer.component';
+import {PlaylistComponent} from 'app/component/playlist.component';
+import {ExplorerComponent} from 'app/component/explorer.component';
 
 @Component({
 	selector: '[video-tab]',

@@ -6,13 +6,13 @@
 
 import {Component, EventEmitter} from 'angular2/core';
 
-import {ExplorerService} from '_app/service/explorer.service';
-import {TrackDurationPipe } from '_app/pipe/trackDuration.pipe';
-import {TrackTitlePipe } from '_app/pipe/trackTitle.pipe';
-import {PagingComponent} from '_app/component/paging.component';
-import {ScaleOnClickDirective} from '_app/directive/scaleOnClick.directive';
-import {UnderlineOnClickDirective} from '_app/directive/underlineOnClick.directive';
-import {ChangeColorOnClick} from '_app/directive/changeColorOnClick.directive';
+import {ExplorerService} from 'app/service/explorer.service';
+import {TrackDurationPipe } from 'app/pipe/trackDuration.pipe';
+import {TrackTitlePipe } from 'app/pipe/trackTitle.pipe';
+import {PagingComponent} from 'app/component/paging.component';
+import {ScaleOnClickDirective} from 'app/directive/scaleOnClick.directive';
+import {UnderlineOnClickDirective} from 'app/directive/underlineOnClick.directive';
+import {ChangeColorOnClick} from 'app/directive/changeColorOnClick.directive';
 
 const DEFAULT_PATH ='/';
 

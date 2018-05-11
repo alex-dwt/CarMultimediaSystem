@@ -5,8 +5,8 @@
  */
 
 import {Component} from 'angular2/core';
-import {GpsService} from '_app/service/gps.service';
-import {GpsInfoPipe } from '_app/pipe/gpsInfo.pipe';
+import {GpsService} from 'app/service/gps.service';
+import {GpsInfoPipe } from 'app/pipe/gpsInfo.pipe';
 
 const GET_INFO_DELAY = 3;
 const PROPERTIES = ['lat', 'lon', 'speed', 'time'];

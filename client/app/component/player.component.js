@@ -5,11 +5,11 @@
  */
 
 import {Component, EventEmitter, OnInit} from 'angular2/core';
-import {PlayerService} from '_app/service/player.service';
-import {SettingsService} from '_app/service/settings.service';
-import {TrackDurationPipe } from '_app/pipe/trackDuration.pipe';
-import {TrackTitlePipe } from '_app/pipe/trackTitle.pipe';
-import {ScaleOnClickDirective} from '_app/directive/scaleOnClick.directive';
+import {PlayerService} from 'app/service/player.service';
+import {SettingsService} from 'app/service/settings.service';
+import {TrackDurationPipe } from 'app/pipe/trackDuration.pipe';
+import {TrackTitlePipe } from 'app/pipe/trackTitle.pipe';
+import {ScaleOnClickDirective} from 'app/directive/scaleOnClick.directive';
 
 const CHECK_CURRENT_POSITION_INTERVAL = 2000;
 const CHECK_STATUS_INTERVAL = 1500;

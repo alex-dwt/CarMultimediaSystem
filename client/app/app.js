@@ -9,22 +9,22 @@ import {Component, EventEmitter, enableProdMode} from 'angular2/core';
 import {HTTP_PROVIDERS} from 'angular2/http';
 import {Subject} from 'rxjs/Subject';
 
-import {ExplorerService} from '_app/service/explorer.service';
-import {HttpService} from '_app/service/http.service'
-import {PlayerService} from '_app/service/player.service'
-import {SettingsService} from '_app/service/settings.service';
-import {CameraService} from '_app/service/camera.service';
-import {GpsService} from '_app/service/gps.service';
-import {SystemService} from '_app/service/system.service';
-import {RecorderService} from '_app/service/recorder.service';
+import {ExplorerService} from 'app/service/explorer.service';
+import {HttpService} from 'app/service/http.service'
+import {PlayerService} from 'app/service/player.service'
+import {SettingsService} from 'app/service/settings.service';
+import {CameraService} from 'app/service/camera.service';
+import {GpsService} from 'app/service/gps.service';
+import {SystemService} from 'app/service/system.service';
+import {RecorderService} from 'app/service/recorder.service';
 
-import {MainTab} from '_app/tab/main.tab';
-import {AudioTab} from '_app/tab/audio.tab';
-import {VideoTab} from '_app/tab/video.tab';
-import {RecorderTab} from '_app/tab/recorder.tab';
-import {CameraTab} from '_app/tab/camera.tab';
-import {NavbarComponent} from '_app/component/navbar.component';
-import {PlayerComponent} from '_app/component/player.component';
+import {MainTab} from 'app/tab/main.tab';
+import {AudioTab} from 'app/tab/audio.tab';
+import {VideoTab} from 'app/tab/video.tab';
+import {RecorderTab} from 'app/tab/recorder.tab';
+import {CameraTab} from 'app/tab/camera.tab';
+import {NavbarComponent} from 'app/component/navbar.component';
+import {PlayerComponent} from 'app/component/player.component';
 
 @Component({
 	selector: 'body',
