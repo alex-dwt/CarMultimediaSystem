@@ -145,16 +145,20 @@ class AppComponent {
 	}
 }
 
-enableProdMode();
+let boot = document.addEventListener('DOMContentLoaded', () => {
+    enableProdMode();
 
-bootstrap(AppComponent, [
-	HTTP_PROVIDERS,
-	SettingsService,
-	ExplorerService,
-	PlayerService,
-	CameraService,
-    RecorderService,
-	GpsService,
-	SystemService,
-	HttpService
-]);
+    bootstrap(AppComponent, [
+        HTTP_PROVIDERS,
+        SettingsService,
+        ExplorerService,
+        PlayerService,
+        CameraService,
+        RecorderService,
+        GpsService,
+        SystemService,
+        HttpService
+    ]);
+});
+
+module.exports = boot;
